@@ -81,7 +81,7 @@ export default function Home() {
                 Hello, I'm Ayushi Lathiya
               </h1>
               <p className="text-lg md:text-xl text-navy-700 mb-8">
-                A passionate full-stack developer specializing in creating beautiful and functional web experiences. With expertise in modern web technologies, I bring ideas to life through clean code and intuitive design.
+                A full-stack developer specializing in creating beautiful and functional web experiences. With expertise in modern web technologies, I bring ideas to life through clean code and intuitive design.
               </p>
               <div className="flex gap-4">
                 <Link href="https://github.com/ayushilathiya" target="_blank" className="p-2 skeuomorphic hover:scale-105 transition-transform">
