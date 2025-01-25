@@ -1,20 +1,23 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Github, Linkedin, Twitter, FileText, ChevronDown } from 'lucide-react';
-import Link from 'next/link';
+import { useState, useEffect } from "react";
+import { Linkedin } from "lucide-react";
+import { SiGithub, SiX } from "react-icons/si";
+import Link from "next/link";
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState("about");
   const [scrollY, setScrollY] = useState(0);
-  const [floatingElements, setFloatingElements] = useState<Array<{
-    width: number;
-    height: number;
-    left: number;
-    top: number;
-    delay: number;
-    duration: number;
-  }>>([]);
+  const [floatingElements, setFloatingElements] = useState<
+    Array<{
+      width: number;
+      height: number;
+      left: number;
+      top: number;
+      delay: number;
+      duration: number;
+    }>
+  >([]);
 
   useEffect(() => {
     // Generate floating elements on the client side
@@ -33,10 +36,10 @@ export default function Home() {
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
-      
-      const sections = ['about', 'projects', 'blog', 'contact'];
-      const sectionElements = sections.map(id => document.getElementById(id));
-      
+
+      const sections = ["about", "projects", "blog", "contact"];
+      const sectionElements = sections.map((id) => document.getElementById(id));
+
       sectionElements.forEach((section) => {
         if (section) {
           const rect = section.getBoundingClientRect();
@@ -47,13 +50,13 @@ export default function Home() {
       });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    element?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -62,7 +65,7 @@ export default function Home() {
       <div className="fixed inset-0 z-0">
         {/* Pattern Background */}
         <div className="absolute inset-0 bg-pattern"></div>
-        
+
         {/* Floating Elements */}
         <div className="absolute w-full h-full">
           {floatingElements.map((element, i) => (
@@ -80,11 +83,10 @@ export default function Home() {
             />
           ))}
         </div>
-        
+
         {/* Wave Elements */}
         <div className="absolute bottom-0 left-0 right-0 h-64 opacity-10">
-          <div className="absolute inset-0 bg-navy animate-wave"></div>
-          <div className="absolute inset-0 bg-navy animate-wave" style={{ animationDelay: '-5s' }}></div>
+          <div className="absolute inset-0 bg-navy"></div>
         </div>
       </div>
 
@@ -93,16 +95,15 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex space-x-8">
-              {['about', 'projects', 'blog', 'contact'].map((section) => (
+              {["about", "projects", "blog", "contact"].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
                   className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 ${
                     activeSection === section
-                      ? 'border-navy text-navy'
-                      : 'border-transparent text-gray-500 hover:text-navy hover:border-navy'
-                  } transition-colors duration-200`}
-                >
+                      ? "border-navy text-navy"
+                      : "border-transparent text-gray-500 hover:text-navy hover:border-navy"
+                  } transition-colors duration-200`}>
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </button>
               ))}
@@ -117,36 +118,54 @@ export default function Home() {
         <section id="about" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="bg-white/90 rounded-2xl shadow-xl p-8 backdrop-blur-lg">
-              <div className="flex flex-col lg:flex-row gap-8">
+              <div className="flex flex-col gap-12">
                 {/* Introduction and Social Links */}
-                <div className="lg:w-1/4 space-y-6">
+                <div className="space-y-6">
                   <h1 className="text-4xl font-bold text-navy">About Me</h1>
-                  <p className="text-lg">
-                    Hi, I'm a passionate software developer with expertise in modern web technologies.
-                    I love creating beautiful and functional applications that solve real-world problems.
+                  <p className="text-lg max-w-2xl">
+                    Hi, I'm a passionate software developer with expertise in
+                    modern web technologies. I love creating beautiful and
+                    functional applications that solve real-world problems.
                   </p>
                   <div className="flex space-x-4">
-                    <Link href="https://github.com" className="text-navy hover:text-navy/80 transition-colors">
-                      <Github className="w-6 h-6" />
+                    <Link
+                      href="https://github.com"
+                      className="text-navy hover:text-navy/80 transition-colors">
+                      <SiGithub className="w-6 h-6" />
                     </Link>
-                    <Link href="https://linkedin.com" className="text-navy hover:text-navy/80 transition-colors">
+                    <Link
+                      href="https://linkedin.com"
+                      className="text-navy hover:text-navy/80 transition-colors">
                       <Linkedin className="w-6 h-6" />
                     </Link>
-                    <Link href="https://twitter.com" className="text-navy hover:text-navy/80 transition-colors">
-                      <Twitter className="w-6 h-6" />
+                    <Link
+                      href="https://twitter.com"
+                      className="text-navy hover:text-navy/80 transition-colors">
+                      <SiX className="w-6 h-6" />
                     </Link>
-                    <Link href="/resume.pdf" className="text-navy hover:text-navy/80 transition-colors">
+                    {/* <Link
+                      href="/resume.pdf"
+                      className="text-navy hover:text-navy/80 transition-colors">
                       <FileText className="w-6 h-6" />
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
 
                 {/* Skills */}
-                <div className="lg:w-1/4 space-y-4">
+                <div className="space-y-4">
                   <h2 className="text-2xl font-semibold text-navy">Skills</h2>
                   <div className="flex flex-wrap gap-2">
-                    {['React', 'Next.js', 'TypeScript', 'Node.js', 'Tailwind CSS', 'GraphQL'].map((skill) => (
-                      <span key={skill} className="px-3 py-1 bg-navy/10 text-navy rounded-full shadow-inner-lg">
+                    {[
+                      "React",
+                      "Next.js",
+                      "TypeScript",
+                      "Node.js",
+                      "Tailwind CSS",
+                      "GraphQL",
+                    ].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1 bg-navy/10 text-navy rounded-full shadow-inner-lg">
                         {skill}
                       </span>
                     ))}
@@ -154,26 +173,36 @@ export default function Home() {
                 </div>
 
                 {/* Experience */}
-                <div className="lg:w-1/4 space-y-4">
-                  <h2 className="text-2xl font-semibold text-navy">Experience</h2>
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-semibold text-navy">
+                    Experience
+                  </h2>
                   <div className="space-y-4">
                     <div className="border-l-2 border-navy pl-4">
                       <h3 className="font-semibold">Senior Developer</h3>
-                      <p className="text-gray-600">Tech Corp • 2020 - Present</p>
+                      <p className="text-gray-600">
+                        Tech Corp • 2020 - Present
+                      </p>
                     </div>
                     <div className="border-l-2 border-navy pl-4">
                       <h3 className="font-semibold">Full Stack Developer</h3>
-                      <p className="text-gray-600">Web Solutions Inc • 2018 - 2020</p>
+                      <p className="text-gray-600">
+                        Web Solutions Inc • 2018 - 2020
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 {/* Education */}
-                <div className="lg:w-1/4 space-y-4">
-                  <h2 className="text-2xl font-semibold text-navy">Education</h2>
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-semibold text-navy">
+                    Education
+                  </h2>
                   <div className="border-l-2 border-navy pl-4">
                     <h3 className="font-semibold">Computer Science, BSc</h3>
-                    <p className="text-gray-600">Tech University • 2014 - 2018</p>
+                    <p className="text-gray-600">
+                      Tech University • 2014 - 2018
+                    </p>
                   </div>
                 </div>
               </div>
@@ -182,21 +211,32 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+        <section
+          id="projects"
+          className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="bg-white/90 rounded-2xl shadow-xl p-8 backdrop-blur-lg">
               <h2 className="text-4xl font-bold text-navy mb-8">Projects</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[1, 2, 3].map((project) => (
-                  <div key={project} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                  <div
+                    key={project}
+                    className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
                     <div className="h-48 bg-navy/10 rounded-lg mb-4"></div>
-                    <h3 className="text-xl font-semibold text-navy mb-2">Project {project}</h3>
+                    <h3 className="text-xl font-semibold text-navy mb-2">
+                      Project {project}
+                    </h3>
                     <p className="text-gray-600 mb-4">
-                      A beautiful and functional project showcasing modern web development techniques.
+                      A beautiful and functional project showcasing modern web
+                      development techniques.
                     </p>
                     <div className="flex space-x-2">
-                      <span className="px-2 py-1 bg-navy/10 text-navy rounded-full text-sm">React</span>
-                      <span className="px-2 py-1 bg-navy/10 text-navy rounded-full text-sm">TypeScript</span>
+                      <span className="px-2 py-1 bg-navy/10 text-navy rounded-full text-sm">
+                        React
+                      </span>
+                      <span className="px-2 py-1 bg-navy/10 text-navy rounded-full text-sm">
+                        TypeScript
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -212,15 +252,24 @@ export default function Home() {
               <h2 className="text-4xl font-bold text-navy mb-8">Blog</h2>
               <div className="space-y-8">
                 {[1, 2, 3].map((post) => (
-                  <article key={post} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                  <article
+                    key={post}
+                    className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
                     <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-xl font-semibold text-navy">Modern Web Development Techniques</h3>
-                      <span className="text-sm text-gray-500">March {post}, 2024</span>
+                      <h3 className="text-xl font-semibold text-navy">
+                        Modern Web Development Techniques
+                      </h3>
+                      <span className="text-sm text-gray-500">
+                        March {post}, 2024
+                      </span>
                     </div>
                     <p className="text-gray-600 mb-4">
-                      Exploring the latest trends and best practices in modern web development...
+                      Exploring the latest trends and best practices in modern
+                      web development...
                     </p>
-                    <Link href="#" className="text-navy hover:text-navy/80 transition-colors">
+                    <Link
+                      href="#"
+                      className="text-navy hover:text-navy/80 transition-colors">
                       Read more →
                     </Link>
                   </article>
@@ -231,19 +280,24 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+        <section
+          id="contact"
+          className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="bg-white/90 rounded-2xl shadow-xl p-8 backdrop-blur-lg">
               <h2 className="text-4xl font-bold text-navy mb-8">Contact</h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <p className="text-lg mb-6">
-                    I'm always open to new opportunities and collaborations. Feel free to reach out!
+                    I'm always open to new opportunities and collaborations.
+                    Feel free to reach out!
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-2 text-navy">
                       <span className="font-semibold">Email:</span>
-                      <a href="mailto:contact@example.com" className="hover:text-navy/80 transition-colors">
+                      <a
+                        href="mailto:contact@example.com"
+                        className="hover:text-navy/80 transition-colors">
                         contact@example.com
                       </a>
                     </div>
@@ -255,7 +309,9 @@ export default function Home() {
                 </div>
                 <form className="space-y-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 mb-1">
                       Name
                     </label>
                     <input
@@ -265,7 +321,9 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700 mb-1">
                       Email
                     </label>
                     <input
@@ -275,19 +333,19 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-gray-700 mb-1">
                       Message
                     </label>
                     <textarea
                       id="message"
                       rows={4}
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:border-navy"
-                    ></textarea>
+                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:border-navy"></textarea>
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-navy text-white py-2 px-4 rounded-lg hover:bg-navy/90 transition-colors"
-                  >
+                    className="w-full bg-navy text-white py-2 px-4 rounded-lg hover:bg-navy/90 transition-colors">
                     Send Message
                   </button>
                 </form>
