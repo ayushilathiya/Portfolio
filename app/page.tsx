@@ -1,244 +1,301 @@
-"use client";
+'use client';
 
-import { useState } from 'react';
-import { Menu, Github, Linkedin, X, ChevronDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Github, Linkedin, Twitter, FileText, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
-import Navigation from '@/components/Navigation';
-
-const sections = ['About', 'Projects', 'Blog', 'Experience', 'Resume', 'Contact'];
-const pastelColors = [
-  'bg-gradient-to-b from-pink-100 to-blue-100',
-  'bg-gradient-to-b from-purple-100 to-green-100',
-  'bg-gradient-to-b from-yellow-100 to-blue-100',
-  'bg-gradient-to-b from-red-100 to-purple-100',
-  'bg-gradient-to-b from-green-100 to-pink-100',
-  'bg-gradient-to-b from-blue-100 to-yellow-100'
-];
-
-const projects = [
-  { title: 'E-commerce Platform', description: 'A full-stack e-commerce solution built with Next.js and Stripe', tech: ['Next.js', 'TypeScript', 'Stripe'] },
-  { title: 'AI Chat Application', description: 'Real-time chat app with AI-powered responses', tech: ['React', 'Socket.io', 'OpenAI'] },
-  { title: 'Portfolio Website', description: 'A modern portfolio website with smooth animations', tech: ['Next.js', 'Tailwind CSS', 'Framer Motion'] }
-];
-
-const blogPosts = [
-  { title: 'The Future of Web Development', date: '2024-03-15', preview: 'Exploring upcoming trends in web development...' },
-  { title: 'Mastering TypeScript', date: '2024-03-01', preview: 'Essential TypeScript features every developer should know...' },
-  { title: 'Building with Next.js', date: '2024-02-15', preview: 'A comprehensive guide to Next.js 14...' }
-];
-
-const experience = [
-  { company: 'Tech Corp', role: 'Senior Developer', period: '2022-Present', description: 'Leading frontend development team...' },
-  { company: 'StartupX', role: 'Full Stack Developer', period: '2020-2022', description: 'Developed and maintained multiple web applications...' },
-  { company: 'Digital Agency', role: 'Frontend Developer', period: '2018-2020', description: 'Created responsive web interfaces...' }
-];
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('about');
+  const [scrollY, setScrollY] = useState(0);
+  const [floatingElements, setFloatingElements] = useState<Array<{
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+    delay: number;
+    duration: number;
+  }>>([]);
+
+  useEffect(() => {
+    // Generate floating elements on the client side
+    setFloatingElements(
+      Array.from({ length: 15 }, () => ({
+        width: Math.random() * 200 + 50,
+        height: Math.random() * 200 + 50,
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        delay: Math.random() * 5,
+        duration: Math.random() * 10 + 10,
+      }))
+    );
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+      
+      const sections = ['about', 'projects', 'blog', 'contact'];
+      const sectionElements = sections.map(id => document.getElementById(id));
+      
+      sectionElements.forEach((section) => {
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section.id);
+          }
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <main className="relative pt-16">
-      <Navigation />
-      
-      {/* Background Animation */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-navy-blue/10">
-          <div className="animate-wave absolute w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI1MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IHJnYmEoMCwwLDI1NSwwLjEpOyIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjogcmdiYSgwLDAsMjU1LDAuMyk7Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjogcmdiYSgwLDAsMjU1LDAuMSk7Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHBhdGggZD0iTTAgMjUwYzI0MCA4MCA0ODAgODAgNzIwIDAgMjQwLTgwIDQ4MC04MCA3MjAgMHY1MDBIMFYyNTB6IiBmaWxsPSJ1cmwoI2dyYWQpIi8+PC9zdmc+')]"></div>
+    <div className="min-h-screen bg-white text-navy relative overflow-hidden">
+      {/* Enhanced Animated Background */}
+      <div className="fixed inset-0 z-0">
+        {/* Pattern Background */}
+        <div className="absolute inset-0 bg-pattern"></div>
+        
+        {/* Floating Elements */}
+        <div className="absolute w-full h-full">
+          {floatingElements.map((element, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full bg-navy/5 animate-float"
+              style={{
+                width: `${element.width}px`,
+                height: `${element.height}px`,
+                left: `${element.left}%`,
+                top: `${element.top}%`,
+                animationDelay: `${element.delay}s`,
+                animationDuration: `${element.duration}s`,
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Wave Elements */}
+        <div className="absolute bottom-0 left-0 right-0 h-64 opacity-10">
+          <div className="absolute inset-0 bg-navy animate-wave"></div>
+          <div className="absolute inset-0 bg-navy animate-wave" style={{ animationDelay: '-5s' }}></div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <div className="fixed top-4 right-4 z-50 md:hidden">
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="p-2 skeuomorphic bg-white/80 backdrop-blur-sm"
-        >
-          <Menu className="w-6 h-6 text-navy-600" />
-        </button>
-        {isMenuOpen && (
-          <div className="absolute top-12 right-0 skeuomorphic bg-white/80 backdrop-blur-sm w-48">
-            {sections.map((section) => (
-              <a
-                key={section}
-                href={`#${section.toLowerCase()}`}
-                className="block py-2 px-4 hover:bg-navy-100 rounded transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {section}
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Sections */}
-      <div className="snap-y snap-mandatory h-screen overflow-y-auto">
-        {/* About Section */}
-        <section id="about" className={`${pastelColors[0]} min-h-screen flex items-center justify-center snap-start relative`}>
-          <div className="container mx-auto px-4 py-16">
-            <div className="max-w-4xl mx-auto skeuomorphic bg-white/80 backdrop-blur-sm">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 text-navy-900">
-                Hello, I'm Ayushi Lathiya
-              </h1>
-              <p className="text-lg md:text-xl text-navy-700 mb-8">
-                A full-stack developer specializing in creating beautiful and functional web experiences. With expertise in modern web technologies, I bring ideas to life through clean code and intuitive design.
-              </p>
-              <div className="flex gap-4">
-                <Link href="https://github.com/ayushilathiya" target="_blank" className="p-2 skeuomorphic hover:scale-105 transition-transform">
-                  <Github className="w-6 h-6 text-navy-600" />
-                </Link>
-                <Link href="https://linkedin.com/in/ayushilathiya" target="_blank" className="p-2 skeuomorphic hover:scale-105 transition-transform">
-                  <Linkedin className="w-6 h-6 text-navy-600" />
-                </Link>
-                <Link href="https://x.com" target="_blank" className="p-2 skeuomorphic hover:scale-105 transition-transform">
-                  <X className="w-6 h-6 text-navy-600" />
-                </Link>
-              </div>
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex space-x-8">
+              {['about', 'projects', 'blog', 'contact'].map((section) => (
+                <button
+                  key={section}
+                  onClick={() => scrollToSection(section)}
+                  className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 ${
+                    activeSection === section
+                      ? 'border-navy text-navy'
+                      : 'border-transparent text-gray-500 hover:text-navy hover:border-navy'
+                  } transition-colors duration-200`}
+                >
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </button>
+              ))}
             </div>
           </div>
-          <ChevronDown className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-8 h-8 text-navy-600 animate-float" />
-        </section>
+        </div>
+      </nav>
 
-        {/* Projects Section */}
-        <section id="projects" className={`${pastelColors[1]} min-h-screen flex items-center justify-center snap-start relative`}>
-          <div className="container mx-auto px-4 py-16">
-            <div className="max-w-6xl mx-auto skeuomorphic bg-white/80 backdrop-blur-sm">
-              <h2 className="text-3xl md:text-5xl font-bold mb-8 text-navy-900">Projects</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects.map((project, index) => (
-                  <div key={index} className="skeuomorphic hover:scale-105 transition-transform">
-                    <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                    <p className="text-navy-600 mb-4">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, i) => (
-                        <span key={i} className="px-2 py-1 bg-navy-100 rounded-full text-sm text-navy-600">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+      {/* Main Content */}
+      <main className="pt-16 relative z-10">
+        {/* About Section - Horizontal Layout */}
+        <section id="about" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="bg-white/90 rounded-2xl shadow-xl p-8 backdrop-blur-lg">
+              <div className="flex flex-col lg:flex-row gap-8">
+                {/* Introduction and Social Links */}
+                <div className="lg:w-1/4 space-y-6">
+                  <h1 className="text-4xl font-bold text-navy">About Me</h1>
+                  <p className="text-lg">
+                    Hi, I'm a passionate software developer with expertise in modern web technologies.
+                    I love creating beautiful and functional applications that solve real-world problems.
+                  </p>
+                  <div className="flex space-x-4">
+                    <Link href="https://github.com" className="text-navy hover:text-navy/80 transition-colors">
+                      <Github className="w-6 h-6" />
+                    </Link>
+                    <Link href="https://linkedin.com" className="text-navy hover:text-navy/80 transition-colors">
+                      <Linkedin className="w-6 h-6" />
+                    </Link>
+                    <Link href="https://twitter.com" className="text-navy hover:text-navy/80 transition-colors">
+                      <Twitter className="w-6 h-6" />
+                    </Link>
+                    <Link href="/resume.pdf" className="text-navy hover:text-navy/80 transition-colors">
+                      <FileText className="w-6 h-6" />
+                    </Link>
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <ChevronDown className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-8 h-8 text-navy-600 animate-float" />
-        </section>
+                </div>
 
-        {/* Blog Section */}
-        <section id="blog" className={`${pastelColors[2]} min-h-screen flex items-center justify-center snap-start relative`}>
-          <div className="container mx-auto px-4 py-16">
-            <div className="max-w-4xl mx-auto skeuomorphic bg-white/80 backdrop-blur-sm">
-              <h2 className="text-3xl md:text-5xl font-bold mb-8 text-navy-900">Blog</h2>
-              <div className="space-y-6">
-                {blogPosts.map((post, index) => (
-                  <div key={index} className="skeuomorphic hover:scale-105 transition-transform">
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="text-xl font-semibold">{post.title}</h3>
-                      <span className="text-sm text-navy-500">{post.date}</span>
-                    </div>
-                    <p className="text-navy-600">{post.preview}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <ChevronDown className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-8 h-8 text-navy-600 animate-float" />
-        </section>
-
-        {/* Experience Section */}
-        <section id="experience" className={`${pastelColors[3]} min-h-screen flex items-center justify-center snap-start relative`}>
-          <div className="container mx-auto px-4 py-16">
-            <div className="max-w-4xl mx-auto skeuomorphic bg-white/80 backdrop-blur-sm">
-              <h2 className="text-3xl md:text-5xl font-bold mb-8 text-navy-900">Experience</h2>
-              <div className="space-y-8">
-                {experience.map((job, index) => (
-                  <div key={index} className="skeuomorphic hover:scale-105 transition-transform">
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="text-xl font-semibold">{job.company}</h3>
-                      <span className="text-sm text-navy-500">{job.period}</span>
-                    </div>
-                    <h4 className="text-lg text-navy-600 mb-2">{job.role}</h4>
-                    <p className="text-navy-500">{job.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <ChevronDown className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-8 h-8 text-navy-600 animate-float" />
-        </section>
-
-        {/* Resume Section */}
-        <section id="resume" className={`${pastelColors[4]} min-h-screen flex items-center justify-center snap-start relative`}>
-          <div className="container mx-auto px-4 py-16">
-            <div className="max-w-4xl mx-auto skeuomorphic bg-white/80 backdrop-blur-sm">
-              <h2 className="text-3xl md:text-5xl font-bold mb-8 text-navy-900">Resume</h2>
-              <div className="space-y-8">
-                <div className="skeuomorphic">
-                  <h3 className="text-2xl font-semibold mb-4">Skills</h3>
+                {/* Skills */}
+                <div className="lg:w-1/4 space-y-4">
+                  <h2 className="text-2xl font-semibold text-navy">Skills</h2>
                   <div className="flex flex-wrap gap-2">
-                    {['React', 'Next.js', 'TypeScript', 'Node.js', 'Tailwind CSS', 'MongoDB', 'PostgreSQL', 'AWS'].map((skill) => (
-                      <span key={skill} className="px-3 py-1 bg-navy-100 rounded-full text-navy-600">
+                    {['React', 'Next.js', 'TypeScript', 'Node.js', 'Tailwind CSS', 'GraphQL'].map((skill) => (
+                      <span key={skill} className="px-3 py-1 bg-navy/10 text-navy rounded-full shadow-inner-lg">
                         {skill}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="skeuomorphic">
-                  <h3 className="text-2xl font-semibold mb-4">Education</h3>
-                  <div>
-                    <h4 className="text-lg font-medium">Bachelor of Science in Computer Science</h4>
-                    <p className="text-navy-600">University Name • 2018-2022</p>
+
+                {/* Experience */}
+                <div className="lg:w-1/4 space-y-4">
+                  <h2 className="text-2xl font-semibold text-navy">Experience</h2>
+                  <div className="space-y-4">
+                    <div className="border-l-2 border-navy pl-4">
+                      <h3 className="font-semibold">Senior Developer</h3>
+                      <p className="text-gray-600">Tech Corp • 2020 - Present</p>
+                    </div>
+                    <div className="border-l-2 border-navy pl-4">
+                      <h3 className="font-semibold">Full Stack Developer</h3>
+                      <p className="text-gray-600">Web Solutions Inc • 2018 - 2020</p>
+                    </div>
                   </div>
                 </div>
-                <a
-                  href="/resume.pdf"
-                  className="inline-block px-6 py-3 bg-navy-600 text-white rounded-lg hover:bg-navy-700 transition-colors skeuomorphic"
-                >
-                  Download Resume
-                </a>
+
+                {/* Education */}
+                <div className="lg:w-1/4 space-y-4">
+                  <h2 className="text-2xl font-semibold text-navy">Education</h2>
+                  <div className="border-l-2 border-navy pl-4">
+                    <h3 className="font-semibold">Computer Science, BSc</h3>
+                    <p className="text-gray-600">Tech University • 2014 - 2018</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <ChevronDown className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-8 h-8 text-navy-600 animate-float" />
         </section>
 
-        {/* Contact Section */}
-        <section id="contact" className={`${pastelColors[5]} min-h-screen flex items-center justify-center snap-start relative`}>
-          <div className="container mx-auto px-4 py-16">
-            <div className="max-w-4xl mx-auto skeuomorphic bg-white/80 backdrop-blur-sm">
-              <h2 className="text-3xl md:text-5xl font-bold mb-8 text-navy-900">Contact</h2>
-              <form className="space-y-6">
-                <div>
-                  <label className="block text-navy-700 mb-2">Name</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 rounded-lg border border-navy-200 focus:outline-none focus:ring-2 focus:ring-navy-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-navy-700 mb-2">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-2 rounded-lg border border-navy-200 focus:outline-none focus:ring-2 focus:ring-navy-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-navy-700 mb-2">Message</label>
-                  <textarea
-                    className="w-full px-4 py-2 rounded-lg border border-navy-200 focus:outline-none focus:ring-2 focus:ring-navy-500 h-32"
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  className="w-full px-6 py-3 bg-navy-600 text-white rounded-lg hover:bg-navy-700 transition-colors skeuomorphic"
-                >
-                  Send Message
-                </button>
-              </form>
+        {/* Projects Section */}
+        <section id="projects" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="bg-white/90 rounded-2xl shadow-xl p-8 backdrop-blur-lg">
+              <h2 className="text-4xl font-bold text-navy mb-8">Projects</h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((project) => (
+                  <div key={project} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                    <div className="h-48 bg-navy/10 rounded-lg mb-4"></div>
+                    <h3 className="text-xl font-semibold text-navy mb-2">Project {project}</h3>
+                    <p className="text-gray-600 mb-4">
+                      A beautiful and functional project showcasing modern web development techniques.
+                    </p>
+                    <div className="flex space-x-2">
+                      <span className="px-2 py-1 bg-navy/10 text-navy rounded-full text-sm">React</span>
+                      <span className="px-2 py-1 bg-navy/10 text-navy rounded-full text-sm">TypeScript</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
-      </div>
-    </main>
+
+        {/* Blog Section */}
+        <section id="blog" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="bg-white/90 rounded-2xl shadow-xl p-8 backdrop-blur-lg">
+              <h2 className="text-4xl font-bold text-navy mb-8">Blog</h2>
+              <div className="space-y-8">
+                {[1, 2, 3].map((post) => (
+                  <article key={post} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-xl font-semibold text-navy">Modern Web Development Techniques</h3>
+                      <span className="text-sm text-gray-500">March {post}, 2024</span>
+                    </div>
+                    <p className="text-gray-600 mb-4">
+                      Exploring the latest trends and best practices in modern web development...
+                    </p>
+                    <Link href="#" className="text-navy hover:text-navy/80 transition-colors">
+                      Read more →
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="bg-white/90 rounded-2xl shadow-xl p-8 backdrop-blur-lg">
+              <h2 className="text-4xl font-bold text-navy mb-8">Contact</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <p className="text-lg mb-6">
+                    I'm always open to new opportunities and collaborations. Feel free to reach out!
+                  </p>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2 text-navy">
+                      <span className="font-semibold">Email:</span>
+                      <a href="mailto:contact@example.com" className="hover:text-navy/80 transition-colors">
+                        contact@example.com
+                      </a>
+                    </div>
+                    <div className="flex items-center space-x-2 text-navy">
+                      <span className="font-semibold">Location:</span>
+                      <span>San Francisco, CA</span>
+                    </div>
+                  </div>
+                </div>
+                <form className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:border-navy"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:border-navy"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={4}
+                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:border-navy"
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-navy text-white py-2 px-4 rounded-lg hover:bg-navy/90 transition-colors"
+                  >
+                    Send Message
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
