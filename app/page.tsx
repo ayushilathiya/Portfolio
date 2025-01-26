@@ -99,11 +99,10 @@ export default function Home() {
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 ${
-                    activeSection === section
+                  className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 ${activeSection === section
                       ? "border-navy text-navy"
                       : "border-transparent text-gray-500 hover:text-navy hover:border-navy"
-                  } transition-colors duration-200`}>
+                    } transition-colors duration-200`}>
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </button>
               ))}
@@ -123,18 +122,16 @@ export default function Home() {
                 <div className="space-y-6">
                   <h1 className="text-4xl font-bold text-navy">About Me</h1>
                   <p className="text-lg max-w-2xl">
-                    Hi, I'm a passionate software developer with expertise in
-                    modern web technologies. I love creating beautiful and
-                    functional applications that solve real-world problems.
+                    Hi, I'm a passionate Embedded Systems Developer and VLSI Enthusiast dedicated to crafting innovative and efficient solutions. With expertise in embedded hardware-software integration and a keen interest in VLSI design and verification, I thrive on solving complex challenges that blend technology and creativity.
                   </p>
                   <div className="flex space-x-4">
                     <Link
-                      href="https://github.com"
+                      href="https://github.com/ayushilathiya"
                       className="text-navy hover:text-navy/80 transition-colors">
                       <SiGithub className="w-6 h-6" />
                     </Link>
                     <Link
-                      href="https://linkedin.com"
+                      href="https://www.linkedin.com/in/ayushilathiya/"
                       className="text-navy hover:text-navy/80 transition-colors">
                       <Linkedin className="w-6 h-6" />
                     </Link>
@@ -153,15 +150,28 @@ export default function Home() {
 
                 {/* Skills */}
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-semibold text-navy">Skills</h2>
+                  <h2 className="text-2xl font-semibold text-navy">Skills & Technologies</h2>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      "React",
-                      "Next.js",
+                      "MOSFETs",
+                      "Python",
+                      "C",
+                      "Verilog",
+                      "Xilinx",
+                      "Machine Learning",
+                      "NumPy",
+                      "MicroPython",
+                      "C++",
+                      "TensorFlow",
+                      "Proteus",
+                      "HTML",
+                      "Embedded C",
+                      "CSS",
+                      "JavaScript",
                       "TypeScript",
-                      "Node.js",
                       "Tailwind CSS",
-                      "GraphQL",
+                      "Matplotlib",
+                      "Vercel",
                     ].map((skill) => (
                       <span
                         key={skill}
@@ -175,34 +185,42 @@ export default function Home() {
                 {/* Experience */}
                 <div className="space-y-4">
                   <h2 className="text-2xl font-semibold text-navy">
-                    Experience
+                    Positions of Responsibility
                   </h2>
                   <div className="space-y-4">
                     <div className="border-l-2 border-navy pl-4">
-                      <h3 className="font-semibold">Senior Developer</h3>
+                      <h3 className="font-semibold">Team Member</h3>
                       <p className="text-gray-600">
-                        Tech Corp • 2020 - Present
+                        Google Developer Student Club - LDCE • Nov 2023 - Oct 2024
                       </p>
                     </div>
-                    <div className="border-l-2 border-navy pl-4">
-                      <h3 className="font-semibold">Full Stack Developer</h3>
-                      <p className="text-gray-600">
-                        Web Solutions Inc • 2018 - 2020
-                      </p>
+                    <div className="space-y-4">
+                      <div className="border-l-2 border-navy pl-4">
+                        <h3 className="font-semibold">Content Writer</h3>
+                        <p className="text-gray-600">
+                          Wizdom • Apr 2024 - Jul 2024
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-navy pl-4">
+                        <h3 className="font-semibold">Teaching Assistant</h3>
+                        <p className="text-gray-600">
+                          Mastermind Education • Jun 2022 - Feb 2024
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Education */}
-                <div className="space-y-4">
-                  <h2 className="text-2xl font-semibold text-navy">
-                    Education
-                  </h2>
-                  <div className="border-l-2 border-navy pl-4">
-                    <h3 className="font-semibold">Computer Science, BSc</h3>
-                    <p className="text-gray-600">
-                      Tech University • 2014 - 2018
-                    </p>
+                  {/* Education */}
+                  <div className="space-y-4">
+                    <h2 className="text-2xl font-semibold text-navy">
+                      Education
+                    </h2>
+                    <div className="border-l-2 border-navy pl-4">
+                      <h3 className="font-semibold">Computer Science, BSc</h3>
+                      <p className="text-gray-600">
+                        Tech University • 2014 - 2018
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
