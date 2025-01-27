@@ -15,8 +15,6 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("about");
   const [scrollY, setScrollY] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [nameText, setNameText] = useState("Hi, I'm Ayushi Lathiya");
-  const [isErasing, setIsErasing] = useState(false);
   const [floatingElements, setFloatingElements] = useState<Array<{
     width: number;
     height: number;
@@ -42,38 +40,6 @@ export default function Home() {
     const timer = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    if (mounted) {
-      const animateName = () => {
-        if (isErasing) {
-          if (nameText.length > 0) {
-            timeout = setTimeout(() => {
-              setNameText(nameText.slice(0, -1));
-            }, 100);
-          } else {
-            setIsErasing(false);
-            timeout = setTimeout(() => {
-              setNameText("");
-              timeout = setTimeout(() => {
-                setNameText("Hi, I'm Ayushi Lathiya");
-              }, 500);
-            }, 500);
-          }
-        } else {
-          if (nameText === "Hi, I'm Ayushi Lathiya") {
-            timeout = setTimeout(() => {
-              setIsErasing(true);
-            }, 2000);
-          }
-        }
-      };
-
-      timeout = setTimeout(animateName, 100);
-    }
-    return () => clearTimeout(timeout);
-  }, [nameText, isErasing, mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -116,9 +82,11 @@ export default function Home() {
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-white">
-        <div className="relative">
-          <div className="w-16 h-16 rounded-full border-4 border-navy border-t-transparent animate-spin"></div>
-          <div className="absolute inset-0 rounded-full border-4 border-navy opacity-20 animate-pulse"></div>
+        <div className="loading-container">
+          <div className="loading-block"></div>
+          <div className="loading-block"></div>
+          <div className="loading-block"></div>
+          <div className="loading-block"></div>
         </div>
       </div>
     );
@@ -249,8 +217,8 @@ export default function Home() {
                 </div>
 
                 <div className="typewriter-container">
-                  <h1 className="text-3xl font-bold text-left">
-                    {nameText}
+                  <h1 className="text-3xl font-bold text-left typewriter">
+                    Hi, I'm Ayushi Lathiya
                   </h1>
                 </div>
 
@@ -316,31 +284,41 @@ export default function Home() {
               <h2 className="text-2xl font-semibold text-navy mb-6 text-left">
                 Positions of Responsibility
               </h2>
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
                   {
                     title: "Team Member",
                     org: "Google Developer Student Club - LDCE",
                     period: "Nov 2023 - Oct 2024",
-                    desc: "Contributing to technical projects and organizing workshops."
+                    desc: "Contributing to technical projects and organizing workshops.",
+                    skills: ["Event Management", "Technical Writing", "Team Leadership", "Workshop Facilitation"]
                   },
                   {
                     title: "Content Writer",
                     org: "Wizdom",
                     period: "Apr 2024 - Jul 2024",
-                    desc: "Creating technical content and documentation."
+                    desc: "Creating technical content and documentation.",
+                    skills: ["Technical Writing", "Content Strategy", "Documentation", "Research"]
                   },
                   {
                     title: "Teaching Assistant",
                     org: "Mastermind Education",
                     period: "Jun 2022 - Feb 2024",
-                    desc: "Assisting students with technical concepts and projects."
+                    desc: "Assisting students with technical concepts and projects.",
+                    skills: ["Teaching", "Mentoring", "Problem Solving", "Communication"]
                   }
                 ].map((pos, idx) => (
                   <div key={idx} className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                     <h3 className="font-semibold text-lg">{pos.title}</h3>
                     <p className="text-gray-600">{pos.org} • {pos.period}</p>
                     <p className="mt-2">{pos.desc}</p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {pos.skills.map((skill, skillIdx) => (
+                        <span key={skillIdx} className="skill-box text-xs">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -351,15 +329,59 @@ export default function Home() {
               <h2 className="text-2xl font-semibold text-navy mb-6 text-left">
                 Education
               </h2>
-              <div className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <h3 className="font-semibold text-lg">B.E. in Electronics & Communication</h3>
-                <p className="text-gray-600">L.D. College of Engineering • 2021 - 2025</p>
-                <p className="mt-2">Relevant coursework: Digital Electronics, VLSI Design, Embedded Systems</p>
-                <ul className="mt-2 list-disc list-inside">
-                  <li>CGPA: 9.23/10</li>
-                  <li>Member of IEEE Student Branch</li>
-                  <li>Technical Team Lead for College Projects</li>
-                </ul>
+              <div className="space-y-6">
+                <div className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <h3 className="font-semibold text-lg">B.E. in Electronics & Communication</h3>
+                  <p className="text-gray-600">L.D. College of Engineering • 2021 - 2025</p>
+                  <p className="mt-2">Relevant coursework: Digital Electronics, VLSI Design, Embedded Systems</p>
+                  <ul className="mt-2 list-disc list-inside mb-3">
+                    <li>CGPA: 9.23/10</li>
+                    <li>Member of IEEE Student Branch</li>
+                    <li>Technical Team Lead for College Projects</li>
+                  </ul>
+                  <div className="flex flex-wrap gap-2">
+                    {["VLSI Design", "Digital Electronics", "Embedded Systems", "Circuit Theory", "Signal Processing"].map((skill, idx) => (
+                      <span key={idx} className="skill-box text-xs">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <h3 className="font-semibold text-lg">Higher Secondary Education</h3>
+                  <p className="text-gray-600">Shree Swaminarayan Gurukul • 2019 - 2021</p>
+                  <p className="mt-2">Science Stream with Mathematics</p>
+                  <ul className="mt-2 list-disc list-inside mb-3">
+                    <li>Percentage: 95%</li>
+                    <li>Mathematics Club Member</li>
+                  </ul>
+                  <div className="flex flex-wrap gap-2">
+                    {["Physics", "Mathematics", "Chemistry", "Computer Science"].map((skill, idx) => (
+                      <span key={idx} className="skill-box text-xs">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <h3 className="font-semibold text-lg">Primary Education</h3>
+                  <p className="text-gray-600">Delhi Public School • 2007 - 2019</p>
+                  <p className="mt-2">Strong foundation in sciences and mathematics</p>
+                  <ul className="mt-2 list-disc list-inside mb-3">
+                    <li>Percentage: 94%</li>
+                    <li>Science Club Member</li>
+                    <li>Participated in various inter-school competitions</li>
+                  </ul>
+                  <div className="flex flex-wrap gap-2">
+                    {["Science", "Mathematics", "English", "Computer Basics"].map((skill, idx) => (
+                      <span key={idx} className="skill-box text-xs">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
