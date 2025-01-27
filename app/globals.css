@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --navy: #001f3f;
-  --navy-light: #003366;
+  --navy: #002b59;  /* Made less dark */
+  --navy-light: #003d80;
 }
 
 @keyframes float {
@@ -34,6 +34,15 @@
   }
 }
 
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink {
+  50% { border-color: transparent }
+}
+
 .animate-float {
   animation: float 10s ease-in-out infinite;
 }
@@ -58,12 +67,23 @@
   border-color: var(--navy);
 }
 
-/* Smooth scrolling for the entire page */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid var(--navy);
+  width: 0;
+  animation: typing 3.5s steps(40, end) forwards,
+             blink .75s step-end infinite;
+}
+
+.typewriter-container {
+  display: inline-block;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -81,35 +101,48 @@ html {
   background: var(--navy-light);
 }
 
-/* Skeuomorphic effects */
 .shadow-xl {
   box-shadow: 
-    0 10px 25px -5px rgba(0, 31, 63, 0.1),
-    0 8px 10px -6px rgba(0, 31, 63, 0.1);
+    0 10px 25px -5px rgba(0, 43, 89, 0.1),
+    0 8px 10px -6px rgba(0, 43, 89, 0.1);
 }
 
 .shadow-lg {
   box-shadow:
-    0 4px 6px -1px rgba(0, 31, 63, 0.1),
-    0 2px 4px -2px rgba(0, 31, 63, 0.1);
+    0 4px 6px -1px rgba(0, 43, 89, 0.1),
+    0 2px 4px -2px rgba(0, 43, 89, 0.1);
 }
 
 .shadow-inner-lg {
-  box-shadow: inset 0 2px 4px 0 rgba(0, 31, 63, 0.1);
+  box-shadow: inset 0 2px 4px 0 rgba(0, 43, 89, 0.1);
 }
 
-/* Responsive design */
-@media (max-width: 640px) {
-  .text-4xl {
-    font-size: 2rem;
+@layer components {
+  .skill-box {
+    @apply px-3 py-1 rounded-full shadow-inner-lg cursor-pointer
+           transition-all duration-300 hover:scale-110;
+    background-color: rgba(0, 43, 89, 0.1);
+    color: var(--navy);
   }
   
-  .grid {
-    grid-template-columns: 1fr;
+  .skill-box:hover {
+    background-color: rgba(0, 43, 89, 0.2);
+  }
+
+  .section-box {
+    @apply bg-white/90 rounded-2xl shadow-xl p-8 backdrop-blur-lg mb-8;
+  }
+
+  .navy-graphics {
+    @apply absolute w-full h-full pointer-events-none;
+  }
+
+  .navy-circle {
+    @apply absolute rounded-full animate-float;
+    background-color: rgba(0, 43, 89, 0.05);
   }
 }
 
-/* Background pattern */
 .bg-pattern {
   background-image: radial-gradient(var(--navy) 1px, transparent 1px);
   background-size: 32px 32px;
