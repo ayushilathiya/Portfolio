@@ -3,31 +3,40 @@
 @tailwind utilities;
 
 :root {
-  --navy: #002b59;  /* Made less dark */
+  --navy: #002b59;
   --navy-light: #003d80;
 }
 
+/* Loading Animation */
+@keyframes navyPulse {
+  0% { opacity: 0; transform: scale(0.95); }
+  50% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.95); }
+}
+
+/* Enhanced Float Animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0) rotate(0);
   }
   50% {
-    transform: translateY(-20px) rotate(5deg);
+    transform: translateY(-30px) rotate(8deg);
   }
 }
 
+/* Enhanced Wave Animation */
 @keyframes wave {
   0%, 100% {
     transform: translateX(0) scaleY(1);
   }
   50% {
-    transform: translateX(-25%) scaleY(0.8);
+    transform: translateX(-35%) scaleY(0.85);
   }
 }
 
 @keyframes pulse {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 0.25;
   }
   50% {
     opacity: 0.1;
@@ -44,15 +53,23 @@
 }
 
 .animate-float {
-  animation: float 10s ease-in-out infinite;
+  animation: float 12s ease-in-out infinite;
 }
 
 .animate-wave {
-  animation: wave 15s ease-in-out infinite;
+  animation: wave 18s ease-in-out infinite;
 }
 
 .animate-pulse-slow {
-  animation: pulse 8s ease-in-out infinite;
+  animation: pulse 10s ease-in-out infinite;
+}
+
+.loading-screen {
+  animation: navyPulse 2s ease-in-out infinite;
+  background-color: var(--navy);
+  position: fixed;
+  inset: 0;
+  z-index: 100;
 }
 
 .text-navy {
@@ -72,8 +89,9 @@
   white-space: nowrap;
   border-right: 3px solid var(--navy);
   width: 0;
-  animation: typing 3.5s steps(40, end) forwards,
-             blink .75s step-end infinite;
+  animation: 
+    typing 3.5s steps(40, end) forwards,
+    blink .75s step-end 8;
 }
 
 .typewriter-container {
@@ -120,7 +138,7 @@ html {
 @layer components {
   .skill-box {
     @apply px-3 py-1 rounded-full shadow-inner-lg cursor-pointer
-           transition-all duration-300 hover:scale-110;
+           transition-all duration-300 hover:scale-110 hover:-translate-y-1;
     background-color: rgba(0, 43, 89, 0.1);
     color: var(--navy);
   }
@@ -130,7 +148,8 @@ html {
   }
 
   .section-box {
-    @apply bg-white/90 rounded-2xl shadow-xl p-8 backdrop-blur-lg mb-8;
+    @apply bg-white/80 rounded-3xl shadow-xl p-6 backdrop-blur-lg mb-6 
+           transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl;
   }
 
   .navy-graphics {
@@ -139,12 +158,21 @@ html {
 
   .navy-circle {
     @apply absolute rounded-full animate-float;
-    background-color: rgba(0, 43, 89, 0.05);
+    background-color: rgba(0, 43, 89, 0.08);
+  }
+
+  .nav-link {
+    @apply transition-all duration-300 hover:text-navy hover:scale-105 cursor-pointer;
+  }
+
+  .social-link {
+    @apply p-3 rounded-xl bg-white/80 backdrop-blur-sm shadow-lg
+           transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
   }
 }
 
 .bg-pattern {
   background-image: radial-gradient(var(--navy) 1px, transparent 1px);
   background-size: 32px 32px;
-  opacity: 0.05;
+  opacity: 0.08;
 }
