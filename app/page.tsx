@@ -122,17 +122,17 @@ export default function Home() {
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-lg">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4">
           <div className="flex justify-between h-16">
-            <div className="flex items-center">
+            <div className="flex items-center pl-2">
               <span className="text-2xl font-bold text-navy">Portfolio</span>
             </div>
-            <div className="flex space-x-8">
+            <div className="flex space-x-6 pr-2">
               {["about", "projects", "blog", "contact"].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`nav-link inline-flex items-center px-3 pt-1 text-sm font-medium border-b-2 transition-all duration-300 hover:scale-110 ${activeSection === section
+                  className={`nav-link inline-flex items-center px-2 pt-1 text-sm font-medium border-b-2 transition-all duration-300 hover:scale-110 ${activeSection === section
                     ? "border-navy text-navy"
                     : "border-transparent text-gray-500 hover:text-navy hover:border-navy"
                     }`}
