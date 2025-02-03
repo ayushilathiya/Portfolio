@@ -93,8 +93,10 @@
 .typewriter {
   overflow: hidden;
   white-space: nowrap;
+  border-right: 3px solid var(--navy);
   width: 0;
-  animation: typing 2s steps(40, end) forwards;
+  animation: type-erase 12s steps(40, end) infinite,
+             blink 1s step-end infinite;
 }
 
 .text-navy {
@@ -190,4 +192,80 @@ html {
   background-image: radial-gradient(var(--navy) 1px, transparent 1px);
   background-size: 32px 32px;
   opacity: 0.08;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes slide-loader {
+  0% {
+    top: 0;
+    left: 0;
+  }
+  25% {
+    top: 0;
+    left: calc(100% - 2rem);
+  }
+  50% {
+    top: calc(100% - 2rem);
+    left: calc(100% - 2rem);
+  }
+  75% {
+    top: calc(100% - 2rem);
+    left: 0;
+  }
+  100% {
+    top: 0;
+    left: 0;
+  }
+}
+
+.animate-slide-loader {
+  animation: slide-loader 2s ease-in-out infinite;
+}
+
+@keyframes slide-squares {
+  0% {
+    transform: translateX(-144px);
+  }
+  15%, 25% {
+    transform: translateX(-144px);
+  }
+  40%, 50% {
+    transform: translateX(-72px);
+  }
+  65%, 75% {
+    transform: translateX(0px);
+  }
+  90%, 100% {
+    transform: translateX(72px);
+  }
+}
+
+.animate-slide-squares {
+  animation: slide-squares 3s ease-in-out infinite;
+}
+
+@keyframes type-erase {
+  0%, 50% {
+    width: 0;
+  }
+  25%, 75% {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  from, to { border-color: transparent }
+  50% { border-color: var(--navy) }
 }

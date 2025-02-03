@@ -82,73 +82,20 @@ export default function Home() {
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-white">
-        <div className="loading-container">
-          <div className="loading-block"></div>
-          <div className="loading-block"></div>
-          <div className="loading-block"></div>
-          <div className="loading-block"></div>
+        <div className="relative w-16 h-16">
+          <div className="cube-loader">
+            <div className="cube-top"></div>
+            <div className="cube-wrapper">
+              <span style={{ '--i': 0 } as React.CSSProperties} className="cube-span"></span>
+              <span style={{ '--i': 1 } as React.CSSProperties} className="cube-span"></span>
+              <span style={{ '--i': 2 } as React.CSSProperties} className="cube-span"></span>
+              <span style={{ '--i': 3 } as React.CSSProperties} className="cube-span"></span>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
-
-  const projects = [
-    {
-      title: "Project 1",
-      description: "A sophisticated web application leveraging modern technologies for optimal performance.",
-      image: "/project1.jpg",
-      techs: ["React", "Node.js", "TypeScript"],
-      link: "#"
-    },
-    {
-      title: "Project 2",
-      description: "Innovative embedded system solution for real-time data processing.",
-      image: "/project2.jpg",
-      techs: ["C++", "Python", "Embedded Systems"],
-      link: "#"
-    },
-    {
-      title: "Project 3",
-      description: "VLSI design implementation for high-performance computing.",
-      image: "/project3.jpg",
-      techs: ["Verilog", "FPGA", "SystemVerilog"],
-      link: "#"
-    },
-    {
-      title: "Project 4",
-      description: "Machine learning model for predictive analytics in IoT devices.",
-      image: "/project4.jpg",
-      techs: ["Python", "TensorFlow", "IoT"],
-      link: "#"
-    }
-  ];
-
-  const blogs = [
-    {
-      title: "Understanding VLSI Design",
-      description: "Deep dive into modern VLSI design principles and practices.",
-      image: "/blog1.jpg",
-      date: "2024-03-20"
-    },
-    {
-      title: "Embedded Systems in IoT",
-      description: "Exploring the intersection of embedded systems and IoT.",
-      image: "/blog2.jpg",
-      date: "2024-03-15"
-    },
-    {
-      title: "Machine Learning on Edge Devices",
-      description: "Implementing ML models on resource-constrained devices.",
-      image: "/blog3.jpg",
-      date: "2024-03-10"
-    },
-    {
-      title: "Future of Hardware Design",
-      description: "Trends and predictions in hardware design and development.",
-      image: "/blog4.jpg",
-      date: "2024-03-05"
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-white text-navy relative overflow-x-hidden">
@@ -186,8 +133,8 @@ export default function Home() {
                   key={section}
                   onClick={() => scrollToSection(section)}
                   className={`nav-link inline-flex items-center px-3 pt-1 text-sm font-medium border-b-2 transition-all duration-300 hover:scale-110 ${activeSection === section
-                      ? "border-navy text-navy"
-                      : "border-transparent text-gray-500 hover:text-navy hover:border-navy"
+                    ? "border-navy text-navy"
+                    : "border-transparent text-gray-500 hover:text-navy hover:border-navy"
                     }`}
                 >
                   {section.charAt(0).toUpperCase() + section.slice(1)}
@@ -409,20 +356,25 @@ export default function Home() {
 
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {["ESP8266", "L298N", "Motor Driver", "WebSockets", "IoT"].map((tech, techIdx) => (
+                    {["ESP8266", "L298N", "JavaScript", "HTML", "CSS", "IoT"].map((tech, techIdx) => (
                       <span key={techIdx} className="skill-box text-sm">{tech}</span>
                     ))}
                   </div>
 
                   {/* Links */}
                   <div className="flex gap-4 mt-3 items-center">
-                    <a href="https://github.com/your-repo/3d-modeling" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
-                      <img src="https://github.com/favicon.ico" alt="GitHub" className="w-5 h-5" />
+                    <a href="https://github.com/ayushilathiya/WiFi-Controlled-Car" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
+                      <SiGithub className="w-5 h-5 text-[#002b59]" />
                       <span className="text-sm">Code</span>
                     </a>
                     <a href="https://ayushilathiya.hashnode.dev/3d-modeling-sensors" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
-                      <img src="https://simpleicons.org/icons/youtube.svg" alt="YouTube Demo" className="w-5 h-5" />
-                      <span className="text-sm">Live Demo</span>
+                      <img
+                        src="https://simpleicons.org/icons/youtube.svg"
+                        alt="Demo"
+                        className="w-5 h-5"
+                        style={{ filter: 'invert(15%) sepia(64%) saturate(1486%) hue-rotate(182deg) brightness(97%) contrast(102%)' }}
+                      />
+                      <span className="text-sm">Demo</span>
                     </a>
                   </div>
                 </div>
@@ -432,69 +384,39 @@ export default function Home() {
               <div className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95">
                 <Image
                   src="/3d-modeling.jpg" // Replace with actual image
-                  alt="3D Modeling Using Sensors"
+                  alt="Sensor-Driven 3D Modeling"
                   width={500}
                   height={300}
                   className="rounded-t-lg w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">3D Modeling Using Sensors</h3>
+                  <h3 className="text-xl font-semibold mb-2">3D Modeling Using Sensor-Driven 3D Visualization</h3>
                   <p className="text-gray-600 mb-4">
-                    A project using MPU6050 to track movements and create 3D models based on sensor data.
+                    Developed a system that captures sensor data to generate dynamic 3D models, providing a visual representation of
+                    environmental parameters.
                   </p>
 
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {["MPU6050", "Python", "WebGL", "Three.js", "Arduino"].map((tech, techIdx) => (
+                    {["MPU6050", "WebGL", "Three.js", "Data Visualization"].map((tech, techIdx) => (
                       <span key={techIdx} className="skill-box text-sm">{tech}</span>
                     ))}
                   </div>
 
                   {/* Links */}
                   <div className="flex gap-4 mt-3 items-center">
-                    <a href="https://github.com/your-repo/3d-modeling" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
-                      <img src="https://github.com/favicon.ico" alt="GitHub" className="w-5 h-5" />
+                    <a href="https://github.com/ayushilathiya/MPU6050-3D-Visualization" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
+                      <SiGithub className="w-5 h-5 text-[#002b59]" />
                       <span className="text-sm">Code</span>
                     </a>
                     <a href="https://ayushilathiya.hashnode.dev/3d-modeling-sensors" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
-                      <img src="https://simpleicons.org/icons/youtube.svg" alt="YouTube Demo" className="w-5 h-5" />
-                      <span className="text-sm">Live Demo</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* ESP-NOW Communication */}
-              <div className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95">
-                <Image
-                  src="/esp-now.jpg" // Replace with actual image
-                  alt="ESP-NOW Communication"
-                  width={500}
-                  height={300}
-                  className="rounded-t-lg w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">ESP-NOW Communication</h3>
-                  <p className="text-gray-600 mb-4">
-                    An implementation of ESP-NOW for seamless unidirectional wireless communication.
-                  </p>
-
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {["ESP8266", "ESP-NOW", "Wireless", "Arduino", "IoT"].map((tech, techIdx) => (
-                      <span key={techIdx} className="skill-box text-sm">{tech}</span>
-                    ))}
-                  </div>
-
-                  {/* Links */}
-                  <div className="flex gap-4 mt-3 items-center">
-                    <a href="https://github.com/your-repo/3d-modeling" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
-                      <img src="https://github.com/favicon.ico" alt="GitHub" className="w-5 h-5" />
-                      <span className="text-sm">Code</span>
-                    </a>
-                    <a href="https://ayushilathiya.hashnode.dev/3d-modeling-sensors" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
-                      <img src="https://simpleicons.org/icons/youtube.svg" alt="YouTube Demo" className="w-5 h-5" />
-                      <span className="text-sm">Live Demo</span>
+                      <img
+                        src="https://simpleicons.org/icons/youtube.svg"
+                        alt="Demo"
+                        className="w-5 h-5"
+                        style={{ filter: 'invert(15%) sepia(64%) saturate(1486%) hue-rotate(182deg) brightness(97%) contrast(102%)' }}
+                      />
+                      <span className="text-sm">Demo</span>
                     </a>
                   </div>
                 </div>
@@ -510,62 +432,160 @@ export default function Home() {
                   className="rounded-t-lg w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Logic Gates in DSCH & Microwind</h3>
+                  <h3 className="text-xl font-semibold mb-2">Designing & Simulating in DSCH & Microwind</h3>
                   <p className="text-gray-600 mb-4">
-                    A beginner’s guide to designing and simulating logic gates using DSCH and Microwind.
+                    Hands-on Logic Gate Simulation and Verilog Implementation Using DSCH and Microwind.
                   </p>
 
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {["DSCH", "Microwind", "VLSI", "Logic Gates", "Digital Design"].map((tech, techIdx) => (
+                    {["DSCH", "Microwind", "Verilog", "Logic Gates", "Digital Design"].map((tech, techIdx) => (
                       <span key={techIdx} className="skill-box text-sm">{tech}</span>
                     ))}
                   </div>
 
                   {/* Links */}
                   <div className="flex gap-4 mt-3 items-center">
-                    <a href="https://github.com/your-repo/3d-modeling" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
-                      <img src="https://github.com/favicon.ico" alt="GitHub" className="w-5 h-5" />
+                    <a href="https://github.com/ayushilathiya/DSCH-MW" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
+                      <SiGithub className="w-5 h-5 text-[#002b59]" />
                       <span className="text-sm">Code</span>
                     </a>
                     <a href="https://ayushilathiya.hashnode.dev/3d-modeling-sensors" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
-                      <img src="https://simpleicons.org/icons/youtube.svg" alt="YouTube Demo" className="w-5 h-5" />
-                      <span className="text-sm">Live Demo</span>
+                      <img
+                        src="https://simpleicons.org/icons/youtube.svg"
+                        alt="Demo"
+                        className="w-5 h-5"
+                        style={{ filter: 'invert(15%) sepia(64%) saturate(1486%) hue-rotate(182deg) brightness(97%) contrast(102%)' }}
+                      />
+                      <span className="text-sm">Demo</span>
                     </a>
                   </div>
                 </div>
               </div>
 
+              {/* ESP-NOW Communication */}
+              <div className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95">
+                <Image
+                  src="/esp-now.jpg" // Replace with actual image
+                  alt="ESP-NOW Protocol"
+                  width={500}
+                  height={300}
+                  className="rounded-t-lg w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">ESP-NOW Protocol</h3>
+                  <p className="text-gray-600 mb-4">
+                    An implementation of ESP-NOW for seamless unidirectional wireless communication.
+                  </p>
+
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {["C++", "ESP-NOW", "Wireless Communication"].map((tech, techIdx) => (
+                      <span key={techIdx} className="skill-box text-sm">{tech}</span>
+                    ))}
+                  </div>
+
+                  {/* Links */}
+                  <div className="flex gap-4 mt-3 items-center">
+                    <a href="https://github.com/ayushilathiya/ESP-NOW-Protocol" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
+                      <SiGithub className="w-5 h-5 text-[#002b59]" />
+                      <span className="text-sm">Code</span>
+                    </a>
+                    <a href="https://ayushilathiya.hashnode.dev/3d-modeling-sensors" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
+                      <img
+                        src="https://simpleicons.org/icons/youtube.svg"
+                        alt="Demo"
+                        className="w-5 h-5"
+                        style={{ filter: 'invert(15%) sepia(64%) saturate(1486%) hue-rotate(182deg) brightness(97%) contrast(102%)' }}
+                      />
+                      <span className="text-sm">Demo</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
-
-
-
-
 
         {/* Blog Section */}
         <section id="blog" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-navy mb-8">Blog</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {blogs.map((blog, idx) => (
-                <div key={idx} className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95">
-                  <Image
-                    src={blog.image}
-                    alt={blog.title}
-                    width={500}
-                    height={300}
-                    className="rounded-t-lg w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-                    <p className="text-gray-600 mb-2">{blog.description}</p>
-                    <p className="text-sm text-gray-500">{new Date(blog.date).toLocaleDateString()}</p>
+            <a
+              href="https://ayushilathiya.hashnode.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <div className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95">
+                {/* Header with Profile */}
+                <div className="p-8 border-b">
+                  <div className="flex items-center gap-4 mb-4">
+                    <img
+                      src="https://cdn.hashnode.com/res/hashnode/image/upload/v1611902473383/CDyAuTy75.png"
+                      alt="Hashnode"
+                      className="w-8 h-8"
+                    />
+                    <div>
+                      <h3 className="font-bold text-xl">Ayushi Lathiya</h3>
+                      <p className="text-gray-600">@ayushilathiya</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700">
+                    Exploring the intersections of VLSI,IoT, Embedded Systems, and Innovation. Join me on my technical journey!
+                  </p>
+                </div>
+
+                {/* Featured Posts Preview */}
+                <div className="p-8">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4">
+                      <Image
+                        src="/blog-3d-viz.jpg" // Add your blog cover image
+                        alt="3D Visualization Blog Cover"
+                        width={64}
+                        height={64}
+                        className="rounded-lg object-cover"
+                      />
+                      <div>
+                        <h4 className="font-semibold">Sensor-Driven 3D Visualization</h4>
+                        <p className="text-gray-600 text-sm">Creating 3D models using ultrasonic sensors and DC motors...</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Image
+                        src="/blog-wifi-car.jpg" // Add your blog cover image
+                        alt="WiFi Car Blog Cover"
+                        width={64}
+                        height={64}
+                        className="rounded-lg object-cover"
+                      />
+                      <div>
+                        <h4 className="font-semibold">WiFi-Controlled Car</h4>
+                        <p className="text-gray-600 text-sm">Building a remote-controlled car using ESP8266...</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
+
+                {/* Footer */}
+                <div className="p-8 bg-gray-50 rounded-b-lg">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <span className="text-navy font-medium">Read more on Hashnode</span>
+                      <svg className="w-4 h-4 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </div>
+                    <div className="flex items-center gap-4 text-gray-600">
+                      <span>4 Articles</span>
+                      <span>•</span>
+                      <span>Technical Blog</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
           </div>
         </section>
 
