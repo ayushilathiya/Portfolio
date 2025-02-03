@@ -82,16 +82,10 @@ export default function Home() {
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-white">
-        <div className="relative w-16 h-16">
-          <div className="cube-loader">
-            <div className="cube-top"></div>
-            <div className="cube-wrapper">
-              <span style={{ '--i': 0 } as React.CSSProperties} className="cube-span"></span>
-              <span style={{ '--i': 1 } as React.CSSProperties} className="cube-span"></span>
-              <span style={{ '--i': 2 } as React.CSSProperties} className="cube-span"></span>
-              <span style={{ '--i': 3 } as React.CSSProperties} className="cube-span"></span>
-            </div>
-          </div>
+        <div className="cube-loader">
+          {[...Array(9)].map((_, i) => (
+            <div key={i} className="cube-block" />
+          ))}
         </div>
       </div>
     );
@@ -236,8 +230,8 @@ export default function Home() {
                     title: "Team Member",
                     org: "Google Developer Student Club - LDCE",
                     period: "Nov 2023 - Oct 2024",
-                    desc: "Contributing to technical projects and organizing workshops.",
-                    skills: ["Event Management", "Technical Writing", "Team Leadership", "Workshop Facilitation"]
+                    desc: "Contributed to technical writing and organizing workshops.",
+                    skills: ["Technical Writing", "Android Studio", "Open Source", "Google Cloud"]
                   },
                   {
                     title: "Content Writer",
@@ -277,16 +271,15 @@ export default function Home() {
               </h2>
               <div className="space-y-6">
                 <div className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <h3 className="font-semibold text-lg">B.E. in Electronics & Communication</h3>
-                  <p className="text-gray-600">L.D. College of Engineering • 2021 - 2025</p>
-                  <p className="mt-2">Relevant coursework: Digital Electronics, VLSI Design, Embedded Systems</p>
-                  <ul className="mt-2 list-disc list-inside mb-3">
-                    <li>CGPA: 9.23/10</li>
-                    <li>Member of IEEE Student Branch</li>
-                    <li>Technical Team Lead for College Projects</li>
-                  </ul>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="font-semibold text-2xl">Lalbhai Dalpatbhai College of Engineering</h3>
+                      <p className="text-xl text-navy mt-2">Bachelor of Engineering in Electronics & Communications</p>
+                    </div>
+                    <p className="text-gray-600">2021-2025</p>
+                  </div>
                   <div className="flex flex-wrap gap-2">
-                    {["VLSI Design", "Digital Electronics", "Embedded Systems", "Circuit Theory", "Signal Processing"].map((skill, idx) => (
+                    {["VLSI Design", "Digital Electronics", "Embedded Systems", "Circuit Theory", "Internet of Things", "Computer Networks", "Microcontrollers", "Machine Learning", "Signal Processing"].map((skill, idx) => (
                       <span key={idx} className="skill-box text-sm">
                         {skill}
                       </span>
@@ -295,33 +288,15 @@ export default function Home() {
                 </div>
 
                 <div className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <h3 className="font-semibold text-lg">Higher Secondary Education</h3>
-                  <p className="text-gray-600">Shree Swaminarayan Gurukul • 2019 - 2021</p>
-                  <p className="mt-2">Science Stream with Mathematics</p>
-                  <ul className="mt-2 list-disc list-inside mb-3">
-                    <li>Percentage: 95%</li>
-                    <li>Mathematics Club Member</li>
-                  </ul>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="font-semibold text-2xl">The H. B. Kapadia New High School</h3>
+                      <p className="text-xl text-navy mt-2">Higher Secondary Education</p>
+                    </div>
+                    <p className="text-gray-600">2021-2022</p>
+                  </div>
                   <div className="flex flex-wrap gap-2">
                     {["Physics", "Mathematics", "Chemistry", "Computer Science"].map((skill, idx) => (
-                      <span key={idx} className="skill-box text-sm">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <h3 className="font-semibold text-lg">Primary Education</h3>
-                  <p className="text-gray-600">Delhi Public School • 2007 - 2019</p>
-                  <p className="mt-2">Strong foundation in sciences and mathematics</p>
-                  <ul className="mt-2 list-disc list-inside mb-3">
-                    <li>Percentage: 94%</li>
-                    <li>Science Club Member</li>
-                    <li>Participated in various inter-school competitions</li>
-                  </ul>
-                  <div className="flex flex-wrap gap-2">
-                    {["Science", "Mathematics", "English", "Computer Basics"].map((skill, idx) => (
                       <span key={idx} className="skill-box text-sm">
                         {skill}
                       </span>
