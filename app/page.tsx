@@ -148,7 +148,7 @@ export default function Home() {
               <div className="flex flex-col items-center gap-8">
                 <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-navy shadow-xl">
                   <Image
-                    src="/your-photo.jpg"
+                    src="/ayushi.jpg"
                     alt="Ayushi Lathiya"
                     width={192}
                     height={192}
@@ -317,7 +317,7 @@ export default function Home() {
               {/* WiFi-Controlled Car */}
               <div className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95">
                 <Image
-                  src="/wifi-car.jpg" // Replace with actual image
+                  src="/wifi.jpg" // Replace with actual image
                   alt="WiFi-Controlled Car"
                   width={500}
                   height={300}
@@ -342,7 +342,7 @@ export default function Home() {
                       <SiGithub className="w-5 h-5 text-[#002b59]" />
                       <span className="text-sm">Code</span>
                     </a>
-                    <a href="https://ayushilathiya.hashnode.dev/3d-modeling-sensors" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
+                    <a href="https://youtu.be/vaGgphrMhso" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
                       <img
                         src="https://simpleicons.org/icons/youtube.svg"
                         alt="Demo"
@@ -358,7 +358,7 @@ export default function Home() {
               {/* 3D Modeling Using Sensors */}
               <div className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95">
                 <Image
-                  src="/3d-modeling.jpg" // Replace with actual image
+                  src="/3dmodel.jpg" // Replace with actual image
                   alt="Sensor-Driven 3D Modeling"
                   width={500}
                   height={300}
@@ -400,7 +400,7 @@ export default function Home() {
               {/* DSCH & Microwind Logic Gates */}
               <div className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95">
                 <Image
-                  src="/logic-gates.jpg" // Replace with actual image
+                  src="/dsch.jpg" // Replace with actual image
                   alt="Logic Gates in DSCH & Microwind"
                   width={500}
                   height={300}
@@ -441,7 +441,7 @@ export default function Home() {
               {/* ESP-NOW Communication */}
               <div className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95">
                 <Image
-                  src="/esp-now.jpg" // Replace with actual image
+                  src="/espnow.jpg" // Replace with actual image
                   alt="ESP-NOW Protocol"
                   width={500}
                   height={300}
@@ -466,7 +466,7 @@ export default function Home() {
                       <SiGithub className="w-5 h-5 text-[#002b59]" />
                       <span className="text-sm">Code</span>
                     </a>
-                    <a href="https://ayushilathiya.hashnode.dev/3d-modeling-sensors" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
+                    <a href="https://youtu.be/NGjMKT3Scls" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300">
                       <img
                         src="https://simpleicons.org/icons/youtube.svg"
                         alt="Demo"
@@ -516,7 +516,7 @@ export default function Home() {
                   <div className="space-y-6">
                     <div className="flex items-center gap-4">
                       <Image
-                        src="/blog-3d-viz.jpg" // Add your blog cover image
+                        src="/3dblog.png" // Add your blog cover image
                         alt="3D Visualization Blog Cover"
                         width={64}
                         height={64}
@@ -529,7 +529,7 @@ export default function Home() {
                     </div>
                     <div className="flex items-center gap-4">
                       <Image
-                        src="/blog-wifi-car.jpg" // Add your blog cover image
+                        src="/wifiblog.png" // Add your blog cover image
                         alt="WiFi Car Blog Cover"
                         width={64}
                         height={64}

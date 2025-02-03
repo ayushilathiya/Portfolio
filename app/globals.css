@@ -24,16 +24,16 @@
 
 .loading-container {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   justify-content: center;
   align-items: center;
 }
 
 .loading-block {
-  width: 12px;
-  height: 12px;
+  width: 1px;
+  height: 1px;
   background-color: var(--navy);
-  border-radius: 2px;
+  border-radius: 0.5px;
   animation: bounce 0.5s ease-in-out infinite;
 }
 
@@ -320,8 +320,8 @@ html {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4px;
-  width: 120px;
-  height: 120px;
+  width: 50px;
+  height: 50px;
 }
 
 .cube-block {
