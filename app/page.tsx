@@ -284,7 +284,7 @@ export default function Home() {
               <h2 className="text-2xl font-semibold text-navy mb-6 text-left">
                 Positions of Responsibility
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-6">
                 {[
                   {
                     title: "Team Member",
@@ -314,7 +314,7 @@ export default function Home() {
                     <p className="mt-2">{pos.desc}</p>
                     <div className="flex flex-wrap gap-2 mt-3">
                       {pos.skills.map((skill, skillIdx) => (
-                        <span key={skillIdx} className="skill-box text-xs">
+                        <span key={skillIdx} className="skill-box text-sm">
                           {skill}
                         </span>
                       ))}
@@ -341,7 +341,7 @@ export default function Home() {
                   </ul>
                   <div className="flex flex-wrap gap-2">
                     {["VLSI Design", "Digital Electronics", "Embedded Systems", "Circuit Theory", "Signal Processing"].map((skill, idx) => (
-                      <span key={idx} className="skill-box text-xs">
+                      <span key={idx} className="skill-box text-sm">
                         {skill}
                       </span>
                     ))}
@@ -358,7 +358,7 @@ export default function Home() {
                   </ul>
                   <div className="flex flex-wrap gap-2">
                     {["Physics", "Mathematics", "Chemistry", "Computer Science"].map((skill, idx) => (
-                      <span key={idx} className="skill-box text-xs">
+                      <span key={idx} className="skill-box text-sm">
                         {skill}
                       </span>
                     ))}
@@ -376,7 +376,7 @@ export default function Home() {
                   </ul>
                   <div className="flex flex-wrap gap-2">
                     {["Science", "Mathematics", "English", "Computer Basics"].map((skill, idx) => (
-                      <span key={idx} className="skill-box text-xs">
+                      <span key={idx} className="skill-box text-sm">
                         {skill}
                       </span>
                     ))}
