@@ -412,7 +412,7 @@ export default function Home() {
               {[
                 {
                   title: "WiFi-Controlled Car",
-                  image: "/wifi.jpg",
+                  image: "/wifi.gif",
                   description: "Engineered a wireless-controlled vehicle using ESP8266 NodeMCU, featuring real-time control through a custom mobile interface. Implemented smooth motion control and responsive directional changes with L298N motor driver integration.",
                   techStack: ["ESP8266", "L298N", "JavaScript", "HTML", "CSS", "IoT"],
                   githubLink: "https://github.com/ayushilathiya/WiFi-Controlled-Car",
@@ -420,7 +420,7 @@ export default function Home() {
                 },
                 {
                   title: "3D Modeling Using Sensor-Driven 3D Visualization",
-                  image: "/3dmodel.jpg",
+                  image: "/mpu6050.gif",
                   description: "Created an innovative system that transforms real-time sensor data into dynamic 3D visualizations. Integrated MPU6050 sensor data with WebGL rendering to achieve precise spatial mapping and interactive model manipulation.",
                   techStack: ["MPU6050", "WebGL", "Three.js", "Data Visualization"],
                   githubLink: "https://github.com/ayushilathiya/MPU6050-3D-Visualization",
@@ -428,7 +428,7 @@ export default function Home() {
                 },
                 {
                   title: "Designing & Simulating in DSCH & Microwind",
-                  image: "/dsch.jpg",
+                  image: "/dsch.gif",
                   description: "Developed comprehensive digital circuit simulations using DSCH and Microwind tools. Implemented and validated various logic gate configurations, with detailed analysis of timing diagrams and power consumption metrics.",
                   techStack: ["DSCH", "Microwind", "Verilog", "Logic Gates", "Digital Design"],
                   githubLink: "https://github.com/ayushilathiya/DSCH-MW",
@@ -436,7 +436,7 @@ export default function Home() {
                 },
                 {
                   title: "ESP-NOW Protocol",
-                  image: "/espnow.jpg",
+                  image: "/espnow.gif",
                   description: "Implemented a robust wireless communication system using ESP-NOW protocol, achieving low-latency data transfer between multiple ESP8266 modules. Optimized for reliable peer-to-peer communication with minimal power consumption.",
                   techStack: ["C++", "ESP-NOW", "Wireless Communication"],
                   githubLink: "https://github.com/ayushilathiya/ESP-NOW-Protocol",
@@ -444,13 +444,15 @@ export default function Home() {
                 }
               ].map((project, index) => (
                 <div key={index} className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95 flex flex-col">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={500}
-                    height={300}
-                    className="rounded-t-lg w-full h-48 object-cover"
-                  />
+                  <div className="relative w-full pt-[56.25%] overflow-hidden rounded-t-lg">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="absolute top-0 left-0 w-full h-full object-cover"
+                      unoptimized
+                    />
+                  </div>
                   <div className="p-6 flex flex-col flex-grow">
                     <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
                     <p className="text-gray-600 mb-4 flex-grow">
