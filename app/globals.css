@@ -5,6 +5,8 @@
 :root {
   --navy: #002b59;
   --navy-light: #003d80;
+  --shadow-color: rgba(0, 43, 89, 0.15);
+  --shadow-color-light: rgba(0, 43, 89, 0.08);
 }
 
 /* Loading Animation */
@@ -52,20 +54,23 @@
 /* Enhanced Float Animation */
 @keyframes float {
   0%, 100% {
-    transform: translateY(0) rotate(0);
+    transform: translateY(0) rotate(0) scale(1);
   }
   50% {
-    transform: translateY(-30px) rotate(8deg);
+    transform: translateY(-30px) rotate(8deg) scale(1.05);
   }
 }
 
 /* Enhanced Wave Animation */
 @keyframes wave {
-  0%, 100% {
-    transform: translateX(0) scaleY(1);
+  0% {
+    transform: translateX(0) scaleY(1) skewX(0);
   }
   50% {
-    transform: translateX(-35%) scaleY(0.85);
+    transform: translateX(-35%) scaleY(0.85) skewX(-5deg);
+  }
+  100% {
+    transform: translateX(0) scaleY(1) skewX(0);
   }
 }
 
@@ -138,14 +143,14 @@ html {
 
 .shadow-xl {
   box-shadow: 
-    0 10px 25px -5px rgba(0, 43, 89, 0.1),
-    0 8px 10px -6px rgba(0, 43, 89, 0.1);
+    0 10px 30px -5px var(--shadow-color),
+    0 8px 15px -6px var(--shadow-color-light);
 }
 
 .shadow-lg {
   box-shadow:
-    0 4px 6px -1px rgba(0, 43, 89, 0.1),
-    0 2px 4px -2px rgba(0, 43, 89, 0.1);
+    0 4px 12px -1px var(--shadow-color),
+    0 2px 8px -2px var(--shadow-color-light);
 }
 
 .shadow-inner-lg {
@@ -154,10 +159,10 @@ html {
 
 @layer components {
   .skill-box {
-    @apply px-3 py-1 rounded-full shadow-inner-lg cursor-pointer
-           transition-all duration-300 hover:scale-110 hover:-translate-y-1;
-    background-color: rgba(0, 43, 89, 0.1);
-    color: var(--navy);
+    @apply px-2 sm:px-3 py-1.5 text-sm rounded-full shadow-lg cursor-pointer
+           transition-all duration-300 hover:scale-110 hover:-translate-y-1
+           hover:shadow-xl;
+    background: linear-gradient(145deg, rgba(0, 43, 89, 0.08), rgba(0, 43, 89, 0.12));
   }
   
   .skill-box:hover {
@@ -165,8 +170,13 @@ html {
   }
 
   .section-box {
-    @apply bg-white/80 rounded-3xl shadow-xl p-6 backdrop-blur-lg mb-6 
-           transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl;
+    @apply bg-white/90 rounded-3xl p-6 sm:p-8 backdrop-blur-xl mb-6 
+           transition-all duration-500 hover:-translate-y-2
+           border border-white/50
+           hover:bg-white/95;
+    box-shadow: 
+      0 20px 40px -15px var(--shadow-color),
+      0 10px 20px -15px var(--shadow-color-light);
   }
 
   .navy-graphics {
@@ -183,8 +193,15 @@ html {
   }
 
   .social-link {
-    @apply p-3 rounded-xl bg-white/80 backdrop-blur-sm shadow-lg
-           transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+    @apply p-2 sm:p-3 rounded-xl bg-white/90 backdrop-blur-md
+           transition-all duration-300 hover:-translate-y-1.5 hover:rotate-[4deg];
+    box-shadow: 
+      0 4px 12px -1px var(--shadow-color),
+      0 2px 8px -2px var(--shadow-color-light);
+  }
+
+  .typewriter {
+    @apply text-2xl sm:text-3xl;
   }
 }
 
@@ -334,10 +351,10 @@ html {
 
 @keyframes cube-bounce {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-15px);
+    transform: translateY(-15px) scale(0.95);
   }
 }
 

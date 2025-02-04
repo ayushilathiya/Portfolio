@@ -6,7 +6,13 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "Ayushi Lathiya's Portfolio",
-  description: "Explore Ayushi Lathiya's portfolio showcasing projects and tech expertise.",
+  description: "Explore Ayushi Lathiya's portfolio showcasing projects and technical skills.",
+  icons: {
+    icon: {
+      url: '/favicon.jpg',
+      type: 'image/jpg',
+    },
+  },
 };
 
 export default function RootLayout({
