@@ -524,7 +524,7 @@ export default function Home() {
                     </div>
                   </div>
                   <p className="text-gray-700">
-                    Exploring the intersections of VLSI,IoT, Embedded Systems, and Innovation. Join me on my technical journey!
+                    Exploring the intersections of VLSI, IoT, Embedded Systems, and Innovation. Join me on my technical journey!
                   </p>
                 </div>
 
@@ -628,6 +628,7 @@ export default function Home() {
           <p className="flex items-center justify-center gap-2">
             Made with <FaHeart className="text-navy animate-pulse" /> by Ayushi ;)
           </p>
+          <p>© 2025 Ayushi Lathiya. All Rights Reserved.</p>
         </footer>
       </main>
 
