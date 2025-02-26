@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: "Explore Ayushi Lathiya's portfolio showcasing projects and technical skills.",
   icons: {
     icon: {
-      url: '/favicon.jpeg',
-      type: 'image/jpeg',
+      url: '/favicon.png',
+      type: 'image/png',
     },
   },
 };
