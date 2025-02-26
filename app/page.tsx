@@ -200,8 +200,8 @@ export default function Home() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="md:hidden fixed inset-x-0 top-16 bg-white/95 backdrop-blur-md shadow-lg z-50">
+              <div className="px-2 py-2 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
                 {["about", "projects", "blog", "contact"].map((section) => (
                   <button
                     key={section}
@@ -209,7 +209,7 @@ export default function Home() {
                       scrollToSection(section);
                       setMobileMenuOpen(false);
                     }}
-                    className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                    className={`block w-full text-left px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
                       activeSection === section
                         ? "bg-navy/10 text-navy"
                         : "text-gray-500 hover:bg-navy/5 hover:text-navy"
