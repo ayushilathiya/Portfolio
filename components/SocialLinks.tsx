@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function SocialLinks() {
   return (
-    <div className="flex space-x-3 sm:space-x-4">
+    <div className="flex flex-wrap justify-center gap-2 xs:gap-3 sm:gap-4">
       {[
         {
           icon: SiGithub,
@@ -33,20 +33,24 @@ export function SocialLinks() {
         },
         {
           icon: ({ className }: { className: string }) => (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 xs:gap-2">
               <svg
                 viewBox="0 0 24 24"
                 className={className}
                 fill="currentColor">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
               </svg>
-              <span>Download CV</span>
+              <span className="hidden xs:inline text-xs sm:text-sm whitespace-nowrap">
+                Download CV
+              </span>
             </div>
           ),
           href: "/docs/Ayushi_Lathiya_CV.pdf",
           download: true,
           target: "_blank",
           rel: "noopener noreferrer",
+          label: "Download Resume",
+          className: "px-3 xs:px-4",
         },
       ].map((social, index) => (
         <a
@@ -55,9 +59,9 @@ export function SocialLinks() {
           target={social.target}
           rel={social.rel}
           download={social.download}
-          className="social-link"
+          className={`social-link ${social.className || ""}`}
           aria-label={social.label}>
-          <social.icon className="w-6 h-6" />
+          <social.icon className="w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
         </a>
       ))}
     </div>

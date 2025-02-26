@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,62 +57,64 @@ export function Contact() {
 
   return (
     <div className="section-box">
-      <h2 className="text-2xl sm:text-3xl font-bold text-navy mb-4 sm:mb-8">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-navy mb-4 sm:mb-6 md:mb-8">
         Let's Connect!
       </h2>
 
       {!isSubmitted ? (
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-6">
           <div>
-            <label className="block text-sm font-medium mb-2">Name</label>
+            <label className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2">Name</label>
             <Input
               type="text"
               name="name"
               placeholder="Your name"
               required
               disabled={isSubmitting}
+              className="text-sm sm:text-base py-1.5 sm:py-2"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Email</label>
+            <label className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2">Email</label>
             <Input
               type="email"
               name="email"
               placeholder="your.email@example.com"
               required
               disabled={isSubmitting}
+              className="text-sm sm:text-base py-1.5 sm:py-2"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Message</label>
+            <label className="block text-xs sm:text-sm font-medium mb-1 sm:mb-2">Message</label>
             <Textarea
               name="message"
               placeholder="Your message"
-              className="min-h-[150px]"
+              className="min-h-[100px] sm:min-h-[150px] text-sm sm:text-base"
               required
               disabled={isSubmitting}
             />
           </div>
 
           {error && (
-            <div className="text-red-500 text-sm text-center">{error}</div>
+            <div className="text-red-500 text-xs sm:text-sm text-center">{error}</div>
           )}
 
           <Button
             type="submit"
-            className="w-full bg-navy hover:bg-navy-light text-white transition-all duration-300"
+            className="w-full bg-navy hover:bg-navy/80 text-white text-sm sm:text-base py-1.5 sm:py-2 transition-all duration-300 h-auto"
             disabled={isSubmitting}>
             <div className="flex items-center justify-center">
               {isSubmitting ? (
                 <>
-                  <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  <div className="mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   <span>Sending...</span>
                 </>
               ) : (
                 <>
-                  <FaPaperPlane className="mr-2 h-4 w-4" />
+                  <FaPaperPlane className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                   <span>Send Message</span>
                 </>
               )}
@@ -118,10 +122,10 @@ export function Contact() {
           </Button>
         </form>
       ) : (
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-3 sm:space-y-4 py-4">
           <div className="flex items-center justify-center text-green-600">
             <svg
-              className="h-12 w-12"
+              className="h-8 w-8 sm:h-12 sm:w-12"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24">
@@ -133,15 +137,15 @@ export function Contact() {
               />
             </svg>
           </div>
-          <h3 className="text-xl font-semibold text-navy">
+          <h3 className="text-lg sm:text-xl font-semibold text-navy">
             Message Sent Successfully!
           </h3>
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600">
             Thank you for your message! I'll get back to you soon.
           </p>
           <Button
             onClick={() => setIsSubmitted(false)}
-            className="mt-4 bg-navy hover:bg-navy-light text-white">
+            className="mt-2 sm:mt-4 bg-navy hover:bg-navy/80 text-white text-sm sm:text-base py-1.5 sm:py-2 px-3 sm:px-4 h-auto">
             Send Another Message
           </Button>
         </div>
