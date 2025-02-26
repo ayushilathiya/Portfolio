@@ -102,7 +102,7 @@ export default function Home() {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("https://formspree.io/f/meoebdvd", {
+      const response = await fetch("", {
         method: "POST",
         body: formData,
         headers: {
