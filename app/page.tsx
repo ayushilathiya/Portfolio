@@ -25,6 +25,7 @@ export default function Home() {
     duration: number;
   }>>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'submitted'>('idle');
 
   useEffect(() => {
     setMounted(true);
@@ -71,12 +72,34 @@ export default function Home() {
   };
 
   const [isSending, setIsSending] = useState(false);
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSending(true);
-    // Simulate sending
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsSending(false);
+    setFormStatus('submitting');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://formspree.io/f/meoebdvd', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setFormStatus('submitted');
+        form.reset();
+        // Reset form status after 5 seconds
+        setTimeout(() => setFormStatus('idle'), 5000);
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setFormStatus('idle');
+    }
   };
 
   if (!mounted) return null;
@@ -123,18 +146,17 @@ export default function Home() {
             <div className="flex items-center pl-2">
               <span className="text-2xl font-bold text-navy">Portfolio</span>
             </div>
-            
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-6 pr-2">
               {["about", "projects", "blog", "contact"].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`nav-link inline-flex items-center px-2 pt-1 text-sm font-medium border-b-2 transition-all duration-300 hover:scale-110 ${
-                    activeSection === section
+                  className={`nav-link inline-flex items-center px-2 pt-1 text-sm font-medium border-b-2 transition-all duration-300 hover:scale-110 ${activeSection === section
                       ? "border-navy text-navy"
                       : "border-transparent text-gray-500 hover:text-navy hover:border-navy"
-                  }`}
+                    }`}
                 >
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </button>
@@ -167,11 +189,10 @@ export default function Home() {
                       scrollToSection(section);
                       setMobileMenuOpen(false);
                     }}
-                    className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-                      activeSection === section
+                    className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${activeSection === section
                         ? "bg-navy/10 text-navy"
                         : "text-gray-500 hover:bg-navy/5 hover:text-navy"
-                    }`}
+                      }`}
                   >
                     {section.charAt(0).toUpperCase() + section.slice(1)}
                   </button>
@@ -211,34 +232,52 @@ export default function Home() {
 
                 <div className="flex space-x-4">
                   {[
-                    { 
-                      icon: SiGithub, 
-                      href: "https://github.com/ayushilathiya", 
-                      target: "_blank", 
+                    {
+                      icon: SiGithub,
+                      href: "https://github.com/ayushilathiya",
+                      target: "_blank",
                       rel: "noopener noreferrer",
-                      label: "GitHub" 
+                      label: "GitHub"
                     },
-                    { 
-                      icon: Linkedin, 
-                      href: "https://www.linkedin.com/in/ayushilathiya/", 
-                      target: "_blank", 
+                    {
+                      icon: Linkedin,
+                      href: "https://www.linkedin.com/in/ayushilathiya/",
+                      target: "_blank",
                       rel: "noopener noreferrer",
-                      label: "LinkedIn" 
+                      label: "LinkedIn"
                     },
-                    { 
+                    {
                       icon: ({ className }: { className: string }) => (
-                        <svg 
-                          viewBox="0 0 24 24" 
+                        <svg
+                          viewBox="0 0 24 24"
                           className={className}
                           fill="currentColor"
                         >
-                          <path d="M22.351 8.019l-6.37-6.37a5.63 5.63 0 0 0-7.962 0l-6.37 6.37a5.63 5.63 0 0 0 0 7.962l6.37 6.37a5.63 5.63 0 0 0 7.962 0l6.37-6.37a5.63 5.63 0 0 0 0-7.962zM12 15.953a3.953 3.953 0 1 1 0-7.906 3.953 3.953 0 0 1 0 7.906z"/>
+                          <path d="M22.351 8.019l-6.37-6.37a5.63 5.63 0 0 0-7.962 0l-6.37 6.37a5.63 5.63 0 0 0 0 7.962l6.37 6.37a5.63 5.63 0 0 0 7.962 0l6.37-6.37a5.63 5.63 0 0 0 0-7.962zM12 15.953a3.953 3.953 0 1 1 0-7.906 3.953 3.953 0 0 1 0 7.906z" />
                         </svg>
                       ),
                       href: "https://ayushilathiya.hashnode.dev",
                       target: "_blank",
                       rel: "noopener noreferrer",
                       label: "Hashnode"
+                    },
+                    {
+                      icon: ({ className }: { className: string }) => (
+                        <div className="flex items-center gap-2">
+                          <svg
+                            viewBox="0 0 24 24"
+                            className={className}
+                            fill="currentColor"
+                          >
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
+                          </svg>
+                          <span>Download CV</span>
+                        </div>
+                      ),
+                      href: "https://www.overleaf.com/download/project/67a05919d810715742cf985c/build/195409fefd7-8c2722d250e1004b/output/output.pdf?compileGroup=standard&clsiserverid=clsi-pre-emp-n2d-b-f-x0sf&enable_pdf_caching=true&popupDownload=true",
+                      download: true,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
                     }
                   ].map((social, index) => (
                     <a
@@ -246,6 +285,7 @@ export default function Home() {
                       href={social.href}
                       target={social.target}
                       rel={social.rel}
+                      download={social.download}
                       className="social-link"
                       aria-label={social.label}
                     >
@@ -320,7 +360,7 @@ export default function Home() {
                   }
                 ].map((pos, idx) => (
                   <div key={idx} className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <a 
+                    <a
                       href={pos.link}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -352,7 +392,7 @@ export default function Home() {
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <h3 className="font-semibold text-2xl">
-                        <a 
+                        <a
                           href="https://ldce.ac.in"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -378,7 +418,7 @@ export default function Home() {
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <h3 className="font-semibold text-2xl">
-                      <a 
+                        <a
                           href="https://hbkapadia.com/"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -411,10 +451,26 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
+                  title: "Gesture-Controlled Car",
+                  image: "/gesture.gif",
+                  description: "Developed a gesture-controlled system interpreting real-time hand gestures to wirelessly command the car's movements via ESP-NOW protocol, ensuring low-latency communication. This project represents the second phase of the Wi-Fi car series, enhancing control capabilities through gesture recognition.",
+                  techStack: ["IoT", "Wireless Communication", "Embedded Systems"],
+                  githubLink: "https://github.com/ayushilathiya/Gesture_Controlled_Car",
+                  demoLink: "https://youtu.be/n70FIHps4CA"
+                },
+                {
+                  title: "Live ECG Monitoring System",
+                  image: "/ecgmoni.gif",
+                  description: "ESP-based IoT ECG monitoring system utilizing the ECG sensor for real-time cardiac signal acquisition and wireless transmission. Implements signal filtering for noise reduction and cloud integration for remote monitoring via ThingSpeak. Ensures low-latency data transfer and precise ECG waveform analysis",
+                  techStack: ["Real-time Data Acquisition", "Thingspeak API", "MIT App Inventor"],
+                  githubLink: "https://github.com/ayushilathiya/ECG-Monitoring",
+                  demoLink: "https://youtu.be/EAjrd2bCG9A"
+                },
+                {
                   title: "WiFi-Controlled Car",
                   image: "/wifi.gif",
                   description: "Engineered a wireless-controlled vehicle using ESP8266 NodeMCU, featuring real-time control through a custom mobile interface. Implemented smooth motion control and responsive directional changes with L298N motor driver integration.",
-                  techStack: ["ESP8266", "L298N", "JavaScript", "HTML", "CSS", "IoT"],
+                  techStack: ["ESP8266", "JavaScript", "HTML", "CSS", "IoT"],
                   githubLink: "https://github.com/ayushilathiya/WiFi-Controlled-Car",
                   demoLink: "https://youtu.be/vaGgphrMhso"
                 },
@@ -424,14 +480,6 @@ export default function Home() {
                   description: "Created an innovative system that transforms real-time sensor data into dynamic 3D visualizations. Integrated MPU6050 sensor data with WebGL rendering to achieve precise spatial mapping and interactive model manipulation.",
                   techStack: ["MPU6050", "WebGL", "Three.js", "Data Visualization"],
                   githubLink: "https://github.com/ayushilathiya/MPU6050-3D-Visualization",
-                  demoLink: "https://ayushilathiya.hashnode.dev/3d-modeling-sensors"
-                },
-                {
-                  title: "Designing & Simulating in DSCH & Microwind",
-                  image: "/dsch.gif",
-                  description: "Developed comprehensive digital circuit simulations using DSCH and Microwind tools. Implemented and validated various logic gate configurations, with detailed analysis of timing diagrams and power consumption metrics.",
-                  techStack: ["DSCH", "Microwind", "Verilog", "Logic Gates", "Digital Design"],
-                  githubLink: "https://github.com/ayushilathiya/DSCH-MW",
                   demoLink: "https://ayushilathiya.hashnode.dev/3d-modeling-sensors"
                 },
                 {
@@ -466,19 +514,19 @@ export default function Home() {
                     </div>
 
                     <div className="flex gap-4 mt-auto items-center">
-                      <a 
-                        href={project.githubLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                      <a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300"
                       >
                         <SiGithub className="w-5 h-5 text-[#002b59]" />
                         <span className="text-sm">Code</span>
                       </a>
-                      <a 
-                        href={project.demoLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                      <a
+                        href={project.demoLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 text-navy hover:translate-y-1 transition-all duration-300"
                       >
                         <img
@@ -511,12 +559,12 @@ export default function Home() {
                 {/* Header with Profile */}
                 <div className="p-8 border-b">
                   <div className="flex items-center gap-4 mb-4">
-                    <svg 
-                      viewBox="0 0 24 24" 
+                    <svg
+                      viewBox="0 0 24 24"
                       className="w-12 h-12 text-navy"
                       fill="currentColor"
                     >
-                      <path d="M22.351 8.019l-6.37-6.37a5.63 5.63 0 0 0-7.962 0l-6.37 6.37a5.63 5.63 0 0 0 0 7.962l6.37 6.37a5.63 5.63 0 0 0 7.962 0l6.37-6.37a5.63 5.63 0 0 0 0-7.962zM12 15.953a3.953 3.953 0 1 1 0-7.906 3.953 3.953 0 0 1 0 7.906z"/>
+                      <path d="M22.351 8.019l-6.37-6.37a5.63 5.63 0 0 0-7.962 0l-6.37 6.37a5.63 5.63 0 0 0 0 7.962l6.37 6.37a5.63 5.63 0 0 0 7.962 0l6.37-6.37a5.63 5.63 0 0 0 0-7.962zM12 15.953a3.953 3.953 0 1 1 0-7.906 3.953 3.953 0 0 1 0 7.906z" />
                     </svg>
                     <div>
                       <h3 className="font-bold text-xl">Ayushi Lathiya</h3>
@@ -570,7 +618,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <div className="flex items-center gap-4 text-gray-600">
-                      <span>4 Articles</span>
+                      <span>6 Articles</span>
                       <span>•</span>
                       <span>Technical Blog</span>
                     </div>
@@ -586,47 +634,72 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="section-box">
               <h2 className="text-2xl sm:text-3xl font-bold text-navy mb-4 sm:mb-8">Let's Connect!</h2>
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-4 sm:space-y-6"
+              >
                 <div>
                   <label className="block text-sm font-medium mb-2">Name</label>
-                  <Input type="text" placeholder="Your name" required />
+                  <Input type="text" name="name" placeholder="Your name" required />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium mb-2">Email</label>
-                  <Input type="email" placeholder="your.email@example.com" required />
+                  <Input type="email" name="email" placeholder="your.email@example.com" required />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium mb-2">Message</label>
-                  <Textarea placeholder="Your message" className="min-h-[150px]" required />
+                  <Textarea name="message" placeholder="Your message" className="min-h-[150px]" required />
                 </div>
+
                 <Button
                   type="submit"
                   className="w-full bg-navy hover:bg-navy-light transition-all duration-300 text-white"
-                  disabled={isSending}
+                  disabled={formStatus !== 'idle'}
                 >
-                  {isSending ? (
-                    <div className="flex items-center justify-center">
-                      <div className="animate-spin mr-2">
-                        <FaPaperPlane className="h-4 w-4" />
-                      </div>
-                      <span className="text-white">Sending...</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center">
-                      <FaPaperPlane className="mr-2 h-4 w-4" />
-                      <span className="text-white">Send Message</span>
-                    </div>
-                  )}
+                  <div className="flex items-center justify-center">
+                    {formStatus === 'submitting' ? (
+                      <>
+                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        <span className="text-white">Sending...</span>
+                      </>
+                    ) : formStatus === 'submitted' ? (
+                      <>
+                        <svg
+                          className="mr-2 h-4 w-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        <span className="text-white">Sent Successfully!</span>
+                      </>
+                    ) : (
+                      <>
+                        <FaPaperPlane className="mr-2 h-4 w-4" />
+                        <span className="text-white">Send Message</span>
+                      </>
+                    )}
+                  </div>
                 </Button>
               </form>
             </div>
           </div>
         </section>
 
+
         {/* Footer */}
         <footer className="py-8 text-center text-navy">
           <p className="flex items-center justify-center gap-2">
-            Made with <FaHeart className="text-navy animate-pulse" /> by Ayushi ;)
+            Made with <FaHeart className="text-navy animate-pulse" /> by Ayushi
           </p>
           <p>© 2025 Ayushi Lathiya. All Rights Reserved.</p>
         </footer>
