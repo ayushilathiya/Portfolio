@@ -274,7 +274,7 @@ export default function Home() {
                           <span>Download CV</span>
                         </div>
                       ),
-                      href: "https://www.overleaf.com/download/project/67a05919d810715742cf985c/build/195409fefd7-8c2722d250e1004b/output/output.pdf?compileGroup=standard&clsiserverid=clsi-pre-emp-n2d-b-f-x0sf&enable_pdf_caching=true&popupDownload=true",
+                      href: "/docs/Ayushi_Lathiya_CV.pdf",
                       download: true,
                       target: "_blank",
                       rel: "noopener noreferrer",
