@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FaHeart, FaPaperPlane } from "react-icons/fa";
 import { Menu, X } from "lucide-react";
+import { Contact } from "@/components/Contact";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -162,10 +163,10 @@ export default function Home() {
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-lg">
-        <div className="w-full px-4">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center pl-2">
-              <span className="text-2xl font-bold text-navy">Portfolio</span>
+        <div className="w-full px-2 sm:px-4">
+          <div className="flex justify-between h-14 sm:h-16">
+            <div className="flex items-center pl-1 sm:pl-2">
+              <span className="text-xl sm:text-2xl font-bold text-navy">Portfolio</span>
             </div>
 
             {/* Desktop Navigation */}
@@ -184,15 +185,15 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Mobile Navigation */}
+            {/* Mobile Navigation Button */}
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-navy p-2">
+                className="text-navy p-1.5 sm:p-2 rounded-lg hover:bg-navy/5 active:bg-navy/10 transition-colors">
                 {mobileMenuOpen ? (
-                  <X className="h-6 w-6" />
+                  <X className="h-5 w-5 sm:h-6 sm:w-6" />
                 ) : (
-                  <Menu className="h-6 w-6" />
+                  <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
                 )}
               </button>
             </div>
@@ -200,8 +201,8 @@ export default function Home() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden fixed inset-x-0 top-16 bg-white/95 backdrop-blur-md shadow-lg z-50">
-              <div className="px-2 py-2 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
+            <div className="md:hidden fixed inset-x-0 top-14 sm:top-16 bg-white/95 backdrop-blur-md shadow-lg z-50 border-t border-gray-100">
+              <div className="px-2 py-1.5 space-y-0.5 max-h-[calc(100vh-4rem)] overflow-y-auto">
                 {["about", "projects", "blog", "contact"].map((section) => (
                   <button
                     key={section}
@@ -209,10 +210,10 @@ export default function Home() {
                       scrollToSection(section);
                       setMobileMenuOpen(false);
                     }}
-                    className={`block w-full text-left px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
+                    className={`block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 active:scale-98 touch-manipulation ${
                       activeSection === section
                         ? "bg-navy/10 text-navy"
-                        : "text-gray-500 hover:bg-navy/5 hover:text-navy"
+                        : "text-gray-600 hover:bg-navy/5 hover:text-navy active:bg-navy/10"
                     }`}>
                     {section.charAt(0).toUpperCase() + section.slice(1)}
                   </button>
@@ -224,15 +225,15 @@ export default function Home() {
       </nav>
 
       {/* Main Content */}
-      <main className="pt-16 relative z-10">
+      <main className="pt-14 sm:pt-16 relative z-10">
         {/* About Section */}
         <section
           id="about"
-          className="min-h-screen py-12 sm:py-20 px-4 sm:px-6 lg:px-8">
+          className="min-h-screen py-8 sm:py-12 md:py-20 px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="section-box">
-              <div className="flex flex-col items-center gap-4 sm:gap-8">
-                <div className="w-32 h-32 sm:w-48 sm:h-48 rounded-full overflow-hidden shadow-xl">
+              <div className="flex flex-col items-center gap-3 sm:gap-4 md:gap-8">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 rounded-full overflow-hidden shadow-xl">
                   <Image
                     src="/ayushi.jpg"
                     alt="Ayushi Lathiya"
@@ -243,12 +244,12 @@ export default function Home() {
                 </div>
 
                 <div className="typewriter-container">
-                  <h1 className="text-3xl font-bold text-left typewriter">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-left typewriter">
                     Hi, I'm Ayushi Lathiya
                   </h1>
                 </div>
 
-                <p className="text-lg text-left">
+                <p className="text-base sm:text-lg text-left">
                   As an Embedded Systems Developer and VLSI Enthusiast, I
                   specialize in developing cutting-edge solutions at the
                   intersection of hardware and software. With a strong
@@ -260,7 +261,7 @@ export default function Home() {
                   technologies in IoT and machine learning.
                 </p>
 
-                <div className="flex space-x-4">
+                <div className="flex space-x-3 sm:space-x-4">
                   {[
                     {
                       icon: SiGithub,
@@ -325,10 +326,10 @@ export default function Home() {
 
             {/* Skills & Technologies */}
             <div className="section-box">
-              <h2 className="text-2xl font-semibold text-navy mb-8 text-left">
+              <h2 className="text-xl sm:text-2xl font-semibold text-navy mb-4 sm:mb-8 text-left">
                 Skills & Technologies
               </h2>
-              <div className="flex flex-wrap justify-start gap-4">
+              <div className="flex flex-wrap justify-start gap-2 sm:gap-4">
                 {[
                   {
                     name: "MOSFETs",
@@ -419,7 +420,7 @@ export default function Home() {
                     href={skill.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="skill-box text-base px-4 py-2 hover:text-navy">
+                    className="skill-box text-sm sm:text-base px-3 sm:px-4 py-1.5 sm:py-2 hover:text-navy active:scale-95 transition-all duration-200">
                     {skill.name}
                   </Link>
                 ))}
@@ -776,98 +777,9 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section
-          id="contact"
-          className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+        <section id="contact" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
-            <div className="section-box">
-              <h2 className="text-2xl sm:text-3xl font-bold text-navy mb-4 sm:mb-8">
-                Let's Connect!
-              </h2>
-
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Name</label>
-                  <Input
-                    type="text"
-                    name="name"
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Email
-                  </label>
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="your.email@example.com"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Message
-                  </label>
-                  <Textarea
-                    name="message"
-                    placeholder="Your message"
-                    className="min-h-[150px]"
-                    required
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  className={`w-full transition-all duration-300 text-white ${
-                    formStatus === "submitted" 
-                      ? "bg-green-600 hover:bg-green-700" 
-                      : "bg-navy hover:bg-navy-light"
-                  }`}
-                  disabled={formStatus !== "idle"}
-                >
-                  <div className="flex items-center justify-center">
-                    {formStatus === "submitting" ? (
-                      <>
-                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                        <span>Sending...</span>
-                      </>
-                    ) : formStatus === "submitted" ? (
-                      <>
-                        <svg
-                          className="mr-2 h-4 w-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <span>Sent Successfully!</span>
-                      </>
-                    ) : (
-                      <>
-                        <FaPaperPlane className="mr-2 h-4 w-4" />
-                        <span>Send Message</span>
-                      </>
-                    )}
-                  </div>
-                </Button>
-
-                {formStatus === "submitted" && (
-                  <div className="mt-4 text-green-600 text-center">
-                    Thank you for your message! I'll get back to you soon.
-                  </div>
-                )}
-              </form>
-            </div>
+            <Contact />
           </div>
         </section>
 
@@ -882,8 +794,30 @@ export default function Home() {
 
       <style jsx global>{`
         .section-box {
-          @apply bg-white/80 rounded-3xl shadow-xl p-6 backdrop-blur-lg mb-6 
-                 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:bg-white/95;
+          @apply bg-white/80 rounded-2xl sm:rounded-3xl shadow-lg sm:shadow-xl 
+                 p-4 sm:p-6 backdrop-blur-lg mb-4 sm:mb-6 
+                 transition-all duration-300 active:scale-[0.995] sm:hover:-translate-y-2 
+                 hover:shadow-xl sm:hover:shadow-2xl hover:bg-white/95;
+        }
+
+        .skill-box {
+          @apply bg-white/50 rounded-lg border border-gray-200/50 
+                 transition-all duration-200 active:scale-[0.98] 
+                 touch-manipulation;
+        }
+
+        @media (max-width: 640px) {
+          .social-link {
+            @apply p-2;
+          }
+          
+          .nav-link {
+            @apply py-1.5;
+          }
+          
+          .typewriter {
+            font-size: 1.5rem;
+          }
         }
       `}</style>
     </div>
