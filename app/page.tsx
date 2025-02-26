@@ -102,24 +102,23 @@ export default function Home() {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("", {
-        method: "POST",
+      const response = await fetch(`https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_KEY}`, {
+        method: 'POST',
         body: formData,
         headers: {
-          Accept: "application/json",
-        },
+          'Accept': 'application/json'
+        }
       });
 
       if (response.ok) {
         setFormStatus("submitted");
         form.reset();
-        // Reset form status after 5 seconds
         setTimeout(() => setFormStatus("idle"), 5000);
       } else {
-        throw new Error("Form submission failed");
+        throw new Error('Form submission failed');
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
       setFormStatus("idle");
     }
   };
@@ -822,13 +821,18 @@ export default function Home() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-navy hover:bg-navy-light transition-all duration-300 text-white"
-                  disabled={formStatus !== "idle"}>
+                  className={`w-full transition-all duration-300 text-white ${
+                    formStatus === "submitted" 
+                      ? "bg-green-600 hover:bg-green-700" 
+                      : "bg-navy hover:bg-navy-light"
+                  }`}
+                  disabled={formStatus !== "idle"}
+                >
                   <div className="flex items-center justify-center">
                     {formStatus === "submitting" ? (
                       <>
                         <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                        <span className="text-white">Sending...</span>
+                        <span>Sending...</span>
                       </>
                     ) : formStatus === "submitted" ? (
                       <>
@@ -836,7 +840,8 @@ export default function Home() {
                           className="mr-2 h-4 w-4"
                           fill="none"
                           stroke="currentColor"
-                          viewBox="0 0 24 24">
+                          viewBox="0 0 24 24"
+                        >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -844,16 +849,22 @@ export default function Home() {
                             d="M5 13l4 4L19 7"
                           />
                         </svg>
-                        <span className="text-white">Sent Successfully!</span>
+                        <span>Sent Successfully!</span>
                       </>
                     ) : (
                       <>
                         <FaPaperPlane className="mr-2 h-4 w-4" />
-                        <span className="text-white">Send Message</span>
+                        <span>Send Message</span>
                       </>
                     )}
                   </div>
                 </Button>
+
+                {formStatus === "submitted" && (
+                  <div className="mt-4 text-green-600 text-center">
+                    Thank you for your message! I'll get back to you soon.
+                  </div>
+                )}
               </form>
             </div>
           </div>
