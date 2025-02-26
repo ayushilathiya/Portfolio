@@ -174,10 +174,11 @@ export default function Home() {
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`nav-link inline-flex items-center px-2 pt-1 text-sm font-medium border-b-2 transition-all duration-300 hover:scale-110 ${activeSection === section
-                    ? "border-navy text-navy"
-                    : "border-transparent text-gray-500 hover:text-navy hover:border-navy"
-                    }`}>
+                  className={`nav-link inline-flex items-center px-2 pt-1 text-sm font-medium border-b-2 transition-all duration-300 hover:scale-110 ${
+                    activeSection === section
+                      ? "border-navy text-navy"
+                      : "border-transparent text-gray-500 hover:text-navy hover:border-navy"
+                  }`}>
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </button>
               ))}
@@ -187,8 +188,7 @@ export default function Home() {
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-navy p-2 focus:outline-none"
-                aria-label="Toggle Menu">
+                className="text-navy p-2">
                 {mobileMenuOpen ? (
                   <X className="h-6 w-6" />
                 ) : (
@@ -198,31 +198,28 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mobile Menu (Full-Screen Overlay) */}
-          <div
-            className={`fixed inset-0 bg-white z-50 transform transition-transform duration-300 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-              } md:hidden flex flex-col items-center justify-center space-y-4`}>
-            <button
-              className="absolute top-5 right-5 text-navy"
-              onClick={() => setMobileMenuOpen(false)}>
-              <X className="h-8 w-8" />
-            </button>
-
-            {["about", "projects", "blog", "contact"].map((section) => (
-              <button
-                key={section}
-                onClick={() => {
-                  scrollToSection(section);
-                  setMobileMenuOpen(false);
-                }}
-                className={`text-sm md:text-base font-semibold ${activeSection === section
-                    ? "text-navy border-b-2 border-navy"
-                    : "text-gray-600 hover:text-navy"
-                  }`}>
-                {section.charAt(0).toUpperCase() + section.slice(1)}
-              </button>
-            ))}
-          </div>
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                {["about", "projects", "blog", "contact"].map((section) => (
+                  <button
+                    key={section}
+                    onClick={() => {
+                      scrollToSection(section);
+                      setMobileMenuOpen(false);
+                    }}
+                    className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
+                      activeSection === section
+                        ? "bg-navy/10 text-navy"
+                        : "text-gray-500 hover:bg-navy/5 hover:text-navy"
+                    }`}>
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -598,13 +595,13 @@ export default function Home() {
                   description:
                     "Engineered a wireless-controlled vehicle using ESP8266 NodeMCU, featuring real-time control through a custom mobile interface. Implemented smooth motion control and responsive directional changes with L298N motor driver integration.",
                   techStack: [
-                    "ESP8266",
-                    "JavaScript",
-                    "HTML",
-                    "CSS",
+                    "ESP8266", 
+                    "JavaScript", 
+                    "HTML", 
+                    "CSS", 
                     "IoT"
                   ],
-                  githubLink: "https://github.com/ayushilathiya/WiFi-Controlled-Car",
+                  githubLink:"https://github.com/ayushilathiya/WiFi-Controlled-Car",
                   demoLink: "https://youtu.be/vaGgphrMhso",
                 },
                 {
@@ -825,10 +822,11 @@ export default function Home() {
 
                 <Button
                   type="submit"
-                  className={`w-full transition-all duration-300 text-white ${formStatus === "submitted"
-                    ? "bg-green-600 hover:bg-green-700"
-                    : "bg-navy hover:bg-navy-light"
-                    }`}
+                  className={`w-full transition-all duration-300 text-white ${
+                    formStatus === "submitted" 
+                      ? "bg-green-600 hover:bg-green-700" 
+                      : "bg-navy hover:bg-navy-light"
+                  }`}
                   disabled={formStatus !== "idle"}
                 >
                   <div className="flex items-center justify-center">
