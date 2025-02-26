@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -6,45 +6,48 @@ import { FaPaperPlane } from "react-icons/fa";
 
 export function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError('');
+    setError("");
     setIsSubmitting(true);
 
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
 
     // Basic validation
-    const email = formData.get('email') as string;
-    const message = formData.get('message') as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
 
     if (!email || !message) {
-      setError('Please fill in all required fields');
+      setError("Please fill in all required fields");
       setIsSubmitting(false);
       return;
     }
 
     try {
-      const response = await fetch(`https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_KEY}`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
+      const response = await fetch(
+        `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_KEY}`,
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
         }
-      });
+      );
 
       if (response.ok) {
         setIsSubmitted(true);
         form.reset();
       } else {
-        throw new Error('Form submission failed');
+        throw new Error("Form submission failed");
       }
     } catch (error) {
-      setError('Failed to send message. Please try again.');
-      console.error('Error:', error);
+      setError("Failed to send message. Please try again.");
+      console.error("Error:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -70,9 +73,7 @@ export function Contact() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">
-              Email
-            </label>
+            <label className="block text-sm font-medium mb-2">Email</label>
             <Input
               type="email"
               name="email"
@@ -83,9 +84,7 @@ export function Contact() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">
-              Message
-            </label>
+            <label className="block text-sm font-medium mb-2">Message</label>
             <Textarea
               name="message"
               placeholder="Your message"
@@ -96,16 +95,13 @@ export function Contact() {
           </div>
 
           {error && (
-            <div className="text-red-500 text-sm text-center">
-              {error}
-            </div>
+            <div className="text-red-500 text-sm text-center">{error}</div>
           )}
 
           <Button
             type="submit"
             className="w-full bg-navy hover:bg-navy-light text-white transition-all duration-300"
-            disabled={isSubmitting}
-          >
+            disabled={isSubmitting}>
             <div className="flex items-center justify-center">
               {isSubmitting ? (
                 <>
@@ -128,8 +124,7 @@ export function Contact() {
               className="h-12 w-12"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+              viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -138,12 +133,15 @@ export function Contact() {
               />
             </svg>
           </div>
-          <h3 className="text-xl font-semibold text-navy">Message Sent Successfully!</h3>
-          <p className="text-gray-600">Thank you for your message! I'll get back to you soon.</p>
+          <h3 className="text-xl font-semibold text-navy">
+            Message Sent Successfully!
+          </h3>
+          <p className="text-gray-600">
+            Thank you for your message! I'll get back to you soon.
+          </p>
           <Button
             onClick={() => setIsSubmitted(false)}
-            className="mt-4 bg-navy hover:bg-navy-light text-white"
-          >
+            className="mt-4 bg-navy hover:bg-navy-light text-white">
             Send Another Message
           </Button>
         </div>
