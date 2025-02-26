@@ -559,8 +559,8 @@ export default function Home() {
           id="projects"
           className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-navy mb-8">Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <h2 className="text-3xl font-bold text-navy mb-12">Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
                   title: "Gesture-Controlled Car",
@@ -580,7 +580,7 @@ export default function Home() {
                   title: "Live ECG Monitoring System",
                   image: "/ecgmoni.gif",
                   description:
-                    "ESP-based IoT ECG monitoring system utilizing the ECG sensor for real-time cardiac signal acquisition and wireless transmission. Implements signal filtering for noise reduction and cloud integration for remote monitoring via ThingSpeak. Ensures low-latency data transfer and precise ECG waveform analysis",
+                    "ESP-based IoT ECG monitoring system utilizing the ECG sensor for real-time cardiac signal acquisition and wireless transmission. Implements signal filtering for noise reduction and cloud integration for remote monitoring via ThingSpeak. Ensures low-latency data transfer and precise ECG waveform analysis.",
                   techStack: [
                     "Real-time Data Acquisition",
                     "Thingspeak API",
@@ -594,9 +594,14 @@ export default function Home() {
                   image: "/wifi.gif",
                   description:
                     "Engineered a wireless-controlled vehicle using ESP8266 NodeMCU, featuring real-time control through a custom mobile interface. Implemented smooth motion control and responsive directional changes with L298N motor driver integration.",
-                  techStack: ["ESP8266", "JavaScript", "HTML", "CSS", "IoT"],
-                  githubLink:
-                    "https://github.com/ayushilathiya/WiFi-Controlled-Car",
+                  techStack: [
+                    "ESP8266", 
+                    "JavaScript", 
+                    "HTML", 
+                    "CSS", 
+                    "IoT"
+                  ],
+                  githubLink: "https://github.com/ayushilathiya/WiFi-Controlled-Car",
                   demoLink: "https://youtu.be/vaGgphrMhso",
                 },
                 {
@@ -628,7 +633,7 @@ export default function Home() {
               ].map((project, index) => (
                 <div
                   key={index}
-                  className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95 flex flex-col">
+                  className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95 flex flex-col h-full">
                   <div className="relative w-full pt-[56.25%] overflow-hidden rounded-t-lg">
                     <Image
                       src={project.image}
@@ -638,15 +643,11 @@ export default function Home() {
                       unoptimized
                     />
                   </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-semibold mb-2">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 flex-grow">
-                      {project.description}
-                    </p>
+                  <div className="p-6 flex flex-col flex-grow space-y-4">
+                    <h3 className="text-xl font-semibold">{project.title}</h3>
+                    <p className="text-gray-600 flex-grow">{project.description}</p>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2">
                       {project.techStack.map((tech, techIdx) => (
                         <span key={techIdx} className="skill-box text-sm">
                           {tech}
@@ -654,7 +655,7 @@ export default function Home() {
                       ))}
                     </div>
 
-                    <div className="flex gap-4 mt-auto items-center">
+                    <div className="flex gap-4 items-center pt-4">
                       <a
                         href={project.githubLink}
                         target="_blank"
