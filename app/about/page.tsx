@@ -39,7 +39,9 @@ export default function AboutSection() {
             technologies in IoT and machine learning.
           </p>
 
-          <SocialLinks />
+          <div className="pt-2 w-full flex justify-center">
+            <SocialLinks />
+          </div>
         </div>
       </div>
 
@@ -48,14 +50,14 @@ export default function AboutSection() {
         <h2 className="text-xl sm:text-2xl font-semibold text-navy mb-4 sm:mb-8 text-left">
           Skills & Technologies
         </h2>
-        <div className="flex flex-wrap justify-start gap-2 sm:gap-4">
+        <div className="flex flex-wrap justify-start gap-1.5 sm:gap-2 md:gap-3">
           {skills.map((skill) => (
             <Link
               key={skill.name}
               href={skill.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="skill-box text-sm sm:text-base px-3 sm:px-4 py-1.5 sm:py-2 hover:text-navy active:scale-95 transition-all duration-200">
+              className="skill-box text-xs sm:text-sm md:text-base px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 hover:text-navy active:scale-95 transition-all duration-200">
               {skill.name}
             </Link>
           ))}
@@ -71,23 +73,25 @@ export default function AboutSection() {
           {responsibilities.map((pos, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              className="p-4 sm:p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <a
                 href={pos.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block hover:text-navy transition-colors duration-300">
-                <h3 className="font-semibold text-2xl hover:underline">
+                <h3 className="font-semibold text-lg sm:text-xl md:text-2xl hover:underline">
                   {pos.title}
                 </h3>
               </a>
-              <p className="text-xl text-gray-600">
+              <p className="text-md sm:text-lg md:text-xl text-gray-600">
                 {pos.org} • {pos.period}
               </p>
-              <p className="mt-2">{pos.desc}</p>
-              <div className="flex flex-wrap gap-2 mt-3">
+              <p className="mt-2 text-sm sm:text-base">{pos.desc}</p>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3">
                 {pos.skills.map((skill, skillIdx) => (
-                  <span key={skillIdx} className="skill-box text-sm">
+                  <span
+                    key={skillIdx}
+                    className="skill-box text-xs sm:text-sm py-0.5 px-2 sm:py-1 sm:px-2.5">
                     {skill}
                   </span>
                 ))}
@@ -106,10 +110,10 @@ export default function AboutSection() {
           {education.map((edu, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="flex justify-between items-start mb-4">
+              className="p-4 sm:p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-1 sm:gap-0">
                 <div>
-                  <h3 className="font-semibold text-2xl">
+                  <h3 className="font-semibold text-lg sm:text-xl md:text-2xl">
                     <a
                       href={edu.website}
                       target="_blank"
@@ -118,13 +122,19 @@ export default function AboutSection() {
                       {edu.institution}
                     </a>
                   </h3>
-                  <p className="text-xl text-navy mt-2">{edu.degree}</p>
+                  <p className="text-md sm:text-lg text-navy mt-2">
+                    {edu.degree}
+                  </p>
                 </div>
-                <p className="text-gray-600">{edu.period}</p>
+                <p className="text-gray-600 text-sm sm:text-base">
+                  {edu.period}
+                </p>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {edu.skills.map((skill, skillIdx) => (
-                  <span key={skillIdx} className="skill-box text-sm">
+                  <span
+                    key={skillIdx}
+                    className="skill-box text-xs sm:text-sm py-0.5 px-2 sm:py-1 sm:px-2.5">
                     {skill}
                   </span>
                 ))}

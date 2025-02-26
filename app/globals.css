@@ -11,7 +11,8 @@
 
 /* Loading Animation */
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -20,8 +21,12 @@
 }
 
 @keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .loading-container {
@@ -53,7 +58,8 @@
 
 /* Enhanced Float Animation */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0) scale(1);
   }
   50% {
@@ -75,7 +81,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.25;
   }
   50% {
@@ -100,8 +107,7 @@
   white-space: nowrap;
   border-right: 3px solid var(--navy);
   width: 0;
-  animation: type-erase 12s steps(40, end) infinite,
-             blink 1s step-end infinite;
+  animation: type-erase 12s steps(40, end) infinite, blink 1s step-end infinite;
 }
 
 .text-navy {
@@ -142,14 +148,12 @@ html {
 }
 
 .shadow-xl {
-  box-shadow: 
-    0 10px 30px -5px var(--shadow-color),
+  box-shadow: 0 10px 30px -5px var(--shadow-color),
     0 8px 15px -6px var(--shadow-color-light);
 }
 
 .shadow-lg {
-  box-shadow:
-    0 4px 12px -1px var(--shadow-color),
+  box-shadow: 0 4px 12px -1px var(--shadow-color),
     0 2px 8px -2px var(--shadow-color-light);
 }
 
@@ -159,24 +163,27 @@ html {
 
 @layer components {
   .skill-box {
-    @apply px-2 sm:px-3 py-1.5 text-sm rounded-full shadow-lg cursor-pointer
-           transition-all duration-300 hover:scale-110 hover:-translate-y-1
-           hover:shadow-xl;
-    background: linear-gradient(145deg, rgba(0, 43, 89, 0.08), rgba(0, 43, 89, 0.12));
+    @apply px-2 py-1 text-xs sm:text-sm rounded-full shadow-md cursor-pointer
+           transition-all duration-300 hover:scale-105 hover:-translate-y-0.5
+           hover:shadow-lg touch-manipulation active:scale-95;
+    background: linear-gradient(
+      145deg,
+      rgba(0, 43, 89, 0.08),
+      rgba(0, 43, 89, 0.12)
+    );
   }
-  
+
   .skill-box:hover {
     background-color: rgba(0, 43, 89, 0.2);
   }
 
   .section-box {
-    @apply bg-white/90 rounded-3xl p-6 sm:p-8 backdrop-blur-xl mb-6 
-           transition-all duration-500 hover:-translate-y-2
+    @apply bg-white/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 backdrop-blur-xl mb-4 sm:mb-6 
+           transition-all duration-500 hover:-translate-y-1 sm:hover:-translate-y-2
            border border-white/50
-           hover:bg-white/95;
-    box-shadow: 
-      0 20px 40px -15px var(--shadow-color),
-      0 10px 20px -15px var(--shadow-color-light);
+           hover:bg-white/95 touch-manipulation;
+    box-shadow: 0 12px 30px -10px var(--shadow-color),
+      0 8px 16px -10px var(--shadow-color-light);
   }
 
   .navy-graphics {
@@ -193,15 +200,23 @@ html {
   }
 
   .social-link {
-    @apply p-2 sm:p-3 rounded-xl bg-white/90 backdrop-blur-md
-           transition-all duration-300 hover:-translate-y-1.5 hover:rotate-[4deg];
-    box-shadow: 
-      0 4px 12px -1px var(--shadow-color),
-      0 2px 8px -2px var(--shadow-color-light);
+    @apply flex items-center justify-center p-2 xs:p-2.5 sm:p-3 
+           rounded-full sm:rounded-xl bg-white/90 backdrop-blur-md shadow-md
+           transition-all duration-300 hover:-translate-y-1 active:scale-95
+           min-w-[36px] min-h-[36px] xs:min-w-[40px] xs:min-h-[40px] sm:min-w-[44px] sm:min-h-[44px]
+           touch-manipulation focus:outline-none focus:ring-2 focus:ring-navy focus:ring-offset-2;
+  }
+
+  .social-link:hover {
+    @apply bg-navy text-white shadow-lg;
+  }
+
+  .social-link:active {
+    @apply bg-navy/90;
   }
 
   .typewriter {
-    @apply text-2xl sm:text-3xl;
+    @apply text-xl sm:text-2xl md:text-3xl;
   }
 }
 
@@ -255,16 +270,20 @@ html {
   0% {
     transform: translateX(-144px);
   }
-  15%, 25% {
+  15%,
+  25% {
     transform: translateX(-144px);
   }
-  40%, 50% {
+  40%,
+  50% {
     transform: translateX(-72px);
   }
-  65%, 75% {
+  65%,
+  75% {
     transform: translateX(0px);
   }
-  90%, 100% {
+  90%,
+  100% {
     transform: translateX(72px);
   }
 }
@@ -274,17 +293,24 @@ html {
 }
 
 @keyframes type-erase {
-  0%, 50% {
+  0%,
+  50% {
     width: 0;
   }
-  25%, 75% {
+  25%,
+  75% {
     width: 100%;
   }
 }
 
 @keyframes blink {
-  from, to { border-color: transparent }
-  50% { border-color: var(--navy) }
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--navy);
+  }
 }
 
 /* Loading Grid Animation */
@@ -323,15 +349,33 @@ html {
 }
 
 /* Ensure each cube has a slightly different animation delay */
-.loading-cube:nth-child(1) { animation-delay: 0s; }
-.loading-cube:nth-child(2) { animation-delay: 0.1s; }
-.loading-cube:nth-child(3) { animation-delay: 0.2s; }
-.loading-cube:nth-child(4) { animation-delay: 0.3s; }
-.loading-cube:nth-child(5) { animation-delay: 0.4s; }
-.loading-cube:nth-child(6) { animation-delay: 0.5s; }
-.loading-cube:nth-child(7) { animation-delay: 0.6s; }
-.loading-cube:nth-child(8) { animation-delay: 0.7s; }
-.loading-cube:nth-child(9) { animation-delay: 0.8s; }
+.loading-cube:nth-child(1) {
+  animation-delay: 0s;
+}
+.loading-cube:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.loading-cube:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.loading-cube:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.loading-cube:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.loading-cube:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.loading-cube:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.loading-cube:nth-child(8) {
+  animation-delay: 0.7s;
+}
+.loading-cube:nth-child(9) {
+  animation-delay: 0.8s;
+}
 
 .cube-loader {
   display: grid;
@@ -350,7 +394,8 @@ html {
 }
 
 @keyframes cube-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) scale(1);
   }
   50% {
@@ -359,12 +404,30 @@ html {
 }
 
 /* Animation delays for each block */
-.cube-block:nth-child(1) { animation-delay: 0.0s; }
-.cube-block:nth-child(2) { animation-delay: 0.1s; }
-.cube-block:nth-child(3) { animation-delay: 0.2s; }
-.cube-block:nth-child(4) { animation-delay: 0.3s; }
-.cube-block:nth-child(5) { animation-delay: 0.4s; }
-.cube-block:nth-child(6) { animation-delay: 0.5s; }
-.cube-block:nth-child(7) { animation-delay: 0.6s; }
-.cube-block:nth-child(8) { animation-delay: 0.7s; }
-.cube-block:nth-child(9) { animation-delay: 0.8s; }
+.cube-block:nth-child(1) {
+  animation-delay: 0s;
+}
+.cube-block:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.cube-block:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.cube-block:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.cube-block:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.cube-block:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.cube-block:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.cube-block:nth-child(8) {
+  animation-delay: 0.7s;
+}
+.cube-block:nth-child(9) {
+  animation-delay: 0.8s;
+}
