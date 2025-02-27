@@ -6,6 +6,7 @@ import { SocialLinks } from "@/components/SocialLinks";
 import { skills } from "@/data/skills";
 import { responsibilities } from "@/data/responsibilities";
 import { education } from "@/data/education";
+import { TypeAnimation } from "react-type-animation";
 
 export default function AboutSection() {
   return (
@@ -23,9 +24,20 @@ export default function AboutSection() {
           </div>
 
           <div className="typewriter-container">
-            <h1 className="text-2xl sm:text-3xl font-bold text-left typewriter">
+            {/* <h1 className="text-2xl sm:text-3xl font-bold text-left typewriter mb-4">
               Hi, I'm Ayushi Lathiya
-            </h1>
+            </h1> */}
+            <TypeAnimation
+              sequence={["Hi, I'm Ayushi Lathiya", 1000, "", 100]}
+              wrapper="h1"
+              cursor={true}
+              repeat={Infinity}
+              style={{
+                display: "inline-block",
+                lineHeight: "1.2",
+              }}
+              className="text-2xl sm:text-3xl font-bold text-left mb-4"
+            />
           </div>
 
           <p className="text-base sm:text-lg text-left">
@@ -57,7 +69,8 @@ export default function AboutSection() {
               href={skill.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="skill-box text-xs sm:text-sm md:text-base px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 hover:text-navy active:scale-95 transition-all duration-200">
+              className="skill-box text-xs sm:text-sm md:text-base px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 hover:text-navy active:scale-95 transition-all duration-200"
+            >
               {skill.name}
             </Link>
           ))}
@@ -73,12 +86,14 @@ export default function AboutSection() {
           {responsibilities.map((pos, idx) => (
             <div
               key={idx}
-              className="p-4 sm:p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              className="p-4 sm:p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
               <a
                 href={pos.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block hover:text-navy transition-colors duration-300">
+                className="inline-block hover:text-navy transition-colors duration-300"
+              >
                 <h3 className="font-semibold text-lg sm:text-xl md:text-2xl hover:underline">
                   {pos.title}
                 </h3>
@@ -91,7 +106,8 @@ export default function AboutSection() {
                 {pos.skills.map((skill, skillIdx) => (
                   <span
                     key={skillIdx}
-                    className="skill-box text-xs sm:text-sm py-0.5 px-2 sm:py-1 sm:px-2.5">
+                    className="skill-box text-xs sm:text-sm py-0.5 px-2 sm:py-1 sm:px-2.5"
+                  >
                     {skill}
                   </span>
                 ))}
@@ -110,7 +126,8 @@ export default function AboutSection() {
           {education.map((edu, idx) => (
             <div
               key={idx}
-              className="p-4 sm:p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              className="p-4 sm:p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-1 sm:gap-0">
                 <div>
                   <h3 className="font-semibold text-lg sm:text-xl md:text-2xl">
@@ -118,7 +135,8 @@ export default function AboutSection() {
                       href={edu.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-navy transition-colors duration-300 hover:underline">
+                      className="hover:text-navy transition-colors duration-300 hover:underline"
+                    >
                       {edu.institution}
                     </a>
                   </h3>
@@ -134,7 +152,8 @@ export default function AboutSection() {
                 {edu.skills.map((skill, skillIdx) => (
                   <span
                     key={skillIdx}
-                    className="skill-box text-xs sm:text-sm py-0.5 px-2 sm:py-1 sm:px-2.5">
+                    className="skill-box text-xs sm:text-sm py-0.5 px-2 sm:py-1 sm:px-2.5"
+                  >
                     {skill}
                   </span>
                 ))}

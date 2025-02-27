@@ -2,7 +2,7 @@ export const education = [
   {
     institution: "Lalbhai Dalpatbhai College of Engineering",
     degree: "Bachelor of Engineering in Electronics & Communications",
-    period: "2021-2025",
+    period: "2022-Present",
     website: "https://ldce.ac.in",
     skills: [
       "VLSI Design",
