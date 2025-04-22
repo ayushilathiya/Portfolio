@@ -431,3 +431,12 @@ html {
 .cube-block:nth-child(9) {
   animation-delay: 0.8s;
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

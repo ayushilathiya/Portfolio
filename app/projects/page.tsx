@@ -12,7 +12,8 @@ export default function ProjectsSection() {
         {projects.map((project, index) => (
           <div
             key={index}
-            className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95 flex flex-col h-full">
+            className="section-box hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/95 flex flex-col h-full"
+          >
             <div className="relative w-full pt-[56.25%] overflow-hidden rounded-t-lg">
               <Image
                 src={project.image}
@@ -34,7 +35,8 @@ export default function ProjectsSection() {
                 {project.techStack.map((tech, techIdx) => (
                   <span
                     key={techIdx}
-                    className="skill-box text-xs sm:text-sm py-0.5 px-2 sm:py-1 sm:px-2.5">
+                    className="skill-box text-xs sm:text-sm py-0.5 px-2 sm:py-1 sm:px-2.5"
+                  >
                     {tech}
                   </span>
                 ))}
@@ -45,7 +47,8 @@ export default function ProjectsSection() {
                   href={project.githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 sm:gap-2 text-navy hover:translate-y-1 transition-all duration-300">
+                  className="flex items-center gap-1 sm:gap-2 text-navy hover:translate-y-1 transition-all duration-300"
+                >
                   <SiGithub className="w-4 h-4 sm:w-5 sm:h-5 text-[#002b59]" />
                   <span className="text-xs sm:text-sm">Code</span>
                 </a>
@@ -53,7 +56,8 @@ export default function ProjectsSection() {
                   href={project.demoLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 sm:gap-2 text-navy hover:translate-y-1 transition-all duration-300">
+                  className="flex items-center gap-1 sm:gap-2 text-navy hover:translate-y-1 transition-all duration-300"
+                >
                   <img
                     src="https://simpleicons.org/icons/youtube.svg"
                     alt="Demo"

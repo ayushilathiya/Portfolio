@@ -23,6 +23,7 @@ export async function GET() {
                     subtitle
                     slug
                     publishedAt
+                    views
                     coverImage {
                       url
                     }
@@ -43,12 +44,12 @@ export async function GET() {
     }
 
     const posts = data.data.publication.posts.edges.map(({ node }: any) => {
-      //   console.log('Node data:', node); // Debug log
       return {
         title: node.title,
         subtitle: node.subtitle,
         slug: node.slug,
         dateAdded: node.publishedAt,
+        views: node.views,
         coverImage: node.coverImage?.url || "",
       };
     });

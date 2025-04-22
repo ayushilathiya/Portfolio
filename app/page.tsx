@@ -6,6 +6,7 @@ import { BackgroundElements } from "@/components/BackgroundElements";
 import { Loading } from "@/components/Loading";
 import { Footer } from "@/components/Footer";
 import AboutSection from "./about/page";
+import SpotlightSection from "./spotlight/page";
 import ProjectsSection from "./projects/page";
 import BlogSection from "./blog/page";
 import ContactSection from "./contact/page";
@@ -25,7 +26,7 @@ export default function Home() {
     if (!mounted) return;
 
     const handleScroll = () => {
-      const sections = ["about", "projects", "blog", "contact"];
+      const sections = ["about", "spotlight", "projects", "blog", "contact"];
       const sectionElements = sections.map((id) => document.getElementById(id));
 
       sectionElements.forEach((section) => {
@@ -66,14 +67,24 @@ export default function Home() {
         {/* About Section */}
         <section
           id="about"
-          className="min-h-screen py-8 sm:py-12 md:py-20 px-3 sm:px-4 md:px-6 lg:px-8">
+          className="min-h-screen py-8 sm:py-12 md:py-20 px-3 sm:px-4 md:px-6 lg:px-8"
+        >
           <AboutSection />
+        </section>
+
+        {/* Spotlight Section */}
+        <section
+          id="spotlight"
+          className="min-h-screen py-20 px-4 sm:px-6 lg:px-8"
+        >
+          <SpotlightSection />
         </section>
 
         {/* Projects Section */}
         <section
           id="projects"
-          className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+          className="min-h-screen py-20 px-4 sm:px-6 lg:px-8"
+        >
           <ProjectsSection />
         </section>
 
@@ -85,7 +96,8 @@ export default function Home() {
         {/* Contact Section */}
         <section
           id="contact"
-          className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+          className="min-h-screen py-20 px-4 sm:px-6 lg:px-8"
+        >
           <ContactSection />
         </section>
 
