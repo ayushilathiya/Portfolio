@@ -1,16 +1,17 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Ayushi Lathiya's Portfolio",
-  description: "Explore Ayushi Lathiya's portfolio showcasing projects and technical skills.",
+  description:
+    "Explore Ayushi Lathiya's portfolio showcasing projects and technical skills.",
   icons: {
     icon: {
-      url: '/favicon.png',
-      type: 'image/png',
+      url: "/favicon.png",
+      type: "image/png",
     },
   },
 };

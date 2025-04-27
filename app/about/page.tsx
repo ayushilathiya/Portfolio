@@ -37,7 +37,7 @@ export default function AboutSection() {
             />
           </div>
 
-          <p className="text-base sm:text-xl text-left">
+          <p className="text-base sm:text-lg text-left">
             As an Embedded Systems Developer and VLSI Enthusiast, I specialize
             in developing cutting-edge solutions at the intersection of hardware
             and software. With a strong foundation in embedded systems

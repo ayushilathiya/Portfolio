@@ -6,39 +6,38 @@ import { useState, useEffect } from "react";
 interface Stats {
   github: {
     repos: number;
-    followers: number;
     stars: number;
   };
   linkedin: {
-    followers: number;
-    connections: number;
+    connections: string;
+    certifications: number;
   };
   hashnode: {
     articles: number;
-    views: number;
+    views: string;
   };
 }
 
 export function SocialLinks() {
   const [stats, setStats] = useState<Stats>({
-    github: { repos: 15, followers: 10, stars: 5 },
-    linkedin: { followers: 85, connections: 150 },
-    hashnode: { articles: 2, views: 827 },
+    github: { repos: 8, stars: 5 },
+    linkedin: { connections: "2K+", certifications: 6 },
+    hashnode: { articles: 6, views: "800+" },
   });
 
   useEffect(() => {
     const fetchStats = async () => {
       setStats({
-        github: { repos: 15, followers: 10, stars: 5 },
-        linkedin: { followers: 2192, connections: 2011 },
-        hashnode: { articles: 6, views: 150 },
+        github: { repos: 8, stars: 5 },
+        linkedin: { connections: "2K+", certifications: 6 },
+        hashnode: { articles: 6, views: "800+" },
       });
     };
     fetchStats();
   }, []);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-lg mx-auto">
+    <div className="flex sm:grid sm:grid-cols-2 md:grid-cols-4 justify-around sm:gap-3 w-full max-w-lg mx-auto px-4 sm:px-0">
       {[
         {
           icon: SiGithub,
@@ -46,7 +45,6 @@ export function SocialLinks() {
           label: "GitHub",
           stats: [
             { label: "Repositories", value: stats.github.repos },
-            { label: "Followers", value: stats.github.followers },
             { label: "Stars", value: stats.github.stars },
           ],
         },
@@ -56,15 +54,15 @@ export function SocialLinks() {
           label: "LinkedIn",
           target: "_blank",
           stats: [
-            { label: "Followers", value: stats.linkedin.followers },
             { label: "Connections", value: stats.linkedin.connections },
+            { label: "Certifications", value: stats.linkedin.certifications },
           ],
         },
         {
           icon: ({ className }: { className: string }) => (
             <svg
               viewBox="0 0 24 24"
-              className="w-5 h-5 -ml-0.3"
+              className="w-6 h-6 -ml-0.3"
               fill="currentColor"
             >
               <path d="M22.351 8.019l-6.37-6.37a5.63 5.63 0 0 0-7.962 0l-6.37 6.37a5.63 5.63 0 0 0 0 7.962l6.37 6.37a5.63 5.63 0 0 0 7.962 0l6.37-6.37a5.63 5.63 0 0 0 0-7.962zM12 15.953a3.953 3.953 0 1 1 0-7.906 3.953 3.953 0 0 1 0 7.906z" />
@@ -86,7 +84,7 @@ export function SocialLinks() {
           href: "/docs/Ayushi_Lathiya_CV.pdf",
           label: "Resume",
           download: true,
-          stats: [{ label: "Format", value: "PDF" }],
+          stats: [{ type: "spacer" }, { label: "Format", value: "PDF" }],
         },
       ].map((social, index) => (
         <a
@@ -95,25 +93,36 @@ export function SocialLinks() {
           target={social.target || "_blank"}
           rel="noopener noreferrer"
           download={social.download}
-          className="aspect-square p-3 bg-navy/5 rounded-xl shadow-md hover:shadow-lg transition-all flex flex-col justify-between items-center hover:bg-navy hover:text-white group"
+          className="p-2 sm:bg-navy/10 sm:rounded-xl sm:shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col gap-1.5 items-center hover:text-navy sm:hover:bg-navy/20 sm:aspect-square"
         >
-          <div className="flex items-center gap-1 w-full justify-center">
+          <div className="flex items-center gap-0.5 justify-center sm:w-full sm:mt-2 sm:mb-6">
             {social.label === "Hashnode" ? (
-              <social.icon className="" />
+              <social.icon className="w-6 h-6 sm:w-5 sm:h-5" />
             ) : (
-              <social.icon className="w-5 h-5" />
+              <social.icon className="w-6 h-6 sm:w-5 sm:h-5" />
             )}
-            <span className="font-medium text-sm">{social.label}</span>
+            <span className="font-medium text-xs sm:text-sm hidden sm:inline">
+              {social.label}
+            </span>
           </div>
-          <div className="flex flex-col gap-1 w-full">
-            {social.stats.map((stat, i) => (
-              <div key={i} className="flex justify-between items-center w-full">
-                <span className="text-[10px] text-gray-600 group-hover:text-gray-300">
-                  {stat.label}
-                </span>
-                <span className="font-semibold text-xs">{stat.value}</span>
-              </div>
-            ))}
+
+          <div className="hidden sm:flex flex-col gap-0.5 w-full">
+            {social.stats.map((stat, i) => {
+              if ("type" in stat && stat.type === "spacer") {
+                return <div key={i} className="h-4" />; // blank space here
+              }
+              return (
+                <div
+                  key={i}
+                  className="flex justify-between items-center w-full"
+                >
+                  <span className="text-[10px] align-right text-gray-600 group-hover:text-gray-300">
+                    {stat.label}
+                  </span>
+                  <span className="font-semibold text-xs">{stat.value}</span>
+                </div>
+              );
+            })}
           </div>
         </a>
       ))}

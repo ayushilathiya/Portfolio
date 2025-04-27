@@ -57,7 +57,7 @@ export default function BlogSection() {
           {showLeftArrow && (
             <button
               onClick={() => scroll("left")}
-              className="absolute left-0 top-1/2 z-10 bg-white/80 rounded-full p-2 shadow-lg transform -translate-y-1/2 hover:bg-white transition-colors"
+              className="absolute left-0 top-1/2 z-10 bg-white/80 rounded-full p-2 shadow-lg transform -translate-y-1/2 sm:hover:bg-navy/10 transition-colors"
             >
               <svg
                 className="w-6 h-6 text-navy"
