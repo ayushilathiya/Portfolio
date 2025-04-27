@@ -16,11 +16,4 @@ export const education = [
       "Signal Processing",
     ],
   },
-  {
-    institution: "The H. B. Kapadia New High School",
-    degree: "Higher Secondary Education",
-    period: "2021-2022",
-    website: "https://hbkapadia.com/",
-    skills: ["Physics", "Mathematics", "Chemistry", "Computer Science"],
-  },
 ];

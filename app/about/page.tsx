@@ -24,9 +24,6 @@ export default function AboutSection() {
           </div>
 
           <div className="typewriter-container">
-            {/* <h1 className="text-2xl sm:text-3xl font-bold text-left typewriter mb-4">
-              Hi, I'm Ayushi Lathiya
-            </h1> */}
             <TypeAnimation
               sequence={["Hi, I'm Ayushi Lathiya", 1000, "", 100]}
               wrapper="h1"
@@ -40,7 +37,7 @@ export default function AboutSection() {
             />
           </div>
 
-          <p className="text-base sm:text-lg text-left">
+          <p className="text-base sm:text-xl text-left">
             As an Embedded Systems Developer and VLSI Enthusiast, I specialize
             in developing cutting-edge solutions at the intersection of hardware
             and software. With a strong foundation in embedded systems
@@ -86,7 +83,7 @@ export default function AboutSection() {
           {responsibilities.map((pos, idx) => (
             <div
               key={idx}
-              className="p-4 sm:p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="p-4 sm:p-6 rounded-xl bg-navy/5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-navy/10"
             >
               <a
                 href={pos.link}
@@ -126,7 +123,7 @@ export default function AboutSection() {
           {education.map((edu, idx) => (
             <div
               key={idx}
-              className="p-4 sm:p-6 rounded-lg bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="p-4 sm:p-6 rounded-xl bg-navy/5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-navy/10"
             >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-1 sm:gap-0">
                 <div>

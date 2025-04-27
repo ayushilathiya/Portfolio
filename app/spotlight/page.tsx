@@ -12,6 +12,13 @@ const spotlights = [
     link: "https://www.linkedin.com/posts/ayushilathiya_healthathon25-msbcgroup-iamapatient-activity-7311730105838440448-xLfs?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEh_BiUBi8YD7gc5H6xB5Xq1d11SbaKNlz8",
   },
   {
+    title: "SSIP 2.0 Innovator | Student-Led Innovation and Startups",
+    description:
+      "Received financial support under the Student Startup and Innovation Policy (SSIP 2.0) for my innovation, recognized at the Proof of Concept (PoC) stage. This support acknowledges the potential and feasibility of the proposed solution along with the real-world implementation of the same.",
+    image: "/ssip.png",
+    link: "https://www.linkedin.com/posts/ayushilathiya_infinityai-artificialintelligence-aicommunity-activity-7281526689388466176-MBuq?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEh_BiUBi8YD7gc5H6xB5Xq1d11SbaKNlz8",
+  },
+  {
     title: "Semiconductor Manufacturing Workshop | IIT Gandhinagar",
     description:
       "Participated in an advanced workshop hosted by SEMI, ESSCI, and IESA focused on semiconductor packaging, vacuum systems, and display technology. The event featured expert sessions from academia and industry leaders such as STMicroelectronics, IIT Guwahati, and IESA, exploring critical domains of India’s semiconductor ecosystem.",
