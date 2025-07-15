@@ -20,17 +20,17 @@ interface Stats {
 
 export function SocialLinks() {
   const [stats, setStats] = useState<Stats>({
-    github: { repos: 8, stars: 5 },
-    linkedin: { connections: "2K+", certifications: 6 },
-    hashnode: { articles: 6, views: "800+" },
+    github: { repos: 13, stars: 5 },
+    linkedin: { connections: "2K+", certifications: 7 },
+    hashnode: { articles: 10, views: "1K+" },
   });
 
   useEffect(() => {
     const fetchStats = async () => {
       setStats({
-        github: { repos: 8, stars: 5 },
-        linkedin: { connections: "2K+", certifications: 6 },
-        hashnode: { articles: 6, views: "800+" },
+        github: { repos: 13, stars: 5 },
+        linkedin: { connections: "2K+", certifications: 7 },
+        hashnode: { articles: 10, views: "1K+" },
       });
     };
     fetchStats();
@@ -93,9 +93,9 @@ export function SocialLinks() {
           target={social.target || "_blank"}
           rel="noopener noreferrer"
           download={social.download}
-          className="p-2 sm:bg-navy/10 sm:rounded-xl sm:shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col gap-1.5 items-center hover:text-navy sm:hover:bg-navy/20 sm:aspect-square"
+          className="p-1.5 sm:bg-navy/10 sm:rounded-xl sm:shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col gap-1 items-center hover:text-navy sm:hover:bg-navy/20"
         >
-          <div className="flex items-center gap-0.5 justify-center sm:w-full sm:mt-2 sm:mb-6">
+          <div className="flex items-center gap-0.5 justify-center sm:w-full sm:mt-0 sm:mb-2">
             {social.label === "Hashnode" ? (
               <social.icon className="w-6 h-6 sm:w-5 sm:h-5" />
             ) : (
@@ -109,14 +109,14 @@ export function SocialLinks() {
           <div className="hidden sm:flex flex-col gap-0.5 w-full">
             {social.stats.map((stat, i) => {
               if ("type" in stat && stat.type === "spacer") {
-                return <div key={i} className="h-4" />; // blank space here
+                return <div key={i} className="h-2" />; // blank space here
               }
               return (
                 <div
                   key={i}
                   className="flex justify-between items-center w-full"
                 >
-                  <span className="text-[10px] align-right text-gray-600 group-hover:text-gray-300">
+                  <span className="text-[10px] align-right text-gray-800 group-hover:text-gray-300">
                     {stat.label}
                   </span>
                   <span className="font-semibold text-xs">{stat.value}</span>

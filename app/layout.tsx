@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Ayushi Lathiya's Portfolio",
   description:
-    "Explore Ayushi Lathiya's portfolio showcasing projects and technical skills.",
+    "From circuit design to AI-powered health tech, explore Ayushi Lathiya's journey through engineering and innovation.",
   icons: {
     icon: {
       url: "/favicon.png",
