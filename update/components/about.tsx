@@ -3,16 +3,11 @@
 import { profile } from '@/data/profile';
 
 export default function About() {
-  const registers = [
-    ...profile.specs.map((spec) => ({
-      key: spec.field,
-      value: spec.value,
-    })),
-    {
-      key: 'DESCRIPTION',
-      value: profile.bio.join(' '),
-    },
-  ];
+  const registers = profile.registers.map((reg) => ({
+    key: reg.field,
+    addr: reg.addr,
+    value: reg.value,
+  }));
 
   return (
     <div className="panel-content">
@@ -24,16 +19,9 @@ export default function About() {
           <div className="divide-y divide-border">
             {registers.map((reg) => (
               <div key={reg.key} className="register-row last:border-0">
+                <span className="register-key">{reg.addr}</span>
                 <span className="register-key">{reg.key}</span>
-                <span
-                  className={
-                    reg.key === 'DESCRIPTION'
-                      ? 'text-text-primary text-xs leading-relaxed'
-                      : 'register-val'
-                  }
-                >
-                  {reg.value}
-                </span>
+                <span className="register-val">{reg.value}</span>
               </div>
             ))}
           </div>
@@ -60,20 +48,13 @@ export default function About() {
               </tr>
             </thead>
             <tbody>
-              {profile.specs.map((spec, index) => (
-                <tr key={spec.field} className="border-b border-border">
-                  <td className="py-2 text-text-muted">0x{String(index).padStart(2, '0')}</td>
-                  <td className="py-2 text-accent">{spec.value}</td>
+              {profile.registers.map((reg) => (
+                <tr key={reg.field} className="border-b border-border">
+                  <td className="py-2 text-text-muted">{reg.addr}</td>
+                  <td className="py-2 text-accent">{reg.value}</td>
                   <td className="py-2 text-text-muted">rw</td>
                 </tr>
               ))}
-              <tr>
-                <td className="py-2 text-text-muted">0x04</td>
-                <td className="py-2 text-text-primary">locked</td>
-                <td className="py-2">
-                  <div className="status-led status-led-verified inline-block" aria-label="verified" />
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>

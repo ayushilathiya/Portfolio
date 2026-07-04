@@ -8,6 +8,7 @@ import ProcPanel from '@/components/proc-panel';
 import Projects from '@/components/projects';
 import DocsPanel from '@/components/docs-panel';
 import Contact from '@/components/contact';
+import HelpPanel from '@/components/help-panel';
 import {
   SECTION_STORAGE_KEY,
   PROC_TAB_STORAGE_KEY,
@@ -20,7 +21,7 @@ import {
 export default function AppShell() {
   const [bootComplete, setBootComplete] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>('proc');
-  const [initialProcTab, setInitialProcTab] = useState<ProcTabId>('about');
+  const [initialProcTab, setInitialProcTab] = useState<ProcTabId>('whoami');
 
   useEffect(() => {
     const storedSection = sessionStorage.getItem(SECTION_STORAGE_KEY);
@@ -70,6 +71,8 @@ export default function AppShell() {
             <Contact />
           </SectionPanel>
         </main>
+
+        <HelpPanel />
       </div>
     </div>
   );

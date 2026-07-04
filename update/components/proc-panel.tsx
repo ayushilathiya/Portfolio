@@ -1,77 +1,88 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { procTabs, type ProcTabId } from '@/lib/sections';
 import { profile } from '@/data/profile';
 import { education } from '@/data/education';
 import { responsibilities } from '@/data/responsibilities';
 import { experienceEntries } from '@/data/experience';
-import { skills, type SkillDomain } from '@/data/skills';
-import { idleEntries, type IdleEntry } from '@/data/idle';
+import SkillMesh from '@/components/skill-mesh';
+import IdleBlock from '@/components/idle-block';
+import SectionVisual, { DomainAccent } from '@/components/section-visual';
 import { cn } from '@/lib/utils';
-
-const domainOrder: SkillDomain[] = ['embedded', 'vlsi', 'iot', 'software'];
-const nodeClass: Record<SkillDomain, string> = {
-  embedded: 'dev-node-embedded',
-  vlsi: 'dev-node-vlsi',
-  iot: 'dev-node-iot',
-  software: 'dev-node-software',
-};
-
-function IdleIcon({ type }: { type: IdleEntry['icon'] }) {
-  const props = {
-    className: 'w-3.5 h-3.5 shrink-0 text-text-secondary',
-    viewBox: '0 0 24 24',
-    fill: 'none',
-    stroke: 'currentColor',
-    strokeWidth: 1.25,
-    'aria-hidden': true as const,
-  };
-
-  switch (type) {
-    case 'crochet':
-      return (
-        <svg {...props}>
-          <path d="M8 4c0 4 4 6 8 6" strokeLinecap="round" />
-          <path d="M6 20c2-6 6-10 12-10" strokeLinecap="round" />
-        </svg>
-      );
-    case 'plant':
-      return (
-        <svg {...props}>
-          <path d="M12 22V12" />
-          <path d="M12 12C12 6 6 4 4 8c4-1 6 2 8 4" strokeLinecap="round" />
-        </svg>
-      );
-    case 'book':
-      return (
-        <svg {...props}>
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-        </svg>
-      );
-    case 'coffee':
-      return (
-        <svg {...props}>
-          <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
-          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
-        </svg>
-      );
-    case 'walk':
-      return (
-        <svg {...props}>
-          <circle cx="12" cy="4" r="2" />
-          <path d="M10 22V12l-2 4M14 22V12l2 4" strokeLinecap="round" />
-        </svg>
-      );
-  }
-}
 
 interface ProcPanelProps {
   initialTab?: ProcTabId;
 }
 
-export default function ProcPanel({ initialTab = 'about' }: ProcPanelProps) {
+const BOOT_STEPS = [
+  '[0.0001] power-on reset',
+  '[0.0012] enumerating buses…',
+  '[0.0024] device online — handshake ok',
+];
+
+function DeviceOnlineIntro() {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (step >= BOOT_STEPS.length) return;
+    const t = setTimeout(() => setStep((s) => s + 1), 450);
+    return () => clearTimeout(t);
+  }, [step]);
+
+  return (
+    <div className="amber-box p-4 mb-4 font-mono text-xs space-y-2 relative overflow-hidden">
+      <SectionVisual tab="whoami" />
+      <div className="space-y-1 text-text-secondary">
+        {BOOT_STEPS.slice(0, step).map((line) => (
+          <div key={line} className="flex items-center gap-2">
+            <div className="status-led status-led-online shrink-0" aria-hidden="true" />
+            <span>{line}</span>
+          </div>
+        ))}
+      </div>
+      {step >= BOOT_STEPS.length && (
+        <>
+          <p className="text-text-primary text-sm md:text-base pt-1">
+            Hi, I&apos;m <span className="text-accent-amber">{profile.name}</span>
+          </p>
+          <p className="text-text-secondary leading-relaxed">{profile.intro}</p>
+          <p className="text-text-muted text-[11px]">{profile.bio[0]}</p>
+        </>
+      )}
+    </div>
+  );
+}
+
+function ConnectedDevices() {
+  return (
+    <div className="amber-box p-4 relative">
+      <p className="mono-label mb-3">connected devices</p>
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" aria-hidden="true">
+        <line x1="15%" y1="50%" x2="85%" y2="50%" stroke="var(--accent-amber)" strokeWidth="0.5" />
+      </svg>
+      <div className="flex flex-wrap gap-3 relative z-10">
+        {profile.devices.map((dev) => (
+          <a
+            key={dev.id}
+            href={dev.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mesh-node flex-col items-start gap-0.5 px-3 py-2 min-w-[140px] hover:text-accent-amber hover:border-accent-amber transition-colors duration-200 ease-out"
+          >
+            <span className="mesh-dot" />
+            <span className="text-[10px] text-text-muted">{dev.id}</span>
+            <span className="text-text-primary text-[11px]">{dev.label}</span>
+            <span className="text-text-muted text-[10px] truncate max-w-[130px]">{dev.addr}</span>
+            <span className="text-[9px] text-status-verified mt-0.5">● linked</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
   const [activeTab, setActiveTab] = useState<ProcTabId>(initialTab);
 
   const workEntries = experienceEntries.filter((e) => e.type === 'work');
@@ -79,35 +90,43 @@ export default function ProcPanel({ initialTab = 'about' }: ProcPanelProps) {
 
   const renderContent = useCallback(() => {
     switch (activeTab) {
-      case 'about':
+      case 'whoami':
         return (
           <div className="space-y-4">
-            <div>
-              <h3 className="font-display text-xl text-text-primary mb-1">{profile.name}</h3>
-              <p className="font-mono text-xs text-text-secondary lowercase">{profile.title.toLowerCase()}</p>
-              <p className="font-mono text-xs text-text-muted mt-3 leading-relaxed">{profile.intro}</p>
-            </div>
-            <div className="panel p-4">
+            <DeviceOnlineIntro />
+            <div className="amber-box p-4 relative">
+              <SectionVisual tab="whoami" />
               <p className="mono-label mb-3">register map</p>
-              {profile.specs.map((spec) => (
-                <div key={spec.field} className="register-row last:border-0">
-                  <span className="register-key">{spec.field}</span>
-                  <span className="register-val">{spec.value}</span>
-                </div>
-              ))}
-              <div className="register-row border-0">
-                <span className="register-key">DESCRIPTION</span>
-                <span className="text-text-secondary text-xs leading-relaxed">{profile.bio.join(' ')}</span>
-              </div>
+              <table className="w-full font-mono text-[11px]">
+                <thead>
+                  <tr className="text-text-muted text-left border-b border-border">
+                    <th className="pb-2 pr-3 font-normal">ADDR</th>
+                    <th className="pb-2 pr-3 font-normal">FIELD</th>
+                    <th className="pb-2 font-normal">VALUE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {profile.registers.map((reg) => (
+                    <tr key={reg.addr} className="border-b border-border last:border-0">
+                      <td className="py-2 pr-3 text-accent-amber">{reg.addr}</td>
+                      <td className="py-2 pr-3 text-text-muted">{reg.field}</td>
+                      <td className="py-2 text-text-secondary">{reg.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
+            <ConnectedDevices />
           </div>
         );
 
-      case 'education':
+      case 'bootloader':
         return (
-          <div className="space-y-3">
+          <div className="space-y-3 relative">
+            <SectionVisual tab="bootloader" />
+            <DomainAccent domain="vlsi" />
             {education.map((edu) => (
-              <div key={edu.institution} className="panel p-4">
+              <div key={edu.institution} className="amber-box p-4">
                 <a
                   href={edu.website}
                   target="_blank"
@@ -118,42 +137,27 @@ export default function ProcPanel({ initialTab = 'about' }: ProcPanelProps) {
                 </a>
                 <p className="font-mono text-xs text-text-secondary mt-1">{edu.degree}</p>
                 <p className="font-mono text-xs text-text-muted mt-1">{edu.period}</p>
+                <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-border">
+                  {edu.skills.map((s) => (
+                    <span key={s} className="mesh-node text-[10px]">{s}</span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         );
 
-      case 'study':
+      case 'runtime':
         return (
-          <div className="panel p-4">
-            <p className="mono-label mb-3">coursework & focus areas</p>
-            <div className="flex flex-wrap gap-1.5">
-              {education[0].skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="font-mono text-[11px] px-2 py-1 border border-border rounded-sm text-text-secondary"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        );
-
-      case 'experience':
-        return (
-          <div className="space-y-2">
+          <div className="space-y-2 relative">
+            <SectionVisual tab="runtime" />
+            <DomainAccent domain="embedded" />
             {workEntries.map((entry) => (
-              <div key={entry.title} className="panel p-3 log-line">
+              <div key={entry.title} className="amber-box p-3 log-line">
                 <div className="flex flex-wrap gap-x-2 text-[11px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
                   {entry.link ? (
-                    <a
-                      href={entry.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out"
-                    >
+                    <a href={entry.link} target="_blank" rel="noopener noreferrer" className="text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out">
                       {entry.title}
                     </a>
                   ) : (
@@ -168,20 +172,19 @@ export default function ProcPanel({ initialTab = 'about' }: ProcPanelProps) {
           </div>
         );
 
-      case 'achievements':
+      case 'beacon':
         return (
-          <div className="space-y-2">
+          <div className="space-y-3 relative">
+            <SectionVisual tab="beacon" />
+            <DomainAccent domain="space" />
+            <p className="mono-label">beacon tx — achievements & contributions</p>
             {achievementEntries.map((entry) => (
-              <div key={entry.title} className="panel p-3 log-line">
+              <div key={entry.title} className="amber-box p-3 log-line">
                 <div className="flex flex-wrap gap-x-2 text-[11px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
+                  <span className="text-accent-amber text-[10px]">TX</span>
                   {entry.link ? (
-                    <a
-                      href={entry.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out"
-                    >
+                    <a href={entry.link} target="_blank" rel="noopener noreferrer" className="text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out">
                       {entry.title}
                     </a>
                   ) : (
@@ -192,86 +195,24 @@ export default function ProcPanel({ initialTab = 'about' }: ProcPanelProps) {
                 <p className="text-text-muted text-[10px] mt-1 leading-relaxed">{entry.description}</p>
               </div>
             ))}
-          </div>
-        );
-
-      case 'contributions':
-        return (
-          <div className="space-y-3">
             {responsibilities.map((pos) => (
-              <div key={pos.title} className="panel p-4">
-                <a
-                  href={pos.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out"
-                >
+              <div key={pos.title} className="amber-box p-4">
+                <a href={pos.link} target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out">
                   {pos.title}
                 </a>
-                <p className="font-mono text-xs text-text-secondary mt-1">
-                  {pos.org} · {pos.period}
-                </p>
+                <p className="font-mono text-xs text-text-secondary mt-1">{pos.org} · {pos.period}</p>
                 <p className="font-mono text-xs text-text-muted mt-2 leading-relaxed">{pos.desc}</p>
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {pos.skills.map((s) => (
-                    <span key={s} className="font-mono text-[10px] px-1.5 py-0.5 border border-border text-text-muted rounded-sm">
-                      {s}
-                    </span>
-                  ))}
-                </div>
               </div>
             ))}
           </div>
         );
 
-      case 'skills': {
-        const grouped = domainOrder.map((domain) => ({
-          domain,
-          items: skills.filter((s) => s.domain === domain),
-        }));
+      case 'dev':
         return (
-          <div className="panel p-3">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              {grouped.map(({ domain, items }) => (
-                <div key={domain}>
-                  <p className="mono-label mb-2 lowercase">{domain}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {items.map((skill) => (
-                      <a
-                        key={skill.name}
-                        href={skill.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={cn('dev-node text-[10px]', nodeClass[domain])}
-                      >
-                        {skill.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      }
-
-      case 'idle':
-        return (
-          <div className="panel p-3 font-mono text-xs">
-            <p className="text-text-muted mb-2 text-[11px]">
-              <span className="text-text-secondary">[idle]</span> cpu task — off-duty log
-            </p>
-            <div className="space-y-1">
-              {idleEntries.map((entry) => (
-                <div key={entry.timestamp + entry.message} className="flex gap-2 py-1.5 border-b border-border last:border-0">
-                  <IdleIcon type={entry.icon} />
-                  <div>
-                    <span className="text-text-muted">[{entry.timestamp}]</span>{' '}
-                    <span className="text-text-secondary">{entry.message}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="relative">
+            <SectionVisual tab="dev" />
+            <DomainAccent domain="iot" />
+            <SkillMesh />
           </div>
         );
 
@@ -281,36 +222,56 @@ export default function ProcPanel({ initialTab = 'about' }: ProcPanelProps) {
   }, [activeTab, workEntries, achievementEntries]);
 
   return (
-    <div className="panel-content">
-      <h2 className="section-header">/proc</h2>
-
-      {/* Secondary sub-nav — always visible, horizontal scroll on mobile */}
-      <div
-        className="shrink-0 flex gap-1 overflow-x-auto scrollbar-hide border-b border-border pb-0 mb-4 -mx-1 px-1"
-        role="tablist"
-        aria-label="Process sub-sections"
-      >
-        {procTabs.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            role="tab"
-            aria-selected={activeTab === tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={cn(
-              'shrink-0 px-2.5 py-1.5 font-mono text-[10px] md:text-xs text-text-muted transition-all duration-200 ease-out border-b-2 -mb-px',
-              activeTab === tab.id
-                ? 'border-accent-amber text-text-primary'
-                : 'border-transparent hover:text-text-secondary'
-            )}
+    <div className="panel-content proc-layout">
+      <div className="flex-1 min-h-0 flex flex-col md:flex-row relative">
+        {/* Sidebar */}
+        <aside className="shrink-0 md:w-28 lg:w-32 flex flex-col md:border-r md:border-border">
+          <nav
+            className="flex md:flex-col gap-0 overflow-x-auto md:overflow-visible scrollbar-hide py-1 shrink-0"
+            role="tablist"
+            aria-label="/proc explorer"
           >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+            {procTabs.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={cn(
+                  'shrink-0 text-left px-3 py-2 font-mono text-[11px] transition-all duration-200 ease-out',
+                  'border-b-2 md:border-b-0 md:border-l-2',
+                  activeTab === tab.id
+                    ? 'border-accent-amber text-text-primary'
+                    : 'border-transparent text-text-muted hover:text-text-secondary'
+                )}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </nav>
 
-      <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll" role="tabpanel">
-        <div className="transition-opacity duration-200 ease-out">{renderContent()}</div>
+          {/* Trace between nav and idle */}
+          <div className="hidden md:block mx-3 border-t border-border-strong" aria-hidden="true" />
+
+          <div className="hidden md:block p-2 shrink-0">
+            <IdleBlock compact />
+          </div>
+        </aside>
+
+        {/* Mobile idle */}
+        <div className="md:hidden p-2 shrink-0 border-b border-border">
+          <IdleBlock compact />
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll p-2 md:p-4 relative" role="tabpanel">
+          {/* Vertical trace desktop */}
+          <svg className="hidden md:block absolute left-0 top-4 bottom-4 w-3 pointer-events-none opacity-40" aria-hidden="true">
+            <line x1="2" y1="0" x2="2" y2="100%" stroke="var(--accent-amber)" strokeWidth="0.5" />
+          </svg>
+          <div className="md:pl-3 transition-opacity duration-200 ease-out">{renderContent()}</div>
+        </div>
       </div>
     </div>
   );

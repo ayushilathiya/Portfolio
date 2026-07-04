@@ -8,14 +8,11 @@ export const sections = [
 export type SectionId = (typeof sections)[number]['id'];
 
 export const procTabs = [
-  { id: 'about', label: 'About' },
-  { id: 'education', label: 'Education' },
-  { id: 'study', label: 'Study' },
-  { id: 'experience', label: 'Work Experience' },
-  { id: 'achievements', label: 'Achievements' },
-  { id: 'contributions', label: 'Contributions' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'idle', label: 'Idle' },
+  { id: 'whoami', label: 'whoami' },
+  { id: 'bootloader', label: 'bootloader' },
+  { id: 'runtime', label: 'runtime' },
+  { id: 'beacon', label: 'beacon' },
+  { id: 'dev', label: '/dev' },
 ] as const;
 
 export type ProcTabId = (typeof procTabs)[number]['id'];
@@ -42,15 +39,20 @@ export const legacySectionMap: Record<string, SectionId> = {
 };
 
 export const legacyProcTabMap: Record<string, ProcTabId> = {
-  about: 'about',
-  education: 'education',
-  study: 'study',
-  experience: 'experience',
-  work: 'experience',
-  achievements: 'achievements',
-  contributions: 'contributions',
-  skills: 'skills',
-  idle: 'idle',
+  about: 'whoami',
+  whoami: 'whoami',
+  education: 'bootloader',
+  bootloader: 'bootloader',
+  study: 'bootloader',
+  experience: 'runtime',
+  runtime: 'runtime',
+  work: 'runtime',
+  achievements: 'beacon',
+  contributions: 'beacon',
+  beacon: 'beacon',
+  skills: 'dev',
+  dev: 'dev',
+  '/dev': 'dev',
 };
 
 export function isSectionId(value: string): value is SectionId {

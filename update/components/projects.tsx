@@ -1,61 +1,84 @@
 'use client';
 
 import { Github, ExternalLink } from 'lucide-react';
-import { projects } from '@/data/projects';
+import { projects, type ProjectStatus } from '@/data/projects';
 import DomainIcon from '@/components/domain-icon';
+import SectionVisual, { DomainAccent } from '@/components/section-visual';
 
-const statusConfig = {
-  active: { led: 'status-led-active', label: 'ACTIVE' },
-  verified: { led: 'status-led-verified', label: 'SHIPPED' },
-  archived: { led: 'status-led-dim', label: 'ARCHIVED' },
+const statusLed: Record<ProjectStatus, string> = {
+  live: 'status-led-verified',
+  deployed: 'status-led-verified',
+  active: 'status-led-active',
+  built: 'status-led-active',
+  archived: 'status-led-dim',
 };
+
+const domainAccentMap = {
+  EMBEDDED: 'embedded',
+  VLSI: 'vlsi',
+  IoT: 'iot',
+  SPACE: 'space',
+  HEALTH: 'health',
+} as const;
 
 export default function Projects() {
   return (
-    <div className="panel-content">
-      <h2 className="section-header">/modules</h2>
+    <div className="panel-content relative">
+      <SectionVisual tab="modules" />
 
-      <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll">
-        <div className="grid sm:grid-cols-2 gap-3">
+      <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative">
+        <DomainAccent domain="embedded" />
+
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none hidden sm:block opacity-35"
+          viewBox="0 0 800 600"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path d="M 380 80 L 420 80 L 420 280 L 380 280" fill="none" stroke="var(--accent-amber)" strokeWidth="0.75" />
+          <path d="M 380 320 L 420 320 L 420 520 L 380 520" fill="none" stroke="var(--border-strong)" strokeWidth="0.75" />
+          <path d="M 400 280 L 400 320" fill="none" stroke="var(--accent-amber)" strokeWidth="0.5" opacity="0.6" />
+        </svg>
+
+        <div className="grid sm:grid-cols-2 gap-3 relative z-10">
           {projects.map((project) => (
             <div
               key={project.title}
-              className="panel p-3 md:p-4 group hover:border-border-strong transition-colors duration-200 ease-out"
+              className="amber-box p-3 md:p-4 group hover:border-accent-amber/40 transition-colors duration-200 ease-out relative overflow-hidden"
             >
-              <div className="flex items-center justify-between mb-2 gap-2">
+              <DomainAccent domain={domainAccentMap[project.domain]} />
+
+              <div className="flex items-center justify-between mb-2 gap-2 relative z-10">
                 <div className="flex items-center gap-2">
                   <div
-                    className={`status-led ${statusConfig[project.status].led}`}
-                    aria-label={statusConfig[project.status].label}
+                    className={`status-led ${statusLed[project.status]}`}
+                    aria-label={project.statusLabel}
                   />
-                  <span className="mono-label text-[10px]">{statusConfig[project.status].label}</span>
+                  <span className="mono-label text-[10px]">{project.statusLabel}</span>
                 </div>
-                <span className="flex items-center gap-1 font-mono text-[10px] text-text-muted uppercase">
+                <span className="mesh-node text-[10px] uppercase flex items-center gap-1 py-0.5">
                   <DomainIcon domain={project.domain} className="w-3 h-3" />
                   {project.domain}
                 </span>
               </div>
 
-              <h3 className="font-mono text-sm text-text-primary mb-1 group-hover:text-accent-amber transition-colors duration-200 ease-out">
+              <h3 className="font-mono text-sm text-text-primary mb-1 group-hover:text-accent-amber transition-colors duration-200 ease-out relative z-10">
                 {project.title}
               </h3>
-              <p className="font-mono text-[11px] text-text-muted leading-relaxed mb-2 line-clamp-3">
+              <p className="font-mono text-[11px] text-text-muted leading-relaxed mb-2 line-clamp-3 relative z-10">
                 {project.description}
               </p>
 
-              <div className="flex flex-wrap gap-1 mb-2">
+              <div className="flex flex-wrap gap-1 mb-2 relative z-10">
                 {project.tech.slice(0, 4).map((tech) => (
-                  <span
-                    key={tech}
-                    className="font-mono text-[10px] px-1.5 py-0.5 border border-border text-text-muted rounded-sm"
-                  >
+                  <span key={tech} className="mesh-node text-[10px]">
                     {tech}
                   </span>
                 ))}
               </div>
 
               {project.links && (
-                <div className="flex gap-2">
+                <div className="flex gap-2 relative z-10">
                   {project.links.map((link) => (
                     <a
                       key={link.type}

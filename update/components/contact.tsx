@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import SectionVisual from '@/components/section-visual';
 
 export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -33,9 +34,7 @@ export default function Contact() {
         {
           method: 'POST',
           body: formData,
-          headers: {
-            Accept: 'application/json',
-          },
+          headers: { Accept: 'application/json' },
         }
       );
 
@@ -54,11 +53,11 @@ export default function Contact() {
   }
 
   return (
-    <div className="panel-content">
-      <h2 className="section-header">/uart</h2>
+    <div className="panel-content relative">
+      <SectionVisual tab="uart" />
 
       <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full min-h-0 overflow-y-auto panel-inner-scroll">
-        <div className="panel p-4 md:p-5">
+        <div className="amber-box p-4 md:p-5 relative">
           <div className="font-mono text-sm mb-4">
             <span className="text-accent-amber">{'>'}</span>
             <span className="text-text-primary ml-2">connect --with ayushi</span>
@@ -77,7 +76,6 @@ export default function Contact() {
                   className="bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-xs h-9"
                 />
               </div>
-
               <div>
                 <label className="block font-mono text-[11px] text-text-muted mb-1">email</label>
                 <Input
@@ -89,7 +87,6 @@ export default function Contact() {
                   className="bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-xs h-9"
                 />
               </div>
-
               <div>
                 <label className="block font-mono text-[11px] text-text-muted mb-1">message</label>
                 <Textarea
@@ -100,11 +97,7 @@ export default function Contact() {
                   disabled={isSubmitting}
                 />
               </div>
-
-              {error && (
-                <p className="font-mono text-[11px] text-text-secondary text-center">{error}</p>
-              )}
-
+              {error && <p className="font-mono text-[11px] text-text-secondary text-center">{error}</p>}
               <Button
                 type="submit"
                 disabled={isSubmitting}

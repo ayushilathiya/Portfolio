@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react';
 
 const bootLines = [
-  { text: '[ 0.0021 ] initializing kernel...', delay: 0 },
-  { text: '[ 0.0342 ] loading modules: embedded.ko vlsi.ko', delay: 400 },
-  { text: '[ 0.0589 ] mounting /ayushi...', delay: 700 },
-  { text: '[ 0.0842 ] probe: silicon.status = VERIFIED', delay: 1000 },
-  { text: '[ 0.1100 ] trace: signal locked', delay: 1300 },
-  { text: '[ 0.1300 ] system: ONLINE // ready', delay: 1600 },
+  { text: '[ 0.0021 ] portfolio.sys — power-on reset', delay: 0 },
+  { text: '[ 0.0342 ] loading: embedded.ko vlsi.ko iot.ko', delay: 400 },
+  { text: '[ 0.0589 ] mounting /proc/ayushi…', delay: 700 },
+  { text: '[ 0.0842 ] probe: device tree — all nodes ok', delay: 1000 },
+  { text: '[ 0.1100 ] link up: github · linkedin enumerated', delay: 1300 },
+  { text: '[ 0.1300 ] shell ready — welcome', delay: 1600 },
 ];
 
 export default function BootSequence({

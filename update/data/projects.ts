@@ -1,11 +1,12 @@
 export type ProjectDomain = 'EMBEDDED' | 'VLSI' | 'IoT' | 'SPACE' | 'HEALTH';
-export type ProjectStatus = 'active' | 'verified' | 'archived';
+export type ProjectStatus = 'active' | 'built' | 'deployed' | 'live' | 'archived';
 
 export interface Project {
   title: string;
   domain: ProjectDomain;
   description: string;
   status: ProjectStatus;
+  statusLabel: string;
   tech: string[];
   links?: { type: 'github' | 'demo'; url: string }[];
 }
@@ -15,9 +16,10 @@ export const projects: Project[] = [
     title: 'Gesture-Controlled Car',
     domain: 'IoT',
     description:
-      "Developed a gesture-controlled system interpreting real-time hand gestures to wirelessly command the car's movements via ESP-NOW protocol, ensuring low-latency communication. Second phase of the Wi-Fi car series with enhanced gesture recognition.",
-    status: 'verified',
-    tech: ['IoT', 'Wireless Communication', 'Embedded Systems', 'ESP-NOW'],
+      "Gesture-controlled system using ESP-NOW for low-latency wireless car control — phase two of the Wi-Fi car series.",
+    status: 'live',
+    statusLabel: 'LIVE',
+    tech: ['IoT', 'ESP-NOW', 'Embedded Systems'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/Gesture_Controlled_Car' },
       { type: 'demo', url: 'https://youtu.be/n70FIHps4CA' },
@@ -27,9 +29,10 @@ export const projects: Project[] = [
     title: 'Live ECG Monitoring System',
     domain: 'HEALTH',
     description:
-      'ESP-based IoT ECG monitoring system utilizing the ECG sensor for real-time cardiac signal acquisition and wireless transmission. Implements signal filtering for noise reduction and cloud integration for remote monitoring via ThingSpeak.',
-    status: 'verified',
-    tech: ['Real-time Data Acquisition', 'ThingSpeak API', 'MIT App Inventor', 'ESP32'],
+      'ESP-based IoT ECG monitor with signal filtering and ThingSpeak cloud integration for remote cardiac monitoring.',
+    status: 'deployed',
+    statusLabel: 'DEPLOYED',
+    tech: ['ESP32', 'ThingSpeak', 'MIT App Inventor'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/ECG-Monitoring' },
       { type: 'demo', url: 'https://youtu.be/EAjrd2bCG9A' },
@@ -39,9 +42,10 @@ export const projects: Project[] = [
     title: 'WiFi-Controlled Car',
     domain: 'IoT',
     description:
-      'Engineered a wireless-controlled vehicle using ESP8266 NodeMCU, featuring real-time control through a custom mobile interface. Implemented smooth motion control and responsive directional changes with L298N motor driver integration.',
-    status: 'verified',
-    tech: ['ESP8266', 'JavaScript', 'HTML', 'CSS', 'IoT'],
+      'ESP8266 wireless vehicle with custom mobile interface and L298N motor driver integration.',
+    status: 'built',
+    statusLabel: 'BUILT',
+    tech: ['ESP8266', 'JavaScript', 'IoT'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/WiFi-Controlled-Car' },
       { type: 'demo', url: 'https://youtu.be/vaGgphrMhso' },
@@ -51,9 +55,10 @@ export const projects: Project[] = [
     title: 'Sensor-Driven 3D Visualization',
     domain: 'EMBEDDED',
     description:
-      'Created an innovative system that transforms real-time sensor data into dynamic 3D visualizations. Integrated MPU6050 sensor data with WebGL rendering to achieve precise spatial mapping and interactive model manipulation.',
-    status: 'verified',
-    tech: ['MPU6050', 'WebGL', 'Three.js', 'Data Visualization'],
+      'MPU6050 sensor data rendered as dynamic 3D visualizations using WebGL and Three.js.',
+    status: 'active',
+    statusLabel: 'ACTIVE',
+    tech: ['MPU6050', 'WebGL', 'Three.js'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/MPU6050-3D-Visualization' },
       { type: 'demo', url: 'https://ayushilathiya.hashnode.dev/3d-modeling-sensors' },
@@ -63,9 +68,10 @@ export const projects: Project[] = [
     title: 'ESP-NOW Protocol',
     domain: 'IoT',
     description:
-      'Implemented a robust wireless communication system using ESP-NOW protocol, achieving low-latency data transfer between multiple ESP8266 modules. Optimized for reliable peer-to-peer communication with minimal power consumption.',
-    status: 'verified',
-    tech: ['C++', 'ESP-NOW', 'Wireless Communication', 'ESP8266'],
+      'Peer-to-peer ESP8266 communication with optimized low-latency ESP-NOW protocol implementation.',
+    status: 'built',
+    statusLabel: 'TESTED',
+    tech: ['C++', 'ESP-NOW', 'ESP8266'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/ESP-NOW-Protocol' },
       { type: 'demo', url: 'https://youtu.be/NGjMKT3Scls' },

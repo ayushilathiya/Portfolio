@@ -21,7 +21,7 @@ export default function SectionPanel({ isActive, children, className }: SectionP
         className
       )}
     >
-      <div className="panel-viewport h-full">{children}</div>
+      <div className="panel-viewport h-full pcb-bg">{children}</div>
     </div>
   );
 }
