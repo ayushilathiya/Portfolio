@@ -76,7 +76,7 @@ export default function HelpPanel() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed bottom-4 right-4 z-50 font-mono text-xs px-2.5 py-1.5 border border-border-strong amber-box text-text-muted hover:text-accent-amber hover:border-accent-amber transition-colors duration-200 ease-out rounded-sm"
+        className="fixed bottom-4 right-4 z-50 font-mono text-xs px-2.5 py-1.5 border border-border-strong bg-panel text-text-muted hover:text-accent-amber hover:border-accent-amber transition-colors duration-200 ease-out rounded-sm"
         aria-label="Open help"
       >
         [?] help
@@ -91,7 +91,7 @@ export default function HelpPanel() {
           onClick={close}
         >
           <div
-            className="amber-box w-full max-w-md max-h-[85vh] overflow-y-auto p-4 md:p-5 font-mono text-xs relative"
+            className="panel-box w-full max-w-md max-h-[85vh] overflow-y-auto p-4 md:p-5 font-mono text-xs relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -117,10 +117,10 @@ SYNOPSIS
 DESCRIPTION`}
                 </pre>
 
-                <div className="space-y-2 mb-4 pl-2 border-l border-accent-amber/30">
+                <div className="space-y-2 mb-4 pl-2 border-l border-border-strong">
                   {HELP_LINES.map((line, i) => (
                     <p key={i} className="text-text-secondary leading-relaxed">
-                      <span className="text-accent-amber mr-2">{line.type === 'tip' ? '→' : '~'}</span>
+                      <span className="text-text-muted mr-2">{line.type === 'tip' ? '→' : '~'}</span>
                       {line.text}
                     </p>
                   ))}
@@ -137,7 +137,7 @@ DESCRIPTION`}
             ) : !isSubmitted ? (
               <>
                 <div className="mb-4 pb-3 border-b border-border-strong">
-                  <p className="text-accent-amber font-mono text-[11px] tracking-wide">
+                  <p className="text-text-primary font-mono text-[11px] tracking-wide">
                     FAULT: unexpected behavior on bus
                   </p>
                   <p className="text-text-muted mt-1 text-[10px]">
@@ -192,7 +192,6 @@ DESCRIPTION`}
               </>
             ) : (
               <div className="text-center py-4 space-y-2">
-                <div className="status-led status-led-verified mx-auto" />
                 <p className="text-text-primary">log stored in non-volatile memory</p>
                 <p className="text-text-muted text-[10px]">thanks — will probe on the bench</p>
                 <Button

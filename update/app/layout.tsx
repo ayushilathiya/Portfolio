@@ -15,17 +15,17 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'TRACE // KERNEL | Ayushi Lathiya',
+  title: 'portfolio.sys | Ayushi Lathiya',
   description:
-    'From circuit design to AI-powered health tech, explore Ayushi Lathiya\'s journey through engineering and innovation.',
+    'Embedded systems, VLSI, IoT, and health tech — Ayushi Lathiya\'s engineering portfolio.',
   openGraph: {
-    title: 'TRACE // KERNEL | Ayushi Lathiya',
+    title: 'portfolio.sys | Ayushi Lathiya',
     description: 'Embedded Systems // VLSI // IoT Engineer',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TRACE // KERNEL | Ayushi Lathiya',
+    title: 'portfolio.sys | Ayushi Lathiya',
     description: 'Embedded Systems // VLSI // IoT Engineer',
   },
 };

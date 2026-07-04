@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ExternalLink } from 'lucide-react';
 import SectionVisual from '@/components/section-visual';
+import PathLabel from '@/components/path-label';
 import { profile } from '@/data/profile';
 
 interface BlogPost {
@@ -64,7 +65,7 @@ export default function DocsPanel() {
         </button>
 
         <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10">
-          <div className="amber-box p-4 font-mono text-xs">
+          <div className="panel-box p-4 font-mono text-xs">
             <pre className="whitespace-pre-wrap text-text-muted leading-relaxed">
 {`${selected.title.toUpperCase()}(1)              portfolio.sys docs              ${formatDate(selected.dateAdded)}
 
@@ -87,7 +88,7 @@ SEE ALSO
               href={`${profile.social.hashnode}/${selected.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 mt-4 text-accent-amber hover:underline text-[11px]"
+              className="inline-flex items-center gap-1 mt-4 text-text-secondary hover:text-accent-amber text-[11px] transition-colors"
             >
               read on hashnode
               <ExternalLink className="w-3 h-3" />
@@ -103,8 +104,9 @@ SEE ALSO
       <SectionVisual tab="docs" />
 
       <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10">
-        <div className="amber-box p-3 font-mono text-[11px]">
-          <div className="text-text-muted mb-3 pb-2 border-b border-border flex flex-wrap gap-x-3 gap-y-1">
+        <div className="panel-box p-3 font-mono text-[11px]">
+          <PathLabel name="docs_index" />
+          <div className="text-text-muted mb-3 pb-2 border-b border-border flex flex-wrap gap-x-3 gap-y-1 -mt-1">
             <span>total {posts.length}</span>
             <span>·</span>
             <span>hashnode feed</span>
@@ -119,7 +121,7 @@ SEE ALSO
                 href={profile.social.hashnode}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-accent-amber hover:underline"
+                className="inline-flex items-center gap-1 text-text-secondary hover:text-accent-amber transition-colors"
               >
                 open ayushilathiya.hashnode.dev
                 <ExternalLink className="w-3 h-3" />

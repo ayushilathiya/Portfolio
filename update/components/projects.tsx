@@ -4,12 +4,13 @@ import { Github, ExternalLink } from 'lucide-react';
 import { projects, type ProjectStatus } from '@/data/projects';
 import DomainIcon from '@/components/domain-icon';
 import SectionVisual, { DomainAccent } from '@/components/section-visual';
+import PathLabel from '@/components/path-label';
 
 const statusLed: Record<ProjectStatus, string> = {
-  live: 'status-led-verified',
-  deployed: 'status-led-verified',
+  live: 'status-led-active',
+  deployed: 'status-led-active',
   active: 'status-led-active',
-  built: 'status-led-active',
+  built: 'status-led-dim',
   archived: 'status-led-dim',
 };
 
@@ -27,24 +28,25 @@ export default function Projects() {
       <SectionVisual tab="modules" />
 
       <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative">
+        <PathLabel name="modules_index" className="relative z-10 px-0.5" />
         <DomainAccent domain="embedded" />
 
         <svg
-          className="absolute inset-0 w-full h-full pointer-events-none hidden sm:block opacity-35"
+          className="absolute inset-0 w-full h-full pointer-events-none hidden sm:block opacity-25"
           viewBox="0 0 800 600"
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          <path d="M 380 80 L 420 80 L 420 280 L 380 280" fill="none" stroke="var(--accent-amber)" strokeWidth="0.75" />
+          <path d="M 380 80 L 420 80 L 420 280 L 380 280" fill="none" stroke="var(--border-strong)" strokeWidth="0.75" />
           <path d="M 380 320 L 420 320 L 420 520 L 380 520" fill="none" stroke="var(--border-strong)" strokeWidth="0.75" />
-          <path d="M 400 280 L 400 320" fill="none" stroke="var(--accent-amber)" strokeWidth="0.5" opacity="0.6" />
+          <path d="M 400 280 L 400 320" fill="none" stroke="var(--border-strong)" strokeWidth="0.5" />
         </svg>
 
         <div className="grid sm:grid-cols-2 gap-3 relative z-10">
           {projects.map((project) => (
             <div
               key={project.title}
-              className="amber-box p-3 md:p-4 group hover:border-accent-amber/40 transition-colors duration-200 ease-out relative overflow-hidden"
+              className="panel-box p-3 md:p-4 group hover:border-border-strong transition-colors duration-200 ease-out relative overflow-hidden"
             >
               <DomainAccent domain={domainAccentMap[project.domain]} />
 
@@ -54,7 +56,9 @@ export default function Projects() {
                     className={`status-led ${statusLed[project.status]}`}
                     aria-label={project.statusLabel}
                   />
-                  <span className="mono-label text-[10px]">{project.statusLabel}</span>
+                  <span className="font-mono text-[10px] tracking-wide lowercase text-text-muted">
+                    {project.statusLabel.toLowerCase()}
+                  </span>
                 </div>
                 <span className="mesh-node text-[10px] uppercase flex items-center gap-1 py-0.5">
                   <DomainIcon domain={project.domain} className="w-3 h-3" />

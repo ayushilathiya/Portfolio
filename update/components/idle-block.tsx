@@ -1,10 +1,11 @@
 'use client';
 
 import { idleEntries, type IdleEntry } from '@/data/idle';
+import PathLabel from '@/components/path-label';
 
 function IdleIcon({ type }: { type: IdleEntry['icon'] }) {
   const props = {
-    className: 'w-3.5 h-3.5 shrink-0 text-accent-amber',
+    className: 'w-3.5 h-3.5 shrink-0 text-text-muted',
     viewBox: '0 0 24 24',
     fill: 'none',
     stroke: 'currentColor',
@@ -51,21 +52,17 @@ function IdleIcon({ type }: { type: IdleEntry['icon'] }) {
   }
 }
 
-export default function IdleBlock({ compact = false }: { compact?: boolean }) {
-  const entries = compact ? idleEntries.slice(0, 4) : idleEntries;
-
+export default function IdleBlock({ scrollable = true }: { scrollable?: boolean }) {
   return (
-    <div className="idle-box font-mono text-[10px] md:text-[11px]">
-      <div className="flex items-center gap-2 mb-2 pb-2 border-b border-border-strong">
-        <div className="status-led status-led-dim" aria-hidden="true" />
-        <span className="text-text-secondary tracking-wide">idle //</span>
-        <span className="text-text-muted">ambient loop</span>
+    <div className="idle-box font-mono text-[10px] md:text-[11px] p-2.5 h-full">
+      <div className="shrink-0 mb-2 pb-2 border-b border-border">
+        <PathLabel name="idle" className="mb-0" />
       </div>
-      <div className="space-y-2">
-        {entries.map((entry) => (
+      <div className={scrollable ? 'idle-box-scroll space-y-2 pr-0.5' : 'space-y-2'}>
+        {idleEntries.map((entry) => (
           <div key={entry.timestamp + entry.message} className="flex gap-2 items-start">
             <IdleIcon type={entry.icon} />
-            <div className="leading-snug">
+            <div className="leading-snug min-w-0">
               <span className="text-text-muted">[{entry.timestamp}]</span>{' '}
               <span className="text-text-primary">{entry.message}</span>
             </div>

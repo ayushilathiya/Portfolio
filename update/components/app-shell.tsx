@@ -19,7 +19,6 @@ import {
 } from '@/lib/sections';
 
 export default function AppShell() {
-  const [bootComplete, setBootComplete] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>('proc');
   const [initialProcTab, setInitialProcTab] = useState<ProcTabId>('whoami');
 
@@ -44,17 +43,11 @@ export default function AppShell() {
     setActiveSection(id);
   }, []);
 
-  const handleBootComplete = useCallback(() => setBootComplete(true), []);
-
   return (
     <div className="app-shell bg-base text-text-primary">
-      <BootSequence onComplete={handleBootComplete} />
+      <BootSequence />
 
-      <div
-        className={`h-full flex flex-col transition-opacity duration-200 ease-out ${
-          bootComplete ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-      >
+      <div className="h-full flex flex-col">
         <Navigation active={activeSection} onSelect={selectSection} />
 
         <main className="flex-1 relative min-h-0 min-w-0">

@@ -25,4 +25,10 @@ export const profile = {
     resume: '/docs/Ayushi_Lathiya_CV.pdf',
   },
   footerNote: 'Open to opportunities in embedded systems, VLSI, IoT, and health tech',
+  stats: [
+    { label: 'BUILDS SHIPPED', value: 'N' },
+    { label: 'FIRMWARE LOC', value: 'N' },
+    { label: 'BOARDS BROUGHT UP', value: 'N' },
+    { label: 'PROJECTS ACTIVE', value: 'N' },
+  ],
 };

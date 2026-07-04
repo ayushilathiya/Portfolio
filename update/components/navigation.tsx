@@ -37,11 +37,6 @@ export default function Navigation({ active, onSelect }: NavigationProps) {
             </button>
           ))}
         </nav>
-
-        <div className="shrink-0 hidden md:flex items-center gap-1.5 font-mono text-[10px] text-text-muted">
-          <div className="status-led status-led-online" aria-hidden="true" />
-          <span>online</span>
-        </div>
       </div>
     </header>
   );

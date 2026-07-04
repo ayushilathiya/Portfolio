@@ -8,6 +8,7 @@ import { responsibilities } from '@/data/responsibilities';
 import { experienceEntries } from '@/data/experience';
 import SkillMesh from '@/components/skill-mesh';
 import IdleBlock from '@/components/idle-block';
+import PathLabel from '@/components/path-label';
 import SectionVisual, { DomainAccent } from '@/components/section-visual';
 import { cn } from '@/lib/utils';
 
@@ -31,12 +32,12 @@ function DeviceOnlineIntro() {
   }, [step]);
 
   return (
-    <div className="amber-box p-4 mb-4 font-mono text-xs space-y-2 relative overflow-hidden">
+    <div className="panel-box p-4 mb-4 font-mono text-xs space-y-2 relative overflow-hidden">
       <SectionVisual tab="whoami" />
       <div className="space-y-1 text-text-secondary">
         {BOOT_STEPS.slice(0, step).map((line) => (
-          <div key={line} className="flex items-center gap-2">
-            <div className="status-led status-led-online shrink-0" aria-hidden="true" />
+          <div key={line} className="flex items-start gap-2">
+            <span className="text-text-muted shrink-0">›</span>
             <span>{line}</span>
           </div>
         ))}
@@ -54,27 +55,46 @@ function DeviceOnlineIntro() {
   );
 }
 
+function SystemStats() {
+  return (
+    <div className="panel-box p-4 relative">
+      <PathLabel name="system_stats" />
+      <table className="w-full font-mono text-[11px]">
+        <tbody>
+          {profile.stats.map((stat, i) => (
+            <tr key={stat.label} className="border-b border-border last:border-0">
+              <td className="py-2 pr-4 text-text-muted">{stat.label}</td>
+              <td className="py-2 text-right tabular-nums">
+                <span className={i === 0 ? 'text-accent-amber' : 'text-text-secondary'}>
+                  {stat.value}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function ConnectedDevices() {
   return (
-    <div className="amber-box p-4 relative">
-      <p className="mono-label mb-3">connected devices</p>
-      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" aria-hidden="true">
-        <line x1="15%" y1="50%" x2="85%" y2="50%" stroke="var(--accent-amber)" strokeWidth="0.5" />
-      </svg>
-      <div className="flex flex-wrap gap-3 relative z-10">
+    <div className="panel-box p-4 relative">
+      <PathLabel name="connected_devices" />
+      <div className="flex flex-wrap gap-3">
         {profile.devices.map((dev) => (
           <a
             key={dev.id}
             href={dev.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="mesh-node flex-col items-start gap-0.5 px-3 py-2 min-w-[140px] hover:text-accent-amber hover:border-accent-amber transition-colors duration-200 ease-out"
+            className="mesh-node flex-col items-start gap-0.5 px-3 py-2 min-w-[140px] hover:text-accent-amber transition-colors duration-200 ease-out"
           >
             <span className="mesh-dot" />
             <span className="text-[10px] text-text-muted">{dev.id}</span>
             <span className="text-text-primary text-[11px]">{dev.label}</span>
             <span className="text-text-muted text-[10px] truncate max-w-[130px]">{dev.addr}</span>
-            <span className="text-[9px] text-status-verified mt-0.5">● linked</span>
+            <span className="text-[9px] text-text-muted mt-0.5">linked</span>
           </a>
         ))}
       </div>
@@ -94,9 +114,9 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
         return (
           <div className="space-y-4">
             <DeviceOnlineIntro />
-            <div className="amber-box p-4 relative">
+            <div className="panel-box p-4 relative">
               <SectionVisual tab="whoami" />
-              <p className="mono-label mb-3">register map</p>
+              <PathLabel name="register_map" />
               <table className="w-full font-mono text-[11px]">
                 <thead>
                   <tr className="text-text-muted text-left border-b border-border">
@@ -116,6 +136,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
                 </tbody>
               </table>
             </div>
+            <SystemStats />
             <ConnectedDevices />
           </div>
         );
@@ -126,7 +147,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
             <SectionVisual tab="bootloader" />
             <DomainAccent domain="vlsi" />
             {education.map((edu) => (
-              <div key={edu.institution} className="amber-box p-4">
+              <div key={edu.institution} className="panel-box p-4">
                 <a
                   href={edu.website}
                   target="_blank"
@@ -152,8 +173,9 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
           <div className="space-y-2 relative">
             <SectionVisual tab="runtime" />
             <DomainAccent domain="embedded" />
+            <PathLabel name="work_log" />
             {workEntries.map((entry) => (
-              <div key={entry.title} className="amber-box p-3 log-line">
+              <div key={entry.title} className="panel-box p-3 log-line">
                 <div className="flex flex-wrap gap-x-2 text-[11px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
                   {entry.link ? (
@@ -177,12 +199,12 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
           <div className="space-y-3 relative">
             <SectionVisual tab="beacon" />
             <DomainAccent domain="space" />
-            <p className="mono-label">beacon tx — achievements & contributions</p>
+            <PathLabel name="beacon_tx" />
             {achievementEntries.map((entry) => (
-              <div key={entry.title} className="amber-box p-3 log-line">
+              <div key={entry.title} className="panel-box p-3 log-line">
                 <div className="flex flex-wrap gap-x-2 text-[11px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
-                  <span className="text-accent-amber text-[10px]">TX</span>
+                  <span className="text-text-muted text-[10px]">tx</span>
                   {entry.link ? (
                     <a href={entry.link} target="_blank" rel="noopener noreferrer" className="text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out">
                       {entry.title}
@@ -196,7 +218,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
               </div>
             ))}
             {responsibilities.map((pos) => (
-              <div key={pos.title} className="amber-box p-4">
+              <div key={pos.title} className="panel-box p-4">
                 <a href={pos.link} target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out">
                   {pos.title}
                 </a>
@@ -224,8 +246,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
   return (
     <div className="panel-content proc-layout">
       <div className="flex-1 min-h-0 flex flex-col md:flex-row relative">
-        {/* Sidebar */}
-        <aside className="shrink-0 md:w-28 lg:w-32 flex flex-col md:border-r md:border-border">
+        <aside className="shrink-0 md:w-28 lg:w-36 flex flex-col md:border-r md:border-border min-h-0 md:self-stretch">
           <nav
             className="flex md:flex-col gap-0 overflow-x-auto md:overflow-visible scrollbar-hide py-1 shrink-0"
             role="tablist"
@@ -251,24 +272,20 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
             ))}
           </nav>
 
-          {/* Trace between nav and idle */}
-          <div className="hidden md:block mx-3 border-t border-border-strong" aria-hidden="true" />
+          <div className="hidden md:block mx-3 border-t border-border-strong shrink-0" aria-hidden="true" />
 
-          <div className="hidden md:block p-2 shrink-0">
-            <IdleBlock compact />
+          <div className="hidden md:flex flex-1 min-h-0 p-2">
+            <IdleBlock scrollable />
           </div>
         </aside>
 
-        {/* Mobile idle */}
-        <div className="md:hidden p-2 shrink-0 border-b border-border">
-          <IdleBlock compact />
+        <div className="md:hidden p-2 shrink-0 border-b border-border max-h-32">
+          <IdleBlock scrollable />
         </div>
 
-        {/* Content */}
         <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll p-2 md:p-4 relative" role="tabpanel">
-          {/* Vertical trace desktop */}
-          <svg className="hidden md:block absolute left-0 top-4 bottom-4 w-3 pointer-events-none opacity-40" aria-hidden="true">
-            <line x1="2" y1="0" x2="2" y2="100%" stroke="var(--accent-amber)" strokeWidth="0.5" />
+          <svg className="hidden md:block absolute left-0 top-4 bottom-4 w-3 pointer-events-none opacity-30" aria-hidden="true">
+            <line x1="2" y1="0" x2="2" y2="100%" stroke="var(--border-strong)" strokeWidth="0.5" />
           </svg>
           <div className="md:pl-3 transition-opacity duration-200 ease-out">{renderContent()}</div>
         </div>

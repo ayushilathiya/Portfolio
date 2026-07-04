@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import SectionVisual from '@/components/section-visual';
+import PathLabel from '@/components/path-label';
 
 export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -57,9 +58,10 @@ export default function Contact() {
       <SectionVisual tab="uart" />
 
       <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full min-h-0 overflow-y-auto panel-inner-scroll">
-        <div className="amber-box p-4 md:p-5 relative">
-          <div className="font-mono text-sm mb-4">
-            <span className="text-accent-amber">{'>'}</span>
+        <div className="panel-box p-4 md:p-5 relative">
+          <PathLabel name="uart_form" />
+          <div className="font-mono text-sm mb-4 -mt-1">
+            <span className="text-text-muted">{'>'}</span>
             <span className="text-text-primary ml-2">connect --with ayushi</span>
           </div>
 
@@ -108,7 +110,6 @@ export default function Contact() {
             </form>
           ) : (
             <div className="text-center space-y-3 py-2 font-mono text-xs">
-              <div className="status-led status-led-verified mx-auto" aria-label="sent" />
               <p className="text-text-primary">signal received</p>
               <p className="text-text-muted">thank you — i&apos;ll get back to you soon.</p>
               <Button
