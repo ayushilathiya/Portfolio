@@ -4,35 +4,34 @@
 
 @layer base {
   :root {
-    /* TRACE // KERNEL — locked palette */
-    --bg-base: #0a0a0a;
-    --bg-panel: #121212;
-    --border: #232323;
-    --border-strong: #333333;
-    --accent: #ffb020;
-    --accent-dim: #925c14;
-    --text-primary: #e9e7e2;
-    --text-muted: #7c7c78;
+    --bg-base: #000000;
+    --bg-panel: #0d0d0d;
+    --border: #1a1a1a;
+    --border-strong: #2a2a2a;
+    --text-primary: #f2f2f0;
+    --text-secondary: #b3b3b0;
+    --text-muted: #6b6b67;
+    --accent-amber: #ffb020;
     --status-verified: #39ff14;
 
-    /* shadcn compat — mapped to kernel tokens */
     --background: var(--bg-base);
     --foreground: var(--text-primary);
     --card: var(--bg-panel);
     --card-foreground: var(--text-primary);
     --popover: var(--bg-panel);
     --popover-foreground: var(--text-primary);
-    --primary: var(--accent);
+    --primary: var(--accent-amber);
     --primary-foreground: var(--bg-base);
-    --secondary: var(--accent-dim);
-    --secondary-foreground: var(--text-primary);
+    --secondary: var(--bg-panel);
+    --secondary-foreground: var(--text-secondary);
     --muted: var(--bg-panel);
     --muted-foreground: var(--text-muted);
+    --accent: var(--accent-amber);
     --accent-foreground: var(--bg-base);
-    --destructive: var(--accent-dim);
+    --destructive: var(--text-muted);
     --destructive-foreground: var(--text-primary);
     --input: var(--border);
-    --ring: var(--accent);
+    --ring: var(--accent-amber);
     --radius: 0.25rem;
   }
 
@@ -41,8 +40,10 @@
     box-sizing: border-box;
   }
 
-  html {
-    scroll-behavior: smooth;
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
   }
 
   body {
@@ -51,8 +52,8 @@
   }
 
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
   }
 
   ::-webkit-scrollbar-track {
@@ -60,36 +61,49 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--border);
+    background: var(--border-strong);
     border-radius: 2px;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--accent);
-  }
-
   ::selection {
-    background: color-mix(in srgb, var(--accent) 30%, transparent);
+    background: color-mix(in srgb, var(--accent-amber) 25%, transparent);
     color: var(--text-primary);
   }
 }
 
 @layer components {
-  .terminal-line {
-    @apply font-mono text-text-muted;
+  .app-shell {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .panel-viewport {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Internal scroll — mobile always; desktop when panel content overflows */
+  .panel-inner-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .panel-inner-scroll {
+      overflow-y: auto;
+    }
+  }
+
+  .panel-content {
+    @apply h-full p-4 md:p-6 flex flex-col;
   }
 
   .section-header {
-    @apply font-mono text-sm tracking-[0.2em] lowercase text-text-muted mb-8;
+    @apply font-mono text-xs md:text-sm tracking-[0.15em] lowercase text-text-muted mb-3 shrink-0;
   }
 
   .panel {
     @apply bg-panel border border-border rounded;
-    background-image: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--accent) 2%, transparent) 0%,
-      transparent 50%
-    );
   }
 
   .status-led {
@@ -97,102 +111,60 @@
   }
 
   .status-led-active {
-    background: var(--accent);
-    box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 25%, transparent);
+    background: var(--accent-amber);
     animation: pulse-glow 2s ease-in-out infinite;
   }
 
   .status-led-verified {
     background: var(--status-verified);
-    box-shadow: 0 0 15px color-mix(in srgb, var(--status-verified) 30%, transparent);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--status-verified) 25%, transparent);
   }
 
   .status-led-dim {
-    background: color-mix(in srgb, var(--text-muted) 30%, transparent);
+    background: color-mix(in srgb, var(--text-muted) 40%, transparent);
   }
 
   .status-led-online {
     background: var(--status-verified);
     animation: blink 1.2s step-end infinite;
-    box-shadow: 0 0 8px color-mix(in srgb, var(--status-verified) 40%, transparent);
-  }
-
-  .trace-line {
-    @apply border-l border-border;
   }
 
   .mono-label {
-    @apply font-mono text-xs tracking-[0.15em] uppercase text-text-muted;
-  }
-
-  .grid-bg {
-    @apply bg-grid-pattern bg-grid;
-  }
-
-  /* Silicon die / PCB substrate texture (~5%) */
-  .pcb-bg {
-    background-color: var(--bg-base);
-    background-image:
-      linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--accent) 4%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        color-mix(in srgb, var(--accent) 4%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        rgba(35, 35, 35, 0.35) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        90deg,
-        rgba(35, 35, 35, 0.35) 1px,
-        transparent 1px
-      );
-    background-size: 48px 48px, 48px 48px, 12px 12px, 12px 12px;
+    @apply font-mono text-[10px] tracking-[0.12em] uppercase text-text-muted;
   }
 
   .register-row {
-    @apply flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 py-3 border-b border-border font-mono text-sm;
+    @apply flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 py-2 border-b border-border font-mono text-xs;
   }
 
   .register-key {
-    @apply text-text-muted shrink-0 sm:w-36 tracking-wider uppercase text-xs;
+    @apply text-text-muted shrink-0 sm:w-28 tracking-wider uppercase text-[10px];
   }
 
   .register-val {
-    @apply text-accent;
+    @apply text-text-secondary;
   }
 
   .log-line {
-    @apply font-mono text-xs md:text-sm leading-relaxed;
+    @apply font-mono text-xs leading-relaxed;
   }
 
   .dev-node {
-    @apply relative px-3 py-1.5 border border-border-strong rounded-sm font-mono text-xs md:text-sm transition-all duration-200 ease-out;
-    background: color-mix(in srgb, var(--bg-base) 80%, transparent);
+    @apply relative px-2 py-1 border border-border rounded-sm font-mono text-[10px] transition-colors duration-200 ease-out;
+    background: var(--bg-base);
+    color: var(--text-secondary);
   }
 
-  .dev-node-embedded {
-    color: var(--accent);
-    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
-  }
-
-  .dev-node-vlsi {
-    color: var(--accent-dim);
-    border-color: color-mix(in srgb, var(--accent-dim) 80%, transparent);
-  }
-
-  .dev-node-iot {
-    @apply text-text-primary;
+  .dev-node-embedded,
+  .dev-node-vlsi,
+  .dev-node-iot,
+  .dev-node-software {
     border-color: var(--border-strong);
   }
 
-  .dev-node-software {
-    @apply text-text-muted;
-    border-color: color-mix(in srgb, var(--text-muted) 50%, transparent);
+  .dev-node:hover {
+    color: var(--text-primary);
+    border-color: var(--border-strong);
   }
 }
 
@@ -220,7 +192,7 @@
 @keyframes pulse-glow {
   0%,
   100% {
-    opacity: 0.6;
+    opacity: 0.5;
   }
   50% {
     opacity: 1;

@@ -16,13 +16,14 @@ const config: Config = {
           DEFAULT: 'var(--border)',
           strong: 'var(--border-strong)',
         },
+        'accent-amber': 'var(--accent-amber)',
         accent: {
-          DEFAULT: 'var(--accent)',
-          dim: 'var(--accent-dim)',
+          DEFAULT: 'var(--accent-amber)',
         },
         verified: 'var(--status-verified)',
         text: {
           primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
           muted: 'var(--text-muted)',
         },
         background: 'var(--background)',
@@ -53,64 +54,29 @@ const config: Config = {
         },
         input: 'var(--input)',
         ring: 'var(--ring)',
-        amber: {
-          DEFAULT: 'var(--accent)',
-          dim: 'var(--accent-dim)',
-        },
       },
       fontFamily: {
         mono: ['var(--font-jetbrains)', 'IBM Plex Mono', 'monospace'],
         display: ['var(--font-space)', 'Space Grotesk', 'sans-serif'],
       },
-      backgroundImage: {
-        'grid-pattern': `
-          linear-gradient(color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px),
-          linear-gradient(90deg, color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px)
-        `,
-      },
-      backgroundSize: {
-        grid: '24px 24px',
-      },
       boxShadow: {
-        'amber-glow': '0 0 20px color-mix(in srgb, var(--accent) 30%, transparent)',
-        'amber-glow-sm': '0 0 10px color-mix(in srgb, var(--accent) 25%, transparent)',
-        'verified-glow': '0 0 15px color-mix(in srgb, var(--status-verified) 30%, transparent)',
+        'amber-glow-sm': '0 0 8px color-mix(in srgb, var(--accent-amber) 20%, transparent)',
       },
       transitionDuration: {
         DEFAULT: '200ms',
       },
       animation: {
         blink: 'blink 1.2s step-end infinite',
-        'trace-draw': 'trace-draw 0.8s ease-out forwards',
-        'wave-flow': 'wave-flow 3s linear infinite',
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-        'fade-in': 'fade-in 0.3s ease-out forwards',
-        'slide-up': 'slide-up 0.3s ease-out forwards',
       },
       keyframes: {
         blink: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
         },
-        'trace-draw': {
-          '0%': { strokeDashoffset: '100' },
-          '100%': { strokeDashoffset: '0' },
-        },
-        'wave-flow': {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
         'pulse-glow': {
-          '0%, 100%': { opacity: '0.6' },
+          '0%, 100%': { opacity: '0.5' },
           '50%': { opacity: '1' },
-        },
-        'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        'slide-up': {
-          '0%': { opacity: '0', transform: 'translateY(12px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
     },

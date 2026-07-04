@@ -1,56 +1,49 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { sections } from '@/lib/sections';
+import { sections, type SectionId } from '@/lib/sections';
+import { cn } from '@/lib/utils';
 
-export default function Navigation() {
-  const [activeSection, setActiveSection] = useState('');
-  const [isVisible, setIsVisible] = useState(false);
+interface NavigationProps {
+  active: SectionId;
+  onSelect: (id: SectionId) => void;
+}
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > 100);
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const element = document.getElementById(sections[i].id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(sections[i].id);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+export default function Navigation({ active, onSelect }: NavigationProps) {
   return (
-    <nav
-      className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-200 ease-out ${
-        isVisible
-          ? 'opacity-100 translate-y-0'
-          : 'opacity-0 -translate-y-4 pointer-events-none'
-      }`}
-    >
-      <div className="panel px-1 py-1 flex items-center gap-0.5 overflow-x-auto scrollbar-hide max-w-[95vw]">
-        {sections.map((section) => (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            className={`px-2 md:px-3 py-1.5 font-mono text-[10px] md:text-xs tracking-wider transition-all duration-200 ease-out rounded-sm whitespace-nowrap ${
-              activeSection === section.id
-                ? 'bg-accent/20 text-accent'
-                : 'text-text-muted hover:text-text-primary'
-            }`}
-          >
-            {section.label}
-          </a>
-        ))}
+    <header className="shrink-0 border-b border-border bg-panel">
+      <div className="flex items-center justify-between gap-4 px-3 md:px-5 py-2 md:py-3">
+        <div className="shrink-0 hidden sm:block">
+          <p className="font-mono text-[10px] text-text-muted tracking-widest">trace // kernel</p>
+        </div>
+
+        <nav
+          className="flex flex-wrap items-center justify-center sm:justify-end gap-x-1 gap-y-1 flex-1"
+          aria-label="Main navigation"
+        >
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              type="button"
+              role="tab"
+              aria-selected={active === section.id}
+              onClick={() => onSelect(section.id)}
+              className={cn(
+                'px-2.5 md:px-3 py-1.5 font-mono text-[11px] md:text-xs text-text-muted transition-all duration-200 ease-out border-b-2',
+                active === section.id
+                  ? 'border-accent-amber text-text-primary'
+                  : 'border-transparent hover:text-text-secondary'
+              )}
+            >
+              {section.label}
+            </button>
+          ))}
+        </nav>
+
+        <div className="shrink-0 hidden md:flex items-center gap-1.5 font-mono text-[10px] text-text-muted">
+          <div className="status-led status-led-online" aria-hidden="true" />
+          <span>online</span>
+        </div>
       </div>
-    </nav>
+    </header>
   );
 }

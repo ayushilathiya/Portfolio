@@ -36,7 +36,7 @@ export default function BootSequence({
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-base pcb-bg flex items-center justify-center transition-opacity duration-300 ease-out ${
+      className={`fixed inset-0 z-50 bg-base flex items-center justify-center transition-opacity duration-200 ease-out ${
         isComplete ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
@@ -51,14 +51,14 @@ export default function BootSequence({
             }`}
             style={{ transitionDelay: `${index * 50}ms` }}
           >
-            <span className="text-accent">{line.text.split(']')[0]}]</span>
+            <span className="text-accent-amber">{line.text.split(']')[0]}]</span>
             <span className="text-text-primary ml-1">
               {line.text.split(']')[1]}
             </span>
           </div>
         ))}
         {visibleLines.length === bootLines.length && (
-          <div className="mt-4 text-accent animate-blink">
+          <div className="mt-4 text-accent-amber animate-blink">
             _
           </div>
         )}

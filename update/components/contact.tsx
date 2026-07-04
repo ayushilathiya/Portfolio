@@ -1,94 +1,134 @@
 'use client';
 
-import { Github, Linkedin, ExternalLink, FileText } from 'lucide-react';
-import { profile } from '@/data/profile';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function Contact() {
-  const channels = [
-    {
-      icon: Github,
-      label: 'github',
-      display: 'github.com/ayushilathiya',
-      href: profile.social.github,
-    },
-    {
-      icon: Linkedin,
-      label: 'linkedin',
-      display: 'linkedin.com/in/ayushilathiya',
-      href: profile.social.linkedin,
-    },
-    {
-      icon: ({ className }: { className?: string }) => (
-        <svg viewBox="0 0 24 24" className={className ?? 'w-4 h-4'} fill="currentColor">
-          <path d="M22.351 8.019l-6.37-6.37a5.63 5.63 0 0 0-7.962 0l-6.37 6.37a5.63 5.63 0 0 0 0 7.962l6.37 6.37a5.63 5.63 0 0 0 7.962 0l6.37-6.37a5.63 5.63 0 0 0 0-7.962zM12 15.953a3.953 3.953 0 1 1 0-7.906 3.953 3.953 0 0 1 0 7.906z" />
-        </svg>
-      ),
-      label: 'hashnode',
-      display: 'ayushilathiya.hashnode.dev',
-      href: profile.social.hashnode,
-    },
-    {
-      icon: FileText,
-      label: 'resume',
-      display: 'Ayushi_Lathiya_CV.pdf',
-      href: profile.social.resume,
-    },
-  ];
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError('');
+    setIsSubmitting(true);
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const email = formData.get('email') as string;
+    const message = formData.get('message') as string;
+
+    if (!email || !message) {
+      setError('Please fill in all required fields');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_KEY}`,
+        {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      );
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        form.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (err) {
+      setError('Failed to send message. Please try again.');
+      console.error('Error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
-    <section id="uart" className="py-24 px-6 md:px-12">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="section-header">/uart</h2>
+    <div className="panel-content">
+      <h2 className="section-header">/uart</h2>
 
-        <div className="panel p-6 md:p-8">
-          <div className="font-mono mb-6 text-sm">
-            <span className="text-accent">{'>'}</span>
+      <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full min-h-0 overflow-y-auto panel-inner-scroll">
+        <div className="panel p-4 md:p-5">
+          <div className="font-mono text-sm mb-4">
+            <span className="text-accent-amber">{'>'}</span>
             <span className="text-text-primary ml-2">connect --with ayushi</span>
           </div>
 
-          <div className="font-mono text-sm space-y-4">
-            <div className="border-l-2 border-accent/50 pl-4">
-              <span className="text-text-muted">/* uart handshake — available channels */</span>
+          {!isSubmitted ? (
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div>
+                <label className="block font-mono text-[11px] text-text-muted mb-1">name</label>
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="your name"
+                  required
+                  disabled={isSubmitting}
+                  className="bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-xs h-9"
+                />
+              </div>
+
+              <div>
+                <label className="block font-mono text-[11px] text-text-muted mb-1">email</label>
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="your.email@example.com"
+                  required
+                  disabled={isSubmitting}
+                  className="bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-xs h-9"
+                />
+              </div>
+
+              <div>
+                <label className="block font-mono text-[11px] text-text-muted mb-1">message</label>
+                <Textarea
+                  name="message"
+                  placeholder="your message"
+                  className="min-h-[100px] bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-xs"
+                  required
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              {error && (
+                <p className="font-mono text-[11px] text-text-secondary text-center">{error}</p>
+              )}
+
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-transparent border border-border-strong text-text-primary hover:border-accent-amber hover:text-accent-amber font-mono text-xs h-9 transition-colors duration-200 ease-out"
+              >
+                {isSubmitting ? 'transmitting…' : 'send signal'}
+              </Button>
+            </form>
+          ) : (
+            <div className="text-center space-y-3 py-2 font-mono text-xs">
+              <div className="status-led status-led-verified mx-auto" aria-label="sent" />
+              <p className="text-text-primary">signal received</p>
+              <p className="text-text-muted">thank you — i&apos;ll get back to you soon.</p>
+              <Button
+                type="button"
+                onClick={() => setIsSubmitted(false)}
+                className="bg-transparent border border-border-strong text-text-secondary hover:text-accent-amber hover:border-accent-amber font-mono text-xs h-8"
+              >
+                send another
+              </Button>
             </div>
-
-            <div className="space-y-2 pl-4">
-              {channels.map((channel) => (
-                <a
-                  key={channel.label}
-                  href={channel.href}
-                  target={channel.label === 'resume' ? undefined : '_blank'}
-                  rel={channel.label === 'resume' ? undefined : 'noopener noreferrer'}
-                  download={channel.label === 'resume' ? true : undefined}
-                  className="flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted hover:text-accent transition-colors duration-200 ease-out group py-1"
-                >
-                  <channel.icon className="w-4 h-4 text-accent shrink-0" />
-                  <span className="text-text-primary">{channel.label}</span>
-                  <span className="text-accent">=</span>
-                  <span className="text-accent break-all">{channel.display}</span>
-                  {channel.label !== 'resume' && (
-                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                  )}
-                </a>
-              ))}
-            </div>
-
-            <div className="border-l-2 border-accent/50 pl-4 mt-6">
-              <span className="text-text-muted">/* {profile.footerNote} */</span>
-            </div>
-          </div>
-
-          <div className="font-mono mt-6 flex items-center gap-2">
-            <span className="text-accent">{'>'}</span>
-            <span className="w-2 h-4 bg-accent animate-blink" />
-          </div>
-        </div>
-
-        <div className="mt-16 pt-8 border-t border-border text-center">
-          <p className="font-mono text-xs text-text-muted lowercase">
-            [ trace // kernel v1.0 ] — © {new Date().getFullYear()} ayushi lathiya
-          </p>
+          )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
