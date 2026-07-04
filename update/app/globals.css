@@ -72,9 +72,96 @@
 }
 
 @layer components {
-  .app-shell {
+  /* Outer page — grid + margin around device frame */
+  .page-backdrop {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     height: 100dvh;
+    min-height: 100dvh;
     overflow: hidden;
+    padding: 10px;
+    background-color: var(--bg-base);
+  }
+
+  @media (min-width: 640px) {
+    .page-backdrop {
+      padding: 16px 24px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .page-backdrop {
+      padding: 24px 40px;
+    }
+  }
+
+  .page-backdrop-decor {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.45;
+  }
+
+  /* Centered device window — larger than reference sites */
+  .device-frame {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1320px;
+    height: 100%;
+    max-height: min(920px, calc(100dvh - 20px));
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: var(--bg-base);
+  }
+
+  @media (min-width: 640px) {
+    .device-frame {
+      max-height: min(920px, calc(100dvh - 32px));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .device-frame {
+      max-height: min(940px, calc(100dvh - 48px));
+    }
+  }
+
+  @media (max-width: 639px) {
+    .page-backdrop {
+      padding: 0;
+    }
+
+    .device-frame {
+      max-width: none;
+      max-height: none;
+      height: 100dvh;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
+  }
+
+  .app-shell {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .proc-nav {
+    flex: 0 0 auto;
   }
 
   .panel-viewport {

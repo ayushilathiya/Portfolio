@@ -1,3 +1,5 @@
+'use client';
+
 /** Section heading styled as a lowercase path, e.g. `/register_map` */
 import { cn } from '@/lib/utils';
 

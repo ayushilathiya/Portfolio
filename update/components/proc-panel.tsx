@@ -246,9 +246,9 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
   return (
     <div className="panel-content proc-layout">
       <div className="flex-1 min-h-0 flex flex-col md:flex-row relative">
-        <aside className="shrink-0 md:w-28 lg:w-36 flex flex-col md:border-r md:border-border min-h-0 md:self-stretch">
+        <aside className="shrink-0 md:w-28 lg:w-36 flex flex-col md:border-r md:border-border min-h-0 md:h-full">
           <nav
-            className="flex md:flex-col gap-0 overflow-x-auto md:overflow-visible scrollbar-hide py-1 shrink-0"
+            className="proc-nav flex md:flex-col gap-0 overflow-x-auto md:overflow-visible scrollbar-hide shrink-0"
             role="tablist"
             aria-label="/proc explorer"
           >
@@ -260,7 +260,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
                 aria-selected={activeTab === tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'shrink-0 text-left px-3 py-2 font-mono text-[11px] transition-all duration-200 ease-out',
+                  'shrink-0 text-left px-2.5 md:px-2 py-1.5 md:py-1 font-mono text-[10px] md:text-[10px] leading-tight transition-all duration-200 ease-out',
                   'border-b-2 md:border-b-0 md:border-l-2',
                   activeTab === tab.id
                     ? 'border-accent-amber text-text-primary'
@@ -272,14 +272,17 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
             ))}
           </nav>
 
-          <div className="hidden md:block mx-3 border-t border-border-strong shrink-0" aria-hidden="true" />
+          <div
+            className="hidden md:block w-full border-t border-border-strong shrink-0"
+            aria-hidden="true"
+          />
 
-          <div className="hidden md:flex flex-1 min-h-0 p-2">
+          <div className="hidden md:flex flex-[1_1_70%] min-h-0 p-2 overflow-hidden">
             <IdleBlock scrollable />
           </div>
         </aside>
 
-        <div className="md:hidden p-2 shrink-0 border-b border-border max-h-32">
+        <div className="md:hidden p-2 shrink-0 border-b border-border min-h-[140px] max-h-[42vh] flex flex-col overflow-hidden">
           <IdleBlock scrollable />
         </div>
 

@@ -9,6 +9,7 @@ import Projects from '@/components/projects';
 import DocsPanel from '@/components/docs-panel';
 import Contact from '@/components/contact';
 import HelpPanel from '@/components/help-panel';
+import PageBackdropDecor from '@/components/page-backdrop-decor';
 import {
   SECTION_STORAGE_KEY,
   PROC_TAB_STORAGE_KEY,
@@ -44,28 +45,32 @@ export default function AppShell() {
   }, []);
 
   return (
-    <div className="app-shell bg-base text-text-primary">
-      <BootSequence />
+    <div className="page-backdrop pcb-bg">
+      <PageBackdropDecor />
 
-      <div className="h-full flex flex-col">
-        <Navigation active={activeSection} onSelect={selectSection} />
+      <div className="device-frame">
+        <BootSequence />
 
-        <main className="flex-1 relative min-h-0 min-w-0">
-          <SectionPanel isActive={activeSection === 'proc'}>
-            <ProcPanel initialTab={initialProcTab} />
-          </SectionPanel>
-          <SectionPanel isActive={activeSection === 'modules'}>
-            <Projects />
-          </SectionPanel>
-          <SectionPanel isActive={activeSection === 'docs'}>
-            <DocsPanel />
-          </SectionPanel>
-          <SectionPanel isActive={activeSection === 'uart'}>
-            <Contact />
-          </SectionPanel>
-        </main>
+        <div className="app-shell text-text-primary">
+          <Navigation active={activeSection} onSelect={selectSection} />
 
-        <HelpPanel />
+          <main className="flex-1 relative min-h-0 min-w-0">
+            <SectionPanel isActive={activeSection === 'proc'}>
+              <ProcPanel initialTab={initialProcTab} />
+            </SectionPanel>
+            <SectionPanel isActive={activeSection === 'modules'}>
+              <Projects />
+            </SectionPanel>
+            <SectionPanel isActive={activeSection === 'docs'}>
+              <DocsPanel />
+            </SectionPanel>
+            <SectionPanel isActive={activeSection === 'uart'}>
+              <Contact />
+            </SectionPanel>
+          </main>
+
+          <HelpPanel />
+        </div>
       </div>
     </div>
   );

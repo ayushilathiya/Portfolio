@@ -76,7 +76,7 @@ export default function HelpPanel() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed bottom-4 right-4 z-50 font-mono text-xs px-2.5 py-1.5 border border-border-strong bg-panel text-text-muted hover:text-accent-amber hover:border-accent-amber transition-colors duration-200 ease-out rounded-sm"
+        className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-50 font-mono text-xs px-2.5 py-1.5 border border-border-strong bg-panel text-text-muted hover:text-accent-amber hover:border-accent-amber transition-colors duration-200 ease-out rounded-sm"
         aria-label="Open help"
       >
         [?] help
@@ -84,7 +84,7 @@ export default function HelpPanel() {
 
       {open && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70"
+          className="absolute inset-0 z-[60] flex items-center justify-center p-4 bg-black/70"
           role="dialog"
           aria-modal="true"
           aria-label="Help"

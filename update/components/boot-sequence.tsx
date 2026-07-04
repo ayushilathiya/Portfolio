@@ -52,7 +52,7 @@ export default function BootSequence({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-base flex items-center justify-center transition-opacity duration-300 ease-out"
+      className="absolute inset-0 z-50 bg-base flex items-center justify-center transition-opacity duration-300 ease-out"
       role="status"
       aria-live="polite"
       aria-label="System boot"
