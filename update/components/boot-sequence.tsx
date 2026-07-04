@@ -28,7 +28,7 @@ export default function BootSequence({
 
     const completeTimer = setTimeout(() => {
       setIsComplete(true);
-      setTimeout(onComplete, 500);
+      setTimeout(onComplete, 300);
     }, 2200);
 
     return () => clearTimeout(completeTimer);
@@ -36,7 +36,7 @@ export default function BootSequence({
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-base grid-bg flex items-center justify-center transition-opacity duration-500 ${
+      className={`fixed inset-0 z-50 bg-base pcb-bg flex items-center justify-center transition-opacity duration-300 ease-out ${
         isComplete ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
@@ -44,21 +44,21 @@ export default function BootSequence({
         {bootLines.map((line, index) => (
           <div
             key={index}
-            className={`transition-all duration-300 ${
+            className={`transition-all duration-200 ease-out ${
               visibleLines.includes(index)
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-2'
             }`}
             style={{ transitionDelay: `${index * 50}ms` }}
           >
-            <span className="text-amber">{line.text.split(']')[0]}]</span>
+            <span className="text-accent">{line.text.split(']')[0]}]</span>
             <span className="text-text-primary ml-1">
               {line.text.split(']')[1]}
             </span>
           </div>
         ))}
         {visibleLines.length === bootLines.length && (
-          <div className="mt-4 text-amber animate-blink">
+          <div className="mt-4 text-accent animate-blink">
             _
           </div>
         )}

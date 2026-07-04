@@ -10,24 +10,52 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // TRACE // KERNEL color palette
-        base: {
-          DEFAULT: '#0a0a0a',
-          50: '#1a1a1a',
-          100: '#141414',
-          200: '#0f0f0f',
+        base: 'var(--bg-base)',
+        panel: 'var(--bg-panel)',
+        border: {
+          DEFAULT: 'var(--border)',
+          strong: 'var(--border-strong)',
         },
-        panel: '#141414',
-        border: '#262626',
-        amber: {
-          DEFAULT: '#ffb020',
-          dim: '#cc6a00',
-          glow: 'rgba(255, 176, 32, 0.3)',
+        accent: {
+          DEFAULT: 'var(--accent)',
+          dim: 'var(--accent-dim)',
         },
-        verified: '#39ff14',
+        verified: 'var(--status-verified)',
         text: {
-          primary: '#e8e6e1',
-          muted: '#7a7a78',
+          primary: 'var(--text-primary)',
+          muted: 'var(--text-muted)',
+        },
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
+        },
+        popover: {
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
+        },
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+        },
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
+        },
+        muted: {
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
+        },
+        destructive: {
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
+        },
+        input: 'var(--input)',
+        ring: 'var(--ring)',
+        amber: {
+          DEFAULT: 'var(--accent)',
+          dim: 'var(--accent-dim)',
         },
       },
       fontFamily: {
@@ -36,26 +64,28 @@ const config: Config = {
       },
       backgroundImage: {
         'grid-pattern': `
-          linear-gradient(rgba(38, 38, 38, 0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(38, 38, 38, 0.04) 1px, transparent 1px)
+          linear-gradient(color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px),
+          linear-gradient(90deg, color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px)
         `,
       },
       backgroundSize: {
-        'grid': '24px 24px',
+        grid: '24px 24px',
       },
       boxShadow: {
-        'amber-glow': '0 0 20px rgba(255, 176, 32, 0.3)',
-        'amber-glow-sm': '0 0 10px rgba(255, 176, 32, 0.25)',
-        'verified-glow': '0 0 15px rgba(57, 255, 20, 0.3)',
+        'amber-glow': '0 0 20px color-mix(in srgb, var(--accent) 30%, transparent)',
+        'amber-glow-sm': '0 0 10px color-mix(in srgb, var(--accent) 25%, transparent)',
+        'verified-glow': '0 0 15px color-mix(in srgb, var(--status-verified) 30%, transparent)',
+      },
+      transitionDuration: {
+        DEFAULT: '200ms',
       },
       animation: {
-        'blink': 'blink 1.2s step-end infinite',
+        blink: 'blink 1.2s step-end infinite',
         'trace-draw': 'trace-draw 0.8s ease-out forwards',
         'wave-flow': 'wave-flow 3s linear infinite',
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-        'fade-in': 'fade-in 0.5s ease-out forwards',
-        'slide-up': 'slide-up 0.5s ease-out forwards',
-        'type-cursor': 'type-cursor 0.8s steps(40) forwards',
+        'fade-in': 'fade-in 0.3s ease-out forwards',
+        'slide-up': 'slide-up 0.3s ease-out forwards',
       },
       keyframes: {
         blink: {
@@ -79,12 +109,8 @@ const config: Config = {
           '100%': { opacity: '1' },
         },
         'slide-up': {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        'type-cursor': {
-          '0%': { width: '0' },
-          '100%': { width: '100%' },
         },
       },
     },

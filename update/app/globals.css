@@ -4,32 +4,36 @@
 
 @layer base {
   :root {
-    /* TRACE // KERNEL color system */
-    --background: #0a0a0a;
-    --foreground: #e8e6e1;
-    --card: #141414;
-    --card-foreground: #e8e6e1;
-    --popover: #141414;
-    --popover-foreground: #e8e6e1;
-    --primary: #ffb020;
-    --primary-foreground: #0a0a0a;
-    --secondary: #cc6a00;
-    --secondary-foreground: #e8e6e1;
-    --muted: #1a1a1a;
-    --muted-foreground: #7a7a78;
+    /* TRACE // KERNEL — locked palette */
+    --bg-base: #0a0a0a;
+    --bg-panel: #121212;
+    --border: #232323;
+    --border-strong: #333333;
     --accent: #ffb020;
-    --accent-foreground: #0a0a0a;
-    --destructive: #cc6a00;
-    --destructive-foreground: #e8e6e1;
-    --border: #262626;
-    --input: #262626;
-    --ring: #ffb020;
-    --radius: 0.25rem;
+    --accent-dim: #925c14;
+    --text-primary: #e9e7e2;
+    --text-muted: #7c7c78;
+    --status-verified: #39ff14;
 
-    /* Custom properties */
-    --amber: #ffb020;
-    --amber-dim: #cc6a00;
-    --verified: #39ff14;
+    /* shadcn compat — mapped to kernel tokens */
+    --background: var(--bg-base);
+    --foreground: var(--text-primary);
+    --card: var(--bg-panel);
+    --card-foreground: var(--text-primary);
+    --popover: var(--bg-panel);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--accent);
+    --primary-foreground: var(--bg-base);
+    --secondary: var(--accent-dim);
+    --secondary-foreground: var(--text-primary);
+    --muted: var(--bg-panel);
+    --muted-foreground: var(--text-muted);
+    --accent-foreground: var(--bg-base);
+    --destructive: var(--accent-dim);
+    --destructive-foreground: var(--text-primary);
+    --input: var(--border);
+    --ring: var(--accent);
+    --radius: 0.25rem;
   }
 
   * {
@@ -43,96 +47,156 @@
 
   body {
     @apply bg-base text-text-primary antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 
-  /* Scrollbar styling */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #0a0a0a;
+    background: var(--bg-base);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #262626;
+    background: var(--border);
     border-radius: 2px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #ffb020;
+    background: var(--accent);
   }
 
-  /* Selection styling */
   ::selection {
-    background: rgba(255, 176, 32, 0.3);
-    color: #e8e6e1;
+    background: color-mix(in srgb, var(--accent) 30%, transparent);
+    color: var(--text-primary);
   }
 }
 
 @layer components {
-  /* Terminal text styling */
   .terminal-line {
     @apply font-mono text-text-muted;
   }
 
-  /* Section header styling */
   .section-header {
-    @apply font-mono text-sm tracking-[0.2em] uppercase text-text-muted mb-8;
+    @apply font-mono text-sm tracking-[0.2em] lowercase text-text-muted mb-8;
   }
 
-  /* Amber accent glow on hover */
-  .amber-glow-hover {
-    @apply transition-all duration-200;
-  }
-
-  .amber-glow-hover:hover {
-    @apply shadow-amber-glow-sm;
-  }
-
-  /* Panel/card styling */
   .panel {
     @apply bg-panel border border-border rounded;
-    background-image: linear-gradient(135deg, rgba(255, 176, 32, 0.02) 0%, transparent 50%);
+    background-image: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 2%, transparent) 0%,
+      transparent 50%
+    );
   }
 
-  /* Status LED */
   .status-led {
     @apply w-2 h-2 rounded-full;
   }
 
   .status-led-active {
-    @apply bg-amber shadow-amber-glow-sm animate-pulse-glow;
+    background: var(--accent);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 25%, transparent);
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 
   .status-led-verified {
-    @apply bg-verified shadow-verified-glow;
+    background: var(--status-verified);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--status-verified) 30%, transparent);
   }
 
   .status-led-dim {
-    @apply bg-text-muted/30;
+    background: color-mix(in srgb, var(--text-muted) 30%, transparent);
   }
 
-  /* Trace line styling */
+  .status-led-online {
+    background: var(--status-verified);
+    animation: blink 1.2s step-end infinite;
+    box-shadow: 0 0 8px color-mix(in srgb, var(--status-verified) 40%, transparent);
+  }
+
   .trace-line {
     @apply border-l border-border;
   }
 
-  /* Mono label */
   .mono-label {
     @apply font-mono text-xs tracking-[0.15em] uppercase text-text-muted;
   }
 
-  /* Grid background */
   .grid-bg {
     @apply bg-grid-pattern bg-grid;
+  }
+
+  /* Silicon die / PCB substrate texture (~5%) */
+  .pcb-bg {
+    background-color: var(--bg-base);
+    background-image:
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--accent) 4%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        color-mix(in srgb, var(--accent) 4%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        rgba(35, 35, 35, 0.35) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        rgba(35, 35, 35, 0.35) 1px,
+        transparent 1px
+      );
+    background-size: 48px 48px, 48px 48px, 12px 12px, 12px 12px;
+  }
+
+  .register-row {
+    @apply flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 py-3 border-b border-border font-mono text-sm;
+  }
+
+  .register-key {
+    @apply text-text-muted shrink-0 sm:w-36 tracking-wider uppercase text-xs;
+  }
+
+  .register-val {
+    @apply text-accent;
+  }
+
+  .log-line {
+    @apply font-mono text-xs md:text-sm leading-relaxed;
+  }
+
+  .dev-node {
+    @apply relative px-3 py-1.5 border border-border-strong rounded-sm font-mono text-xs md:text-sm transition-all duration-200 ease-out;
+    background: color-mix(in srgb, var(--bg-base) 80%, transparent);
+  }
+
+  .dev-node-embedded {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+
+  .dev-node-vlsi {
+    color: var(--accent-dim);
+    border-color: color-mix(in srgb, var(--accent-dim) 80%, transparent);
+  }
+
+  .dev-node-iot {
+    @apply text-text-primary;
+    border-color: var(--border-strong);
+  }
+
+  .dev-node-software {
+    @apply text-text-muted;
+    border-color: color-mix(in srgb, var(--text-muted) 50%, transparent);
   }
 }
 
 @layer utilities {
-  /* Hide scrollbar but keep functionality */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -140,5 +204,25 @@
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
   }
 }

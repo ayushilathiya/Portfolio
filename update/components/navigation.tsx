@@ -1,14 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
-const sections = [
-  { id: 'about', label: 'ABOUT', hex: '0x00' },
-  { id: 'skills', label: 'STACK', hex: '0x01' },
-  { id: 'projects', label: 'PROJECTS', hex: '0x02' },
-  { id: 'experience', label: 'LOG', hex: '0x03' },
-  { id: 'contact', label: 'CONNECT', hex: '0x04' },
-];
+import { sections } from '@/lib/sections';
 
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState('');
@@ -18,18 +11,12 @@ export default function Navigation() {
     const handleScroll = () => {
       setIsVisible(window.scrollY > 100);
 
-      // Determine active section
-      const sectionElements = sections.map((s) => ({
-        id: s.id,
-        element: document.getElementById(s.id),
-      }));
-
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const section = sectionElements[i];
-        if (section.element) {
-          const rect = section.element.getBoundingClientRect();
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sections[i].id);
+        if (element) {
+          const rect = element.getBoundingClientRect();
           if (rect.top <= 150) {
-            setActiveSection(section.id);
+            setActiveSection(sections[i].id);
             break;
           }
         }
@@ -43,24 +30,24 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${
+      className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-200 ease-out ${
         isVisible
           ? 'opacity-100 translate-y-0'
           : 'opacity-0 -translate-y-4 pointer-events-none'
       }`}
     >
-      <div className="panel px-1 py-1 flex items-center gap-0.5">
+      <div className="panel px-1 py-1 flex items-center gap-0.5 overflow-x-auto scrollbar-hide max-w-[95vw]">
         {sections.map((section) => (
           <a
             key={section.id}
             href={`#${section.id}`}
-            className={`px-3 py-1.5 font-mono text-xs tracking-wider transition-all duration-200 rounded-sm ${
+            className={`px-2 md:px-3 py-1.5 font-mono text-[10px] md:text-xs tracking-wider transition-all duration-200 ease-out rounded-sm whitespace-nowrap ${
               activeSection === section.id
-                ? 'bg-amber/20 text-amber'
+                ? 'bg-accent/20 text-accent'
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
-            {section.hex} // {section.label}
+            {section.label}
           </a>
         ))}
       </div>

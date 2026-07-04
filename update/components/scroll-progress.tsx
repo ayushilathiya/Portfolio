@@ -21,7 +21,7 @@ export default function ScrollProgress() {
     <div className="fixed top-0 left-0 right-0 h-1 bg-base z-40">
       {/* Progress fill with waveform-like gradient */}
       <div
-        className="h-full bg-gradient-to-r from-amber via-amber to-amber-dim transition-all duration-100"
+        className="h-full bg-gradient-to-r from-accent via-accent to-accent-dim transition-all duration-150 ease-linear"
         style={{ width: `${progress * 100}%` }}
       />
 
@@ -30,7 +30,7 @@ export default function ScrollProgress() {
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className={`w-1 h-1 rounded-full bg-amber transition-opacity duration-200 ${
+            className={`w-1 h-1 rounded-full bg-accent transition-opacity duration-200 ease-out ${
               progress >= (i + 1) / 4 ? 'opacity-100' : 'opacity-30'
             }`}
           />
@@ -39,7 +39,7 @@ export default function ScrollProgress() {
 
       {/* Amber glow at progress point */}
       <div
-        className="absolute top-0 h-full w-2 shadow-amber-glow bg-amber"
+        className="absolute top-0 h-full w-2 shadow-amber-glow bg-accent"
         style={{ left: `${progress * 100}%` }}
       />
     </div>

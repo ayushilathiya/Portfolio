@@ -36,26 +36,22 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-24 px-6 md:px-12">
+    <section id="uart" className="py-24 px-6 md:px-12">
       <div className="max-w-4xl mx-auto">
-        <h2 className="section-header">0x04 // CONNECT</h2>
+        <h2 className="section-header">/uart</h2>
 
-        {/* Terminal prompt */}
         <div className="panel p-6 md:p-8">
-          {/* Prompt line */}
-          <div className="font-mono mb-6">
-            <span className="text-amber">{'>'}</span>
+          <div className="font-mono mb-6 text-sm">
+            <span className="text-accent">{'>'}</span>
             <span className="text-text-primary ml-2">connect --with ayushi</span>
           </div>
 
-          {/* Output */}
           <div className="font-mono text-sm space-y-4">
-            <div className="border-l-2 border-amber/50 pl-4">
-              <span className="text-text-muted">/* Available channels */</span>
+            <div className="border-l-2 border-accent/50 pl-4">
+              <span className="text-text-muted">/* uart handshake — available channels */</span>
             </div>
 
-            {/* Contact links */}
-            <div className="space-y-3 pl-4">
+            <div className="space-y-2 pl-4">
               {channels.map((channel) => (
                 <a
                   key={channel.label}
@@ -63,35 +59,33 @@ export default function Contact() {
                   target={channel.label === 'resume' ? undefined : '_blank'}
                   rel={channel.label === 'resume' ? undefined : 'noopener noreferrer'}
                   download={channel.label === 'resume' ? true : undefined}
-                  className="flex items-center gap-3 text-text-muted hover:text-amber transition-colors duration-200 group"
+                  className="flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted hover:text-accent transition-colors duration-200 ease-out group py-1"
                 >
-                  <channel.icon className="w-4 h-4 text-amber group-hover:shadow-amber-glow-sm" />
+                  <channel.icon className="w-4 h-4 text-accent shrink-0" />
                   <span className="text-text-primary">{channel.label}</span>
-                  <span className="text-amber">{channel.display}</span>
+                  <span className="text-accent">=</span>
+                  <span className="text-accent break-all">{channel.display}</span>
                   {channel.label !== 'resume' && (
-                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                   )}
                 </a>
               ))}
             </div>
 
-            {/* Footer note */}
-            <div className="border-l-2 border-amber/50 pl-4 mt-6">
+            <div className="border-l-2 border-accent/50 pl-4 mt-6">
               <span className="text-text-muted">/* {profile.footerNote} */</span>
             </div>
           </div>
 
-          {/* Cursor */}
           <div className="font-mono mt-6 flex items-center gap-2">
-            <span className="text-amber">{'>'}</span>
-            <span className="w-2 h-4 bg-amber animate-blink" />
+            <span className="text-accent">{'>'}</span>
+            <span className="w-2 h-4 bg-accent animate-blink" />
           </div>
         </div>
 
-        {/* Footer */}
         <div className="mt-16 pt-8 border-t border-border text-center">
-          <p className="font-mono text-xs text-text-muted">
-            [ TRACE KERNEL v1.0 ] -- © {new Date().getFullYear()} Ayushi Lathiya
+          <p className="font-mono text-xs text-text-muted lowercase">
+            [ trace // kernel v1.0 ] — © {new Date().getFullYear()} ayushi lathiya
           </p>
         </div>
       </div>
