@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* TRACE // KERNEL color system */
+    --background: #0a0a0a;
+    --foreground: #e8e6e1;
+    --card: #141414;
+    --card-foreground: #e8e6e1;
+    --popover: #141414;
+    --popover-foreground: #e8e6e1;
+    --primary: #ffb020;
+    --primary-foreground: #0a0a0a;
+    --secondary: #cc6a00;
+    --secondary-foreground: #e8e6e1;
+    --muted: #1a1a1a;
+    --muted-foreground: #7a7a78;
+    --accent: #ffb020;
+    --accent-foreground: #0a0a0a;
+    --destructive: #cc6a00;
+    --destructive-foreground: #e8e6e1;
+    --border: #262626;
+    --input: #262626;
+    --ring: #ffb020;
+    --radius: 0.25rem;
+
+    /* Custom properties */
+    --amber: #ffb020;
+    --amber-dim: #cc6a00;
+    --verified: #39ff14;
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-base text-text-primary antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ffb020;
+  }
+
+  /* Selection styling */
+  ::selection {
+    background: rgba(255, 176, 32, 0.3);
+    color: #e8e6e1;
+  }
+}
+
+@layer components {
+  /* Terminal text styling */
+  .terminal-line {
+    @apply font-mono text-text-muted;
+  }
+
+  /* Section header styling */
+  .section-header {
+    @apply font-mono text-sm tracking-[0.2em] uppercase text-text-muted mb-8;
+  }
+
+  /* Amber accent glow on hover */
+  .amber-glow-hover {
+    @apply transition-all duration-200;
+  }
+
+  .amber-glow-hover:hover {
+    @apply shadow-amber-glow-sm;
+  }
+
+  /* Panel/card styling */
+  .panel {
+    @apply bg-panel border border-border rounded;
+    background-image: linear-gradient(135deg, rgba(255, 176, 32, 0.02) 0%, transparent 50%);
+  }
+
+  /* Status LED */
+  .status-led {
+    @apply w-2 h-2 rounded-full;
+  }
+
+  .status-led-active {
+    @apply bg-amber shadow-amber-glow-sm animate-pulse-glow;
+  }
+
+  .status-led-verified {
+    @apply bg-verified shadow-verified-glow;
+  }
+
+  .status-led-dim {
+    @apply bg-text-muted/30;
+  }
+
+  /* Trace line styling */
+  .trace-line {
+    @apply border-l border-border;
+  }
+
+  /* Mono label */
+  .mono-label {
+    @apply font-mono text-xs tracking-[0.15em] uppercase text-text-muted;
+  }
+
+  /* Grid background */
+  .grid-bg {
+    @apply bg-grid-pattern bg-grid;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
