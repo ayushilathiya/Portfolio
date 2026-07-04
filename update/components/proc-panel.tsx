@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { procTabs, type ProcTabId } from '@/lib/sections';
 import { profile } from '@/data/profile';
 import { education } from '@/data/education';
@@ -16,53 +16,27 @@ interface ProcPanelProps {
   initialTab?: ProcTabId;
 }
 
-const BOOT_STEPS = [
-  '[0.0001] power-on reset',
-  '[0.0012] enumerating buses…',
-  '[0.0024] device online — handshake ok',
-];
-
-function DeviceOnlineIntro() {
-  const [step, setStep] = useState(0);
-
-  useEffect(() => {
-    if (step >= BOOT_STEPS.length) return;
-    const t = setTimeout(() => setStep((s) => s + 1), 450);
-    return () => clearTimeout(t);
-  }, [step]);
-
+function WhoamiHero() {
   return (
-    <div className="panel-box p-4 mb-4 font-mono text-xs space-y-2 relative overflow-hidden">
+    <div className="content-stack-section relative overflow-hidden">
       <SectionVisual tab="whoami" />
-      <div className="space-y-1 text-text-secondary">
-        {BOOT_STEPS.slice(0, step).map((line) => (
-          <div key={line} className="flex items-start gap-2">
-            <span className="text-text-muted shrink-0">›</span>
-            <span>{line}</span>
-          </div>
-        ))}
-      </div>
-      {step >= BOOT_STEPS.length && (
-        <>
-          <p className="text-text-primary text-sm md:text-base pt-1">
-            Hi, I&apos;m <span className="text-accent-amber">{profile.name}</span>
-          </p>
-          <p className="text-text-secondary leading-relaxed">{profile.intro}</p>
-          <p className="text-text-muted text-[11px]">{profile.bio[0]}</p>
-        </>
-      )}
+      <h1 className="text-text-primary text-lg md:text-xl font-medium leading-snug">
+        Hi, I&apos;m <span className="text-accent-amber">{profile.name}</span>
+      </h1>
+      <p className="text-text-primary text-sm md:text-base mt-2 leading-relaxed">{profile.intro}</p>
+      <p className="text-text-secondary text-[11px] md:text-xs mt-2 leading-relaxed">{profile.bio[0]}</p>
     </div>
   );
 }
 
 function SystemStats() {
   return (
-    <div className="panel-box p-4 relative">
+    <div className="content-stack-section relative">
       <PathLabel name="system_stats" />
       <table className="w-full font-mono text-[11px]">
         <tbody>
           {profile.stats.map((stat, i) => (
-            <tr key={stat.label} className="border-b border-border last:border-0">
+            <tr key={stat.label} className="border-b border-border-strong last:border-0">
               <td className="py-2 pr-4 text-text-muted">{stat.label}</td>
               <td className="py-2 text-right tabular-nums">
                 <span className={i === 0 ? 'text-accent-amber' : 'text-text-secondary'}>
@@ -79,7 +53,7 @@ function SystemStats() {
 
 function ConnectedDevices() {
   return (
-    <div className="panel-box p-4 relative">
+    <div className="content-stack-section relative">
       <PathLabel name="connected_devices" />
       <div className="flex flex-wrap gap-3">
         {profile.devices.map((dev) => (
@@ -112,14 +86,14 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
     switch (activeTab) {
       case 'whoami':
         return (
-          <div className="space-y-4">
-            <DeviceOnlineIntro />
-            <div className="panel-box p-4 relative">
+          <div className="content-stack">
+            <WhoamiHero />
+            <div className="content-stack-section relative">
               <SectionVisual tab="whoami" />
               <PathLabel name="register_map" />
               <table className="w-full font-mono text-[11px]">
                 <thead>
-                  <tr className="text-text-muted text-left border-b border-border">
+                  <tr className="text-text-muted text-left border-b border-border-strong">
                     <th className="pb-2 pr-3 font-normal">ADDR</th>
                     <th className="pb-2 pr-3 font-normal">FIELD</th>
                     <th className="pb-2 font-normal">VALUE</th>
@@ -127,7 +101,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
                 </thead>
                 <tbody>
                   {profile.registers.map((reg) => (
-                    <tr key={reg.addr} className="border-b border-border last:border-0">
+                    <tr key={reg.addr} className="border-b border-border-strong last:border-0">
                       <td className="py-2 pr-3 text-accent-amber">{reg.addr}</td>
                       <td className="py-2 pr-3 text-text-muted">{reg.field}</td>
                       <td className="py-2 text-text-secondary">{reg.value}</td>
@@ -143,11 +117,11 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
 
       case 'bootloader':
         return (
-          <div className="space-y-3 relative">
+          <div className="content-stack relative">
             <SectionVisual tab="bootloader" />
             <DomainAccent domain="vlsi" />
             {education.map((edu) => (
-              <div key={edu.institution} className="panel-box p-4">
+              <div key={edu.institution} className="content-stack-section">
                 <a
                   href={edu.website}
                   target="_blank"
@@ -158,7 +132,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
                 </a>
                 <p className="font-mono text-xs text-text-secondary mt-1">{edu.degree}</p>
                 <p className="font-mono text-xs text-text-muted mt-1">{edu.period}</p>
-                <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-border">
+                <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-border-strong">
                   {edu.skills.map((s) => (
                     <span key={s} className="mesh-node text-[10px]">{s}</span>
                   ))}
@@ -170,12 +144,14 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
 
       case 'runtime':
         return (
-          <div className="space-y-2 relative">
+          <div className="content-stack relative">
             <SectionVisual tab="runtime" />
             <DomainAccent domain="embedded" />
-            <PathLabel name="work_log" />
+            <div className="content-stack-section">
+              <PathLabel name="work_log" />
+            </div>
             {workEntries.map((entry) => (
-              <div key={entry.title} className="panel-box p-3 log-line">
+              <div key={entry.title} className="content-stack-section log-line">
                 <div className="flex flex-wrap gap-x-2 text-[11px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
                   {entry.link ? (
@@ -196,12 +172,14 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
 
       case 'beacon':
         return (
-          <div className="space-y-3 relative">
+          <div className="content-stack relative">
             <SectionVisual tab="beacon" />
             <DomainAccent domain="space" />
-            <PathLabel name="beacon_tx" />
+            <div className="content-stack-section">
+              <PathLabel name="beacon_tx" />
+            </div>
             {achievementEntries.map((entry) => (
-              <div key={entry.title} className="panel-box p-3 log-line">
+              <div key={entry.title} className="content-stack-section log-line">
                 <div className="flex flex-wrap gap-x-2 text-[11px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
                   <span className="text-text-muted text-[10px]">tx</span>
@@ -218,7 +196,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
               </div>
             ))}
             {responsibilities.map((pos) => (
-              <div key={pos.title} className="panel-box p-4">
+              <div key={pos.title} className="content-stack-section">
                 <a href={pos.link} target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out">
                   {pos.title}
                 </a>
@@ -246,7 +224,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
   return (
     <div className="panel-content proc-layout">
       <div className="flex-1 min-h-0 flex flex-col md:flex-row relative">
-        <aside className="shrink-0 md:w-28 lg:w-36 flex flex-col md:border-r md:border-border min-h-0 md:h-full">
+        <aside className="shrink-0 md:w-28 lg:w-36 flex flex-col md:border-r md:border-border min-h-0 md:h-full overflow-hidden">
           <nav
             className="proc-nav flex md:flex-col gap-0 overflow-x-auto md:overflow-visible scrollbar-hide shrink-0"
             role="tablist"
@@ -277,13 +255,13 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
             aria-hidden="true"
           />
 
-          <div className="hidden md:flex flex-[1_1_70%] min-h-0 p-2 overflow-hidden">
-            <IdleBlock scrollable />
+          <div className="hidden md:block idle-sidebar-slot">
+            <IdleBlock />
           </div>
         </aside>
 
-        <div className="md:hidden p-2 shrink-0 border-b border-border min-h-[140px] max-h-[42vh] flex flex-col overflow-hidden">
-          <IdleBlock scrollable />
+        <div className="md:hidden idle-mobile-slot">
+          <IdleBlock />
         </div>
 
         <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll p-2 md:p-4 relative" role="tabpanel">

@@ -106,7 +106,7 @@ SEE ALSO
       <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10">
         <div className="panel-box p-3 font-mono text-[11px]">
           <PathLabel name="docs_index" />
-          <div className="text-text-muted mb-3 pb-2 border-b border-border flex flex-wrap gap-x-3 gap-y-1 -mt-1">
+          <div className="text-text-muted mb-3 pb-2 border-b border-border-strong flex flex-wrap gap-x-3 gap-y-1 -mt-1">
             <span>total {posts.length}</span>
             <span>·</span>
             <span>hashnode feed</span>
@@ -134,7 +134,7 @@ SEE ALSO
                   key={post.slug}
                   type="button"
                   onClick={() => setSelected(post)}
-                  className="w-full text-left p-2 rounded border border-transparent hover:border-border-strong transition-colors duration-200 ease-out group flex gap-3"
+                  className="w-full text-left p-2 border-b border-border-strong last:border-b-0 hover:bg-panel transition-colors duration-200 ease-out group flex gap-3"
                 >
                   {post.coverImage ? (
                     <div className="shrink-0 w-16 h-12 md:w-20 md:h-14 rounded overflow-hidden border border-border bg-base">
@@ -172,7 +172,7 @@ SEE ALSO
                 href={profile.social.hashnode}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 mt-3 pt-3 border-t border-border text-text-secondary hover:text-accent-amber transition-colors"
+                className="flex items-center justify-center gap-2 mt-3 pt-3 border-t border-border-strong text-text-secondary hover:text-accent-amber transition-colors"
               >
                 view all on hashnode
                 <ExternalLink className="w-3.5 h-3.5" />

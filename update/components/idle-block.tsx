@@ -52,22 +52,24 @@ function IdleIcon({ type }: { type: IdleEntry['icon'] }) {
   }
 }
 
-export default function IdleBlock({ scrollable = true }: { scrollable?: boolean }) {
+export default function IdleBlock() {
   return (
-    <div className="idle-box font-mono text-[10px] md:text-[11px] p-2.5 h-full">
-      <div className="shrink-0 mb-2 pb-2 border-b border-border">
+    <div className="idle-panel font-mono text-[10px] md:text-[11px]">
+      <div className="idle-panel-header shrink-0">
         <PathLabel name="idle" className="mb-0" />
       </div>
-      <div className={scrollable ? 'idle-box-scroll space-y-2 pr-0.5' : 'space-y-2'}>
-        {idleEntries.map((entry) => (
-          <div key={entry.timestamp + entry.message} className="flex gap-2 items-start">
-            <IdleIcon type={entry.icon} />
-            <div className="leading-snug min-w-0">
-              <span className="text-text-muted">[{entry.timestamp}]</span>{' '}
-              <span className="text-text-primary">{entry.message}</span>
+      <div className="idle-scroll-visible">
+        <div className="space-y-2 pb-1">
+          {idleEntries.map((entry) => (
+            <div key={entry.timestamp + entry.message} className="flex gap-2 items-start">
+              <IdleIcon type={entry.icon} />
+              <div className="leading-snug min-w-0">
+                <span className="text-text-muted">[{entry.timestamp}]</span>{' '}
+                <span className="text-text-primary">{entry.message}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

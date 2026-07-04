@@ -10,6 +10,7 @@ import DocsPanel from '@/components/docs-panel';
 import Contact from '@/components/contact';
 import HelpPanel from '@/components/help-panel';
 import PageBackdropDecor from '@/components/page-backdrop-decor';
+import WindowTitleBar from '@/components/window-title-bar';
 import {
   SECTION_STORAGE_KEY,
   PROC_TAB_STORAGE_KEY,
@@ -45,11 +46,13 @@ export default function AppShell() {
   }, []);
 
   return (
-    <div className="page-backdrop pcb-bg">
+    <div className="page-backdrop">
       <PageBackdropDecor />
 
       <div className="device-frame">
         <BootSequence />
+
+        <WindowTitleBar />
 
         <div className="app-shell text-text-primary">
           <Navigation active={activeSection} onSelect={selectSection} />

@@ -49,4 +49,18 @@ export const idleEntries: IdleEntry[] = [
     perm: '-rw-rw-r--',
     size: '2.4k',
   },
+  {
+    timestamp: '2026.01.12',
+    message: 'repotted the pothos — root-bound but recovering fine',
+    icon: 'plant',
+    perm: '-rw-r--r--',
+    size: '512B',
+  },
+  {
+    timestamp: '2025.12.20',
+    message: 'sketched a block diagram for a side project that may never leave the notebook',
+    icon: 'book',
+    perm: '-r--r--r--',
+    size: '1.8k',
+  },
 ];

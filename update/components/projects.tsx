@@ -46,7 +46,7 @@ export default function Projects() {
           {projects.map((project) => (
             <div
               key={project.title}
-              className="panel-box p-3 md:p-4 group hover:border-border-strong transition-colors duration-200 ease-out relative overflow-hidden"
+              className="panel-box p-3 md:p-4 group transition-colors duration-200 ease-out relative overflow-hidden"
             >
               <DomainAccent domain={domainAccentMap[project.domain]} />
 

@@ -60,7 +60,7 @@ export default function Contact() {
       <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full min-h-0 overflow-y-auto panel-inner-scroll">
         <div className="panel-box p-4 md:p-5 relative">
           <PathLabel name="uart_form" />
-          <div className="font-mono text-sm mb-4 -mt-1">
+          <div className="font-mono text-sm mb-4 -mt-1 pb-3 border-b border-border-strong">
             <span className="text-text-muted">{'>'}</span>
             <span className="text-text-primary ml-2">connect --with ayushi</span>
           </div>

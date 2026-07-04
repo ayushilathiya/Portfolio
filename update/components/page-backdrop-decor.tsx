@@ -1,6 +1,6 @@
 'use client';
 
-/** Decorative trace lines and IoT nodes on the outer page background */
+/** Animated amber trace lines on the plain outer page background */
 export default function PageBackdropDecor() {
   return (
     <svg
@@ -9,33 +9,56 @@ export default function PageBackdropDecor() {
       preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"
     >
-      {/* Horizontal traces */}
-      <line x1="0" y1="120" x2="280" y2="120" stroke="var(--border-strong)" strokeWidth="0.75" opacity="0.6" />
-      <line x1="1160" y1="780" x2="1440" y2="780" stroke="var(--border-strong)" strokeWidth="0.75" opacity="0.6" />
-      <line x1="80" y1="0" x2="80" y2="200" stroke="var(--border-strong)" strokeWidth="0.5" opacity="0.4" />
-      <line x1="1360" y1="700" x2="1360" y2="900" stroke="var(--border-strong)" strokeWidth="0.5" opacity="0.4" />
-
-      {/* L-shaped trace segments */}
-      <path d="M 200 60 L 200 160 L 320 160" fill="none" stroke="var(--border-strong)" strokeWidth="0.75" opacity="0.5" />
-      <path d="M 1240 840 L 1240 740 L 1120 740" fill="none" stroke="var(--border-strong)" strokeWidth="0.75" opacity="0.5" />
-      <path d="M 520 40 L 620 40 L 620 100" fill="none" stroke="var(--border-strong)" strokeWidth="0.5" opacity="0.35" />
-      <path d="M 920 860 L 820 860 L 820 800" fill="none" stroke="var(--border-strong)" strokeWidth="0.5" opacity="0.35" />
-
-      {/* IoT / mesh nodes */}
-      <circle cx="200" cy="60" r="2.5" fill="var(--text-muted)" opacity="0.5" />
-      <circle cx="320" cy="160" r="2" fill="var(--text-muted)" opacity="0.4" />
-      <circle cx="1240" cy="840" r="2.5" fill="var(--text-muted)" opacity="0.5" />
-      <circle cx="1120" cy="740" r="2" fill="var(--text-muted)" opacity="0.4" />
-      <circle cx="80" cy="200" r="1.5" fill="var(--text-muted)" opacity="0.35" />
-      <circle cx="1360" cy="700" r="1.5" fill="var(--text-muted)" opacity="0.35" />
-      <circle cx="620" cy="100" r="1.5" fill="var(--text-muted)" opacity="0.3" />
-      <circle cx="820" cy="800" r="1.5" fill="var(--text-muted)" opacity="0.3" />
-
-      {/* VLSI die outline hints */}
-      <rect x="40" y="720" width="48" height="48" fill="none" stroke="var(--border-strong)" strokeWidth="0.5" opacity="0.25" />
-      <rect x="52" y="732" width="8" height="8" fill="var(--border)" opacity="0.4" />
-      <rect x="64" y="732" width="8" height="8" fill="var(--border)" opacity="0.4" />
-      <rect x="1352" y="132" width="48" height="48" fill="none" stroke="var(--border-strong)" strokeWidth="0.5" opacity="0.25" />
+      <line
+        className="trace-pulse"
+        x1="0"
+        y1="140"
+        x2="320"
+        y2="140"
+        stroke="var(--accent-amber)"
+        strokeWidth="0.75"
+      />
+      <line
+        className="trace-pulse trace-pulse-delay-1"
+        x1="1120"
+        y1="760"
+        x2="1440"
+        y2="760"
+        stroke="var(--accent-amber)"
+        strokeWidth="0.75"
+      />
+      <path
+        className="trace-pulse trace-pulse-delay-2"
+        d="M 180 48 L 180 168 L 300 168"
+        fill="none"
+        stroke="var(--accent-amber)"
+        strokeWidth="0.6"
+      />
+      <path
+        className="trace-pulse trace-pulse-delay-3"
+        d="M 1260 852 L 1260 732 L 1140 732"
+        fill="none"
+        stroke="var(--accent-amber)"
+        strokeWidth="0.6"
+      />
+      <line
+        className="trace-pulse trace-pulse-delay-2"
+        x1="60"
+        y1="0"
+        x2="60"
+        y2="180"
+        stroke="var(--accent-amber)"
+        strokeWidth="0.5"
+      />
+      <line
+        className="trace-pulse trace-pulse-delay-1"
+        x1="1380"
+        y1="720"
+        x2="1380"
+        y2="900"
+        stroke="var(--accent-amber)"
+        strokeWidth="0.5"
+      />
     </svg>
   );
 }
