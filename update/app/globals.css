@@ -710,6 +710,10 @@
   .module-card {
     padding: 0;
     overflow: hidden;
+    min-height: 11rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .module-card-motif {
@@ -727,6 +731,9 @@
   .module-card-body {
     padding: 0.875rem 1rem;
     min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .module-motif-svg {
@@ -742,17 +749,14 @@
     display: grid;
     gap: 0.875rem;
     grid-template-columns: 1fr;
+    align-items: stretch;
   }
 
   @media (min-width: 640px) {
     .modules-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
+      gap: 0.875rem;
     }
-  }
-
-  .module-card {
-    min-height: 11rem;
   }
 
   .device-port-card-sm {

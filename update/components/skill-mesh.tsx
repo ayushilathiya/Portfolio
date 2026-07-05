@@ -29,9 +29,9 @@ export default function SkillMesh({ compact = false }: { compact?: boolean }) {
     >
       {compact ? (
         <div className="content-stack-section border-b border-border-strong">
-          <PathLabel name="dev_pin_map" className="mb-2 relative z-10" />
+          <PathLabel name="devskillsmap" className="mb-2 relative z-10" />
           <p className="font-mono text-[10px] text-text-muted relative z-10">
-            gpio map · {skills.length} pins mapped
+            gpio · {skills.length} pins connected
           </p>
         </div>
       ) : (

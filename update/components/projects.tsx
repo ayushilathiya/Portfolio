@@ -26,15 +26,18 @@ export default function Projects() {
   return (
     <div className="panel-content relative">
       <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative">
-        <PathLabel name="modules_index" className="relative z-10 px-0.5 mb-3" />
+        <div className="flex items-baseline gap-2 relative z-10 px-0.5 mb-3">
+          <PathLabel name="modules_index" className="mb-0" />
+          <span className="font-mono text-[10px] text-text-muted">· {projects.length}</span>
+        </div>
 
         <div className="modules-grid relative z-10">
           {projects.map((project) => (
             <article
               key={project.title}
-              className="module-card panel-box group transition-colors duration-200 ease-out relative overflow-hidden"
+              className="module-card panel-box group transition-colors duration-200 ease-out relative overflow-hidden h-full"
             >
-              <div className="module-card-body relative z-[2]">
+              <div className="module-card-body relative z-[2] flex flex-col h-full">
                 <div className="module-card-motif" aria-hidden="true">
                   <ModuleDomainMotif domain={project.domain} />
                 </div>
@@ -60,11 +63,11 @@ export default function Projects() {
                 <h3 className="font-mono text-xs md:text-[13px] text-text-primary mb-2 group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
                   {project.title}
                 </h3>
-                <p className="font-mono text-[11px] text-text-muted leading-relaxed mb-3 line-clamp-4">
+                <p className="font-mono text-[11px] text-text-muted leading-relaxed mb-3 line-clamp-4 flex-1">
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1.5 mb-3">
+                <div className="flex flex-wrap gap-1.5 mb-3 mt-auto">
                   {project.tech.slice(0, 4).map((tech) => (
                     <span key={tech} className="module-tech-pill">
                       {tech}
@@ -73,7 +76,7 @@ export default function Projects() {
                 </div>
 
                 {project.links && (
-                  <div className="flex gap-3 pt-2 border-t border-border-strong">
+                  <div className="module-card-links flex gap-3 pt-2 mt-auto border-t border-border-strong">
                     {project.links.map((link) => (
                       <a
                         key={link.type}

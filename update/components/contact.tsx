@@ -50,11 +50,10 @@ export default function Contact() {
     <div className="panel-content uart-panel relative">
       <div className="uart-panel-inner">
         <div className="panel-box uart-form-box p-3 relative">
-          <PathLabel name="tx" />
-          <div className="font-mono text-[11px] mb-2 -mt-1 pb-2 border-b border-border-strong">
-            <span className="text-text-muted">{'>'}</span>
-            <span className="text-text-primary ml-2">tx --to ayushi</span>
-          </div>
+          <PathLabel name="tx" className="mb-2" />
+          <p className="font-mono text-[11px] mb-2 pb-2 border-b border-border-strong text-text-primary">
+            transmit --to ayushi
+          </p>
 
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="space-y-2.5">

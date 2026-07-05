@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { procTabs, type ProcTabId } from '@/lib/sections';
 import { profile } from '@/data/profile';
 import { education } from '@/data/education';
-import { runtimeEntries, beaconEntries } from '@/data/experience';
+import { runtimeEntries, beaconEntries, getRuntimeExperienceLabel } from '@/data/experience';
 import SkillMesh from '@/components/skill-mesh';
 import IdleBlock from '@/components/idle-block';
 import PathLabel from '@/components/path-label';
@@ -72,9 +72,9 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
         return (
           <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll">
             <div className="content-stack-section border-b border-border-strong">
-              <PathLabel name="education_record" className="mb-2" />
+              <PathLabel name="bootloader" className="mb-2" />
               <p className="font-mono text-[10px] text-text-muted">
-                firmware image · curriculum map
+                versions · {education.length} images loaded
               </p>
             </div>
             {education.map((edu) => (
@@ -118,7 +118,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
         return (
           <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll">
             <div className="content-stack-section border-b border-border-strong">
-              <PathLabel name="work_log" className="mb-2" />
+              <p className="path-label mb-2">runtime: [{getRuntimeExperienceLabel()}]</p>
               <p className="font-mono text-[10px] text-text-muted">
                 tail -f /var/log/work.log · {runtimeEntries.length} entries
               </p>

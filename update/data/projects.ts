@@ -8,10 +8,23 @@ export interface Project {
   status: ProjectStatus;
   statusLabel: string;
   tech: string[];
-  links?: { type: 'github' | 'demo'; url: string }[];
+  links?: { type: 'github' | 'demo' | 'website' | 'youtube' | 'blog'; url: string }[];
 }
 
 export const projects: Project[] = [
+  {
+    title: 'HeartStream (Remote Cardiac Diagnostics)',
+    domain: 'HEALTH',
+    description:
+      'Custom ECGNet model trained on MIT-BIH for cardiac anomaly detection (99% accuracy), with a real-time AD8232 + ESP8266 sensor pipeline streaming to ThingSpeak, and a Streamlit + Supabase app for live monitoring, ECG visualization, and PDF parsing.',
+    status: 'live',
+    statusLabel: 'LIVE',
+    tech: ['Python', 'ECGNet', 'Supabase', 'Streamlit'],
+    links: [
+      { type: 'github', url: 'https://github.com/ayushilathiya/HeartStream' },
+      { type: 'website', url: 'https://heartstream.streamlit.app/' },
+    ],
+  },
   {
     title: 'Gesture-Controlled Car',
     domain: 'IoT',
@@ -22,7 +35,7 @@ export const projects: Project[] = [
     tech: ['IoT', 'ESP-NOW', 'Embedded Systems'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/Gesture_Controlled_Car' },
-      { type: 'demo', url: 'https://youtu.be/n70FIHps4CA' },
+      { type: 'youtube', url: 'https://youtu.be/n70FIHps4CA' },
     ],
   },
   {
@@ -35,17 +48,20 @@ export const projects: Project[] = [
     tech: ['ESP32', 'ThingSpeak', 'MIT App Inventor'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/ECG-Monitoring' },
-      { type: 'demo', url: 'https://youtu.be/EAjrd2bCG9A' },
+      { type: 'youtube', url: 'https://youtu.be/EAjrd2bCG9A' },
     ],
   },
   {
-    title: 'HeartStream (Remote Cardiac Diagnostics)',
-    domain: 'HEALTH',
+    title: 'Smart Water Level Controller (RTL Design & Verification)',
+    domain: 'VLSI',
     description:
-      'Custom ECGNet model trained on MIT-BIH for cardiac anomaly detection (99% accuracy), with a real-time AD8232 + ESP8266 sensor pipeline streaming to ThingSpeak, and a Streamlit + Supabase app for live monitoring, ECG visualization, and PDF parsing.',
-    status: 'live',
-    statusLabel: 'LIVE',
-    tech: ['Python', 'ECGNet', 'Supabase', 'Streamlit'],
+      'Designed an RTL-level water level controller using Verilog, modeling sensor inputs and motor control outputs via a FSM.',
+    status: 'built',
+    statusLabel: 'BUILT',
+    tech: ['Verilog', 'Testbench', 'Xilinx'],
+    links: [
+      { type: 'github', url: 'https://github.com/ayushilathiya/Water_Level_Controller-RTL-Design-Verification-' },
+    ],
   },
   {
     title: 'WiFi-Controlled Car',
@@ -57,7 +73,7 @@ export const projects: Project[] = [
     tech: ['ESP8266', 'JavaScript', 'IoT'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/WiFi-Controlled-Car' },
-      { type: 'demo', url: 'https://youtu.be/vaGgphrMhso' },
+      { type: 'youtube', url: 'https://youtu.be/vaGgphrMhso' },
     ],
   },
   {
@@ -70,7 +86,7 @@ export const projects: Project[] = [
     tech: ['MPU6050', 'WebGL', 'Three.js'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/MPU6050-3D-Visualization' },
-      { type: 'demo', url: 'https://ayushilathiya.hashnode.dev/3d-modeling-sensors' },
+      { type: 'blog', url: 'https://ayushilathiya.hashnode.dev/3d-modeling-sensors' },
     ],
   },
   {
@@ -83,16 +99,7 @@ export const projects: Project[] = [
     tech: ['C++', 'ESP-NOW', 'ESP8266'],
     links: [
       { type: 'github', url: 'https://github.com/ayushilathiya/ESP-NOW-Protocol' },
-      { type: 'demo', url: 'https://youtu.be/NGjMKT3Scls' },
+      { type: 'youtube', url: 'https://youtu.be/NGjMKT3Scls' },
     ],
-  },
-  {
-    title: 'Smart Water Level Controller ASIC',
-    domain: 'VLSI',
-    description:
-      'RTL-level water level controller ASIC in Verilog with a full testbench simulating real-world sensor scenarios, FSM transitions, motor control logic, and asynchronous reset handling — simulated and validated in Xilinx.',
-    status: 'built',
-    statusLabel: 'BUILT',
-    tech: ['Verilog', 'Testbench', 'Xilinx'],
   },
 ];
