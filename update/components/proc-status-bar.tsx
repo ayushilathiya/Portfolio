@@ -40,6 +40,7 @@ export default function ProcStatusBar() {
   const [progress, setProgress] = useState(JUMP_SEQUENCE[0]);
   const [prevProgress, setPrevProgress] = useState(JUMP_SEQUENCE[0]);
   const indexRef = useRef(0);
+  const prevRef = useRef(JUMP_SEQUENCE[0]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -47,10 +48,9 @@ export default function ProcStatusBar() {
     const jump = () => {
       indexRef.current = (indexRef.current + 1) % JUMP_SEQUENCE.length;
       const next = JUMP_SEQUENCE[indexRef.current];
-      setProgress((current) => {
-        setPrevProgress(current);
-        return next;
-      });
+      setPrevProgress(prevRef.current);
+      prevRef.current = next;
+      setProgress(next);
       const pause = 380 + Math.floor(Math.random() * 520);
       timer = setTimeout(jump, pause);
     };
