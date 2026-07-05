@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useLayoutEffect, useRef } from 'react';
 
-export const INTRO_SESSION_KEY = 'portfolio-intro-seen';
+/** Bump version to replay intro after boot/interaction fixes */
+export const INTRO_SESSION_KEY = 'portfolio-intro-v2';
 
 const introLines = [
   '[0.0001] power-on reset',
@@ -12,6 +13,7 @@ const introLines = [
 
 const LINE_MS = 380;
 const FINISH_MS = 1600;
+const SAFETY_MS = 2600;
 
 type IntroPhase = 'hidden' | 'playing' | 'fading';
 
@@ -23,13 +25,23 @@ export default function BootSequence() {
   const finish = () => {
     if (doneRef.current) return;
     doneRef.current = true;
-    sessionStorage.setItem(INTRO_SESSION_KEY, '1');
+    try {
+      sessionStorage.setItem(INTRO_SESSION_KEY, '1');
+    } catch {
+      /* private mode — still dismiss overlay */
+    }
     setPhase('fading');
     setTimeout(() => setPhase('hidden'), 320);
   };
 
-  useEffect(() => {
-    if (sessionStorage.getItem(INTRO_SESSION_KEY)) return;
+  useLayoutEffect(() => {
+    let seen = false;
+    try {
+      seen = Boolean(sessionStorage.getItem(INTRO_SESSION_KEY));
+    } catch {
+      seen = false;
+    }
+    if (seen) return;
 
     doneRef.current = false;
     setPhase('playing');
@@ -45,6 +57,7 @@ export default function BootSequence() {
     });
 
     timers.push(setTimeout(finish, FINISH_MS));
+    timers.push(setTimeout(finish, SAFETY_MS));
 
     return () => timers.forEach(clearTimeout);
   }, []);
