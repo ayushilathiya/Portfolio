@@ -19,10 +19,17 @@ import {
   type ProcTabId,
 } from '@/lib/sections';
 export default function AppShell() {
+  const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>('proc');
   const [initialProcTab, setInitialProcTab] = useState<ProcTabId>('whoami');
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const storedSection = sessionStorage.getItem(SECTION_STORAGE_KEY);
     const storedProcTab = sessionStorage.getItem(PROC_TAB_STORAGE_KEY);
 
@@ -37,11 +44,23 @@ export default function AppShell() {
       if (resolvedTab) setInitialProcTab(resolvedTab);
       sessionStorage.removeItem(PROC_TAB_STORAGE_KEY);
     }
-  }, []);
+  }, [mounted]);
 
   const selectSection = useCallback((id: SectionId) => {
     setActiveSection(id);
   }, []);
+
+  if (!mounted) {
+    return (
+      <div className="page-backdrop">
+        <div className="device-frame flex items-center justify-center">
+          <p className="font-mono text-sm text-text-muted animate-pulse px-6">
+            › [0.0000] booting portfolio.sys…
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="page-backdrop">
