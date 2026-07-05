@@ -18,7 +18,7 @@ interface ProcPanelProps {
 
 function WhoamiHero() {
   return (
-    <div className="content-stack-section proc-whoami-hero shrink-0 relative">
+    <div className="content-stack-section proc-whoami-hero relative">
       <h1 className="text-text-primary font-medium relative z-10">
         Hi, I&apos;m <span className="text-accent-amber">{profile.name}</span>
       </h1>
