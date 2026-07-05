@@ -16,10 +16,17 @@ const SAFETY_MS = 2200;
 
 type IntroPhase = 'hidden' | 'playing' | 'fading';
 
-export default function BootSequence() {
+interface BootSequenceProps {
+  standalone?: boolean;
+  onComplete?: () => void;
+}
+
+export default function BootSequence({ standalone = false, onComplete }: BootSequenceProps) {
   const [phase, setPhase] = useState<IntroPhase>('hidden');
   const [visibleCount, setVisibleCount] = useState(1);
   const doneRef = useRef(false);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   const finish = () => {
     if (doneRef.current) return;
@@ -30,17 +37,22 @@ export default function BootSequence() {
       /* private mode */
     }
     setPhase('fading');
-    setTimeout(() => setPhase('hidden'), 280);
+    setTimeout(() => {
+      setPhase('hidden');
+      onCompleteRef.current?.();
+    }, 280);
   };
 
   useLayoutEffect(() => {
-    let seen = false;
-    try {
-      seen = Boolean(sessionStorage.getItem(INTRO_SESSION_KEY));
-    } catch {
-      seen = false;
+    if (!standalone) {
+      let seen = false;
+      try {
+        seen = Boolean(sessionStorage.getItem(INTRO_SESSION_KEY));
+      } catch {
+        seen = false;
+      }
+      if (seen) return;
     }
-    if (seen) return;
 
     doneRef.current = false;
     setPhase('playing');
@@ -59,20 +71,22 @@ export default function BootSequence() {
     timers.push(setTimeout(finish, SAFETY_MS));
 
     return () => timers.forEach(clearTimeout);
-  }, []);
+  }, [standalone]);
 
   if (phase !== 'playing' && phase !== 'fading') return null;
 
   return (
     <div
-      className={`intro-overlay absolute inset-0 z-[70] flex items-center justify-center transition-opacity duration-300 ease-out pointer-events-none ${
-        phase === 'fading' ? 'opacity-0' : 'opacity-100'
-      }`}
+      className={`intro-overlay flex items-center justify-center transition-opacity duration-300 ease-out pointer-events-none ${
+        standalone ? 'fixed inset-0 z-[1]' : 'absolute inset-0 z-[70]'
+      } ${phase === 'fading' ? 'opacity-0' : 'opacity-100'}`}
       role="status"
       aria-live="polite"
       aria-label="System intro"
     >
-      <div className="absolute inset-0 bg-base/92 pointer-events-none" aria-hidden="true" />
+      {!standalone && (
+        <div className="absolute inset-0 bg-base/92 pointer-events-none" aria-hidden="true" />
+      )}
 
       <button
         type="button"

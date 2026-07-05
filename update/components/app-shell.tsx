@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import BootSequence from '@/components/boot-sequence';
+import { useState, useEffect, useLayoutEffect, useCallback } from 'react';
+import BootSequence, { INTRO_SESSION_KEY } from '@/components/boot-sequence';
 import Navigation from '@/components/navigation';
 import SectionPanel from '@/components/section-panel';
 import ProcPanel from '@/components/proc-panel';
@@ -18,17 +18,31 @@ import {
   type SectionId,
   type ProcTabId,
 } from '@/lib/sections';
+
+type AppPhase = 'pending' | 'boot' | 'ready';
+
 export default function AppShell() {
+  const [phase, setPhase] = useState<AppPhase>('pending');
   const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>('proc');
   const [initialProcTab, setInitialProcTab] = useState<ProcTabId>('whoami');
+
+  useLayoutEffect(() => {
+    let seen = false;
+    try {
+      seen = Boolean(sessionStorage.getItem(INTRO_SESSION_KEY));
+    } catch {
+      seen = false;
+    }
+    setPhase(seen ? 'ready' : 'boot');
+  }, []);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || phase !== 'ready') return;
 
     const storedSection = sessionStorage.getItem(SECTION_STORAGE_KEY);
     const storedProcTab = sessionStorage.getItem(PROC_TAB_STORAGE_KEY);
@@ -44,52 +58,44 @@ export default function AppShell() {
       if (resolvedTab) setInitialProcTab(resolvedTab);
       sessionStorage.removeItem(PROC_TAB_STORAGE_KEY);
     }
-  }, [mounted]);
+  }, [mounted, phase]);
 
   const selectSection = useCallback((id: SectionId) => {
     setActiveSection(id);
   }, []);
 
-  if (!mounted) {
-    return (
-      <div className="page-backdrop">
-        <div className="device-frame flex items-center justify-center">
-          <p className="font-mono text-[11px] text-text-muted animate-pulse px-6">
-            › [0.0000] booting portfolio.sys…
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="page-backdrop">
       <PageBackdropDecor />
 
-      <div className="device-frame">
-        <BootSequence />
+      {phase === 'boot' && (
+        <BootSequence standalone onComplete={() => setPhase('ready')} />
+      )}
 
-        <WindowTitleBar />
+      {phase === 'ready' && (
+        <div className="device-frame">
+          <WindowTitleBar />
 
-        <div className="app-shell text-text-primary">
-          <Navigation active={activeSection} onSelect={selectSection} />
+          <div className="app-shell text-text-primary">
+            <Navigation active={activeSection} onSelect={selectSection} />
 
-          <main className="flex-1 relative min-h-0 min-w-0">
-            <SectionPanel isActive={activeSection === 'proc'}>
-              <ProcPanel initialTab={initialProcTab} />
-            </SectionPanel>
-            <SectionPanel isActive={activeSection === 'modules'}>
-              <Projects />
-            </SectionPanel>
-            <SectionPanel isActive={activeSection === 'docs'}>
-              <DocsPanel />
-            </SectionPanel>
-            <SectionPanel isActive={activeSection === 'uart'}>
-              <Contact />
-            </SectionPanel>
-          </main>
+            <main className="flex-1 relative min-h-0 min-w-0">
+              <SectionPanel isActive={activeSection === 'proc'}>
+                <ProcPanel initialTab={initialProcTab} />
+              </SectionPanel>
+              <SectionPanel isActive={activeSection === 'modules'}>
+                <Projects />
+              </SectionPanel>
+              <SectionPanel isActive={activeSection === 'docs'}>
+                <DocsPanel />
+              </SectionPanel>
+              <SectionPanel isActive={activeSection === 'uart'}>
+                <Contact />
+              </SectionPanel>
+            </main>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

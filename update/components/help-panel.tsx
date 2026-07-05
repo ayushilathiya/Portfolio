@@ -20,7 +20,7 @@ const HELP_COMMANDS = [
 ];
 
 const FAULT_CONFIRMATION =
-  "FAULT LOGGED: ticket #0x1337 filed under 'Signal analysis complete: Oh no no, that's a feature, not a bug! Terminating thread, thanks bye!'";
+  "Signal analysis complete: Oh no no, that's a feature, not a bug! Terminating thread, thanks bye!";
 
 export default function HelpPanel({ variant = 'floating' }: { variant?: 'floating' | 'titlebar' }) {
   const [open, setOpen] = useState(false);
@@ -118,10 +118,10 @@ export default function HelpPanel({ variant = 'floating' }: { variant?: 'floatin
               <>
                 <div className="mb-4 pb-3 border-b border-border-strong">
                   <p className="text-text-primary font-mono text-[11px] tracking-wide">
-                    FAULT: unexpected behavior on bus
+                    Signal analysis
                   </p>
                   <p className="text-text-muted mt-1 text-[10px]">
-                    describe what broke — report goes to the bit bucket, not an inbox
+                    describe the anomaly — report goes to the bit bucket, not an inbox
                   </p>
                 </div>
 
