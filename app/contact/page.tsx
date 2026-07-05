@@ -1,12 +1,5 @@
-"use client";
+import LegacySectionRedirect from '@/components/legacy-section-redirect';
 
-import { useState } from "react";
-import { Contact as ContactComponent } from "@/components/Contact";
-
-export default function ContactSection() {
-  return (
-    <div className="max-w-6xl mx-auto">
-      <ContactComponent />
-    </div>
-  );
+export default function ContactRedirect() {
+  return <LegacySectionRedirect target="uart" />;
 }

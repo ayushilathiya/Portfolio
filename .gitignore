@@ -25,6 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
 
 # vercel
@@ -34,42 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# vscode
-.vscode
-
-# env
-*.env
-
-# Personal/Private files
-/public/docs/Ayushi_Lathiya_CV.pdf
-*.pdf
-
-# Environment variables and secrets
-.env
-.env.*
-.env.local
-.env.*.local
-
-# API keys & secrets
-/config/secrets.json
-**/config.js
-**/config.ts
-**/secrets.*
-
-# Debug & logs
-logs/
-*.log
-debug.log*
-
-# IDE specific
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-
-# Build & dependencies 
-/.next
-/build
-/dist
-/node_modules
+# leftover from update/ promotion (local only)
+/update/

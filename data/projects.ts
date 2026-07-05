@@ -1,51 +1,105 @@
-export const projects = [
+export type ProjectDomain = 'EMBEDDED' | 'VLSI' | 'IoT' | 'SPACE' | 'HEALTH';
+export type ProjectStatus = 'active' | 'built' | 'deployed' | 'live' | 'archived';
+
+export interface Project {
+  title: string;
+  domain: ProjectDomain;
+  description: string;
+  status: ProjectStatus;
+  statusLabel: string;
+  tech: string[];
+  links?: { type: 'github' | 'demo' | 'website' | 'youtube' | 'blog'; url: string }[];
+}
+
+export const projects: Project[] = [
   {
-    title: "Gesture-Controlled Car",
-    image: "/gesture.gif",
+    title: 'HeartStream (Remote Cardiac Diagnostics)',
+    domain: 'HEALTH',
     description:
-      "Developed a gesture-controlled system interpreting real-time hand gestures to wirelessly command the car's movements via ESP-NOW protocol, ensuring low-latency communication. This project represents the second phase of the Wi-Fi car series, enhancing control capabilities through gesture recognition.",
-    techStack: ["IoT", "Wireless Communication", "Embedded Systems"],
-    githubLink: "https://github.com/ayushilathiya/Gesture_Controlled_Car",
-    demoLink: "https://youtu.be/n70FIHps4CA",
-  },
-  {
-    title: "Live ECG Monitoring System",
-    image: "/ecgmoni.gif",
-    description:
-      "ESP-based IoT ECG monitoring system utilizing the ECG sensor for real-time cardiac signal acquisition and wireless transmission. Implements signal filtering for noise reduction and cloud integration for remote monitoring via ThingSpeak. Ensures low-latency data transfer and precise ECG waveform analysis.",
-    techStack: [
-      "Real-time Data Acquisition",
-      "Thingspeak API",
-      "MIT App Inventor",
+      'Custom ECGNet model trained on MIT-BIH for cardiac anomaly detection (99% accuracy), with a real-time AD8232 + ESP8266 sensor pipeline streaming to ThingSpeak, and a Streamlit + Supabase app for live monitoring, ECG visualization, and PDF parsing.',
+    status: 'live',
+    statusLabel: 'LIVE',
+    tech: ['Python', 'ECGNet', 'Supabase', 'Streamlit'],
+    links: [
+      { type: 'github', url: 'https://github.com/ayushilathiya/HeartStream' },
+      { type: 'website', url: 'https://heartstream.streamlit.app/' },
     ],
-    githubLink: "https://github.com/ayushilathiya/ECG-Monitoring",
-    demoLink: "https://youtu.be/EAjrd2bCG9A",
   },
   {
-    title: "WiFi-Controlled Car",
-    image: "/wifi.gif",
+    title: 'Gesture-Controlled Car',
+    domain: 'IoT',
     description:
-      "Engineered a wireless-controlled vehicle using ESP8266 NodeMCU, featuring real-time control through a custom mobile interface. Implemented smooth motion control and responsive directional changes with L298N motor driver integration.",
-    techStack: ["ESP8266", "JavaScript", "HTML", "CSS", "IoT"],
-    githubLink: "https://github.com/ayushilathiya/WiFi-Controlled-Car",
-    demoLink: "https://youtu.be/vaGgphrMhso",
+      'Gesture-controlled system using ESP-NOW for low-latency wireless car control — phase two of the Wi-Fi car series.',
+    status: 'built',
+    statusLabel: 'BUILT',
+    tech: ['IoT', 'ESP-NOW', 'Embedded Systems'],
+    links: [
+      { type: 'github', url: 'https://github.com/ayushilathiya/Gesture_Controlled_Car' },
+      { type: 'youtube', url: 'https://youtu.be/n70FIHps4CA' },
+    ],
   },
   {
-    title: "3D Modeling Using Sensor-Driven 3D Visualization",
-    image: "/mpu6050.gif",
+    title: 'Live ECG Monitoring System',
+    domain: 'HEALTH',
     description:
-      "Created an innovative system that transforms real-time sensor data into dynamic 3D visualizations. Integrated MPU6050 sensor data with WebGL rendering to achieve precise spatial mapping and interactive model manipulation.",
-    techStack: ["MPU6050", "WebGL", "Three.js", "Data Visualization"],
-    githubLink: "https://github.com/ayushilathiya/MPU6050-3D-Visualization",
-    demoLink: "https://ayushilathiya.hashnode.dev/3d-modeling-sensors",
+      'ESP-based IoT ECG monitor with signal filtering and ThingSpeak cloud integration for remote cardiac monitoring.',
+    status: 'deployed',
+    statusLabel: 'DEPLOYED',
+    tech: ['ESP32', 'ThingSpeak', 'MIT App Inventor'],
+    links: [
+      { type: 'github', url: 'https://github.com/ayushilathiya/ECG-Monitoring' },
+      { type: 'youtube', url: 'https://youtu.be/EAjrd2bCG9A' },
+    ],
   },
   {
-    title: "ESP-NOW Protocol",
-    image: "/espnow.gif",
+    title: 'Smart Water Level Controller (RTL Design & Verification)',
+    domain: 'VLSI',
     description:
-      "Implemented a robust wireless communication system using ESP-NOW protocol, achieving low-latency data transfer between multiple ESP8266 modules. Optimized for reliable peer-to-peer communication with minimal power consumption.",
-    techStack: ["C++", "ESP-NOW", "Wireless Communication"],
-    githubLink: "https://github.com/ayushilathiya/ESP-NOW-Protocol",
-    demoLink: "https://youtu.be/NGjMKT3Scls",
+      'Designed an RTL-level water level controller using Verilog, modeling sensor inputs and motor control outputs via a FSM.',
+    status: 'built',
+    statusLabel: 'BUILT',
+    tech: ['Verilog', 'Testbench', 'Xilinx'],
+    links: [
+      { type: 'github', url: 'https://github.com/ayushilathiya/Water_Level_Controller-RTL-Design-Verification-' },
+    ],
+  },
+  {
+    title: 'WiFi-Controlled Car',
+    domain: 'IoT',
+    description:
+      'ESP8266 wireless vehicle with custom mobile interface and L298N motor driver integration.',
+    status: 'built',
+    statusLabel: 'BUILT',
+    tech: ['ESP8266', 'JavaScript', 'IoT'],
+    links: [
+      { type: 'github', url: 'https://github.com/ayushilathiya/WiFi-Controlled-Car' },
+      { type: 'youtube', url: 'https://youtu.be/vaGgphrMhso' },
+    ],
+  },
+  {
+    title: 'Sensor-Driven 3D Visualization',
+    domain: 'EMBEDDED',
+    description:
+      'MPU6050 sensor data rendered as dynamic 3D visualizations using WebGL and Three.js.',
+    status: 'active',
+    statusLabel: 'ACTIVE',
+    tech: ['MPU6050', 'WebGL', 'Three.js'],
+    links: [
+      { type: 'github', url: 'https://github.com/ayushilathiya/MPU6050-3D-Visualization' },
+      { type: 'blog', url: 'https://ayushilathiya.hashnode.dev/3d-modeling-sensors' },
+    ],
+  },
+  {
+    title: 'ESP-NOW Protocol',
+    domain: 'IoT',
+    description:
+      'Peer-to-peer ESP8266 communication with optimized low-latency ESP-NOW protocol implementation.',
+    status: 'built',
+    statusLabel: 'TESTED',
+    tech: ['C++', 'ESP-NOW', 'ESP8266'],
+    links: [
+      { type: 'github', url: 'https://github.com/ayushilathiya/ESP-NOW-Protocol' },
+      { type: 'youtube', url: 'https://youtu.be/NGjMKT3Scls' },
+    ],
   },
 ];
