@@ -1,30 +1,48 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-const STATUS_CYCLE = [
-  'Compiling sketch...',
-  'Uploading... 42%',
-  'Uploading... 87%',
-  'Done uploading.',
+type StatusPhase = 'compile' | 'upload' | 'done';
+
+interface StatusStep {
+  text: string;
+  phase: StatusPhase;
+  durationMs: number;
+}
+
+const STATUS_CYCLE: StatusStep[] = [
+  { text: 'Compiling sketch...', phase: 'compile', durationMs: 2200 },
+  { text: 'Uploading... 23%', phase: 'upload', durationMs: 1800 },
+  { text: 'Uploading... 67%', phase: 'upload', durationMs: 1800 },
+  { text: 'Uploading... 100%', phase: 'upload', durationMs: 1800 },
+  { text: 'Done uploading.', phase: 'done', durationMs: 1400 },
 ];
 
-const STEP_MS = 2200;
+const phaseClass: Record<StatusPhase, string> = {
+  compile: 'proc-status-neutral',
+  upload: 'proc-status-amber',
+  done: 'proc-status-green',
+};
 
 export default function ProcStatusBar() {
   const [index, setIndex] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((i) => (i + 1) % STATUS_CYCLE.length);
-    }, STEP_MS);
-    return () => clearInterval(timer);
+  const advance = useCallback(() => {
+    setIndex((i) => (i + 1) % STATUS_CYCLE.length);
   }, []);
+
+  useEffect(() => {
+    const step = STATUS_CYCLE[index];
+    const timer = setTimeout(advance, step.durationMs);
+    return () => clearTimeout(timer);
+  }, [index, advance]);
+
+  const step = STATUS_CYCLE[index];
 
   return (
     <div className="proc-status-bar shrink-0" aria-live="polite" aria-atomic="true">
-      <span className="text-text-muted mr-2">›</span>
-      <span className="text-text-secondary">{STATUS_CYCLE[index]}</span>
+      <span className={`proc-status-led ${phaseClass[step.phase]}`} aria-hidden="true" />
+      <span className={`${phaseClass[step.phase]} transition-colors duration-300`}>{step.text}</span>
     </div>
   );
 }

@@ -4,7 +4,10 @@ import type { ProjectDomain } from '@/data/projects';
 
 /** Small corner motif per project domain */
 export default function ModuleDomainMotif({ domain }: { domain: ProjectDomain }) {
-  const cls = 'module-domain-motif pointer-events-none';
+  const useBottomCorner = domain === 'IoT' || domain === 'EMBEDDED';
+  const cls = useBottomCorner
+    ? 'module-domain-motif module-domain-motif-bl pointer-events-none'
+    : 'module-domain-motif pointer-events-none';
 
   switch (domain) {
     case 'IoT':

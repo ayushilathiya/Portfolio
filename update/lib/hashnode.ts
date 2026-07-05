@@ -1,6 +1,8 @@
 export interface HashnodePost {
   slug: string;
   title: string;
+  publishedAt: string;
+  body: string;
 }
 
 const PUBLICATION_HOST = 'ayushilathiya.hashnode.dev';
@@ -14,8 +16,25 @@ const GET_POSTS_QUERY = `
           node {
             slug
             title
-            brief
+            publishedAt
+            content {
+              markdown
+            }
           }
+        }
+      }
+    }
+  }
+`;
+
+const GET_POST_QUERY = `
+  query GetPost($slug: String!) {
+    publication(host: "${PUBLICATION_HOST}") {
+      post(slug: $slug) {
+        title
+        publishedAt
+        content {
+          markdown
         }
       }
     }
@@ -24,30 +43,78 @@ const GET_POSTS_QUERY = `
 
 export async function getHashnodePosts(): Promise<HashnodePost[]> {
   try {
-    const posts = await fetchViaGraphQL();
+    const posts = await fetchPostsViaGraphQL();
     if (posts.length > 0) return posts;
   } catch (error) {
     console.error('Hashnode GraphQL fetch failed:', error);
   }
 
   try {
-    return await fetchViaRss();
+    return await fetchPostsViaRss();
   } catch (error) {
     console.error('Hashnode RSS fallback failed:', error);
     return [];
   }
 }
 
-async function fetchViaGraphQL(): Promise<HashnodePost[]> {
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  };
+export async function getHashnodePost(slug: string): Promise<HashnodePost | null> {
+  try {
+    const post = await fetchPostViaGraphQL(slug);
+    if (post) return post;
+  } catch (error) {
+    console.error(`Hashnode GraphQL fetch failed for ${slug}:`, error);
+  }
 
+  try {
+    const posts = await fetchPostsViaRss();
+    return posts.find((p) => p.slug === slug) ?? null;
+  } catch (error) {
+    console.error(`Hashnode RSS fallback failed for ${slug}:`, error);
+    return null;
+  }
+}
+
+async function fetchPostsViaGraphQL(): Promise<HashnodePost[]> {
+  const data = await gqlRequest(GET_POSTS_QUERY);
+  const edges = data.data?.publication?.posts?.edges;
+
+  if (!Array.isArray(edges)) {
+    throw new Error('Invalid GraphQL response format');
+  }
+
+  return edges.map(({ node }: { node: Record<string, unknown> }) =>
+    mapGraphQLNode(node)
+  );
+}
+
+async function fetchPostViaGraphQL(slug: string): Promise<HashnodePost | null> {
+  const data = await gqlRequest(GET_POST_QUERY, { slug });
+  const node = data.data?.publication?.post;
+
+  if (!node) return null;
+
+  return mapGraphQLNode(node as Record<string, unknown>, slug);
+}
+
+function mapGraphQLNode(node: Record<string, unknown>, slugOverride?: string): HashnodePost {
+  const markdown = (node.content as { markdown?: string })?.markdown ?? '';
+
+  return {
+    slug: (slugOverride ?? node.slug) as string,
+    title: node.title as string,
+    publishedAt: (node.publishedAt as string) ?? '',
+    body: stripImagesFromContent(markdown),
+  };
+}
+
+async function gqlRequest(query: string, variables?: Record<string, string>) {
   const response = await fetch('https://gql.hashnode.com', {
     method: 'POST',
-    headers,
-    body: JSON.stringify({ query: GET_POSTS_QUERY }),
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({ query, variables }),
     next: { revalidate: 3600 },
   });
 
@@ -62,18 +129,10 @@ async function fetchViaGraphQL(): Promise<HashnodePost[]> {
     throw new Error(data.errors[0]?.message ?? 'GraphQL error');
   }
 
-  const edges = data.data?.publication?.posts?.edges;
-  if (!Array.isArray(edges)) {
-    throw new Error('Invalid GraphQL response format');
-  }
-
-  return edges.map(({ node }: { node: { slug: string; title: string } }) => ({
-    slug: node.slug,
-    title: node.title,
-  }));
+  return data;
 }
 
-async function fetchViaRss(): Promise<HashnodePost[]> {
+async function fetchPostsViaRss(): Promise<HashnodePost[]> {
   const response = await fetch(`${PUBLICATION_URL}/rss.xml`, {
     next: { revalidate: 3600 },
   });
@@ -87,23 +146,71 @@ async function fetchViaRss(): Promise<HashnodePost[]> {
   const posts: HashnodePost[] = [];
 
   for (const item of items.slice(0, 20)) {
-    const titleMatch =
-      item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) ??
-      item.match(/<title>(.*?)<\/title>/);
-    const linkMatch = item.match(/<link>(.*?)<\/link>/);
-
-    if (!titleMatch || !linkMatch) continue;
-
-    const url = linkMatch[1].trim();
-    const slug = url.replace(/\/$/, '').split('/').pop() ?? '';
-    if (!slug) continue;
-
-    posts.push({ title: titleMatch[1].trim(), slug });
+    const post = parseRssItem(item);
+    if (post) posts.push(post);
   }
 
   return posts;
 }
 
-export function postUrl(slug: string): string {
-  return `${PUBLICATION_URL}/${slug}`;
+function parseRssItem(item: string): HashnodePost | null {
+  const titleMatch =
+    item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) ??
+    item.match(/<title>(.*?)<\/title>/);
+  const linkMatch = item.match(/<link>(.*?)<\/link>/);
+  const pubDateMatch = item.match(/<pubDate>(.*?)<\/pubDate>/);
+  const contentMatch =
+    item.match(/<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/) ??
+    item.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/);
+
+  if (!titleMatch || !linkMatch) return null;
+
+  const url = linkMatch[1].trim();
+  const slug = url.replace(/\/$/, '').split('/').pop() ?? '';
+  if (!slug) return null;
+
+  const rawBody = contentMatch?.[1] ?? '';
+  const body = stripImagesFromContent(htmlToPlainText(rawBody));
+
+  return {
+    slug,
+    title: titleMatch[1].trim(),
+    publishedAt: pubDateMatch?.[1] ?? '',
+    body,
+  };
+}
+
+export function stripImagesFromContent(content: string): string {
+  return content
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+    .replace(/<img[^>]*>/gi, '')
+    .replace(/<figure[^>]*>[\s\S]*?<\/figure>/gi, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+function htmlToPlainText(html: string): string {
+  return html
+    .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, '\n\n# $1\n\n')
+    .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, '\n\n## $1\n\n')
+    .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, '\n\n### $1\n\n')
+    .replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, '\n\n#### $1\n\n')
+    .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, '\n- $1')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/p>/gi, '\n\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .trim();
+}
+
+export function formatPostDate(iso: string): string {
+  if (!iso) return '';
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return '';
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }

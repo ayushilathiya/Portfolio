@@ -1,14 +1,50 @@
-import { ExternalLink } from 'lucide-react';
+'use client';
+
+import { useState } from 'react';
 import SectionVisual from '@/components/section-visual';
 import PathLabel from '@/components/path-label';
-import { profile } from '@/data/profile';
-import { postUrl, type HashnodePost } from '@/lib/hashnode';
+import PostBody from '@/components/post-body';
+import { formatPostDate, type HashnodePost } from '@/lib/hashnode';
 
 interface DocsPanelProps {
   posts: HashnodePost[];
 }
 
 export default function DocsPanel({ posts }: DocsPanelProps) {
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const selected = posts.find((p) => p.slug === selectedSlug) ?? null;
+
+  if (selected) {
+    const dateLabel = formatPostDate(selected.publishedAt);
+
+    return (
+      <div className="panel-content relative">
+        <SectionVisual tab="docs" />
+
+        <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10">
+          <button
+            type="button"
+            onClick={() => setSelectedSlug(null)}
+            className="font-mono text-xs text-text-muted hover:text-accent-amber mb-3 transition-colors duration-200 ease-out shrink-0"
+          >
+            {'< /docsindex'}
+          </button>
+
+          <div className="panel-box p-4 md:p-5 font-mono text-xs">
+            <PathLabel name={selected.slug.replace(/-/g, '_')} />
+            <div className="text-text-muted mb-4 pb-3 border-b border-border-strong -mt-1 flex flex-wrap gap-x-3 gap-y-1">
+              {dateLabel && <span>{dateLabel}</span>}
+              {dateLabel && <span>·</span>}
+              <span className="text-text-secondary">{selected.title}</span>
+            </div>
+
+            <PostBody content={selected.body} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="panel-content relative">
       <SectionVisual tab="docs" />
@@ -19,47 +55,25 @@ export default function DocsPanel({ posts }: DocsPanelProps) {
           <div className="text-text-muted mb-3 pb-2 border-b border-border-strong flex flex-wrap gap-x-3 gap-y-1 -mt-1">
             <span>total {posts.length}</span>
             <span>·</span>
-            <span>hashnode feed</span>
+            <span>local index</span>
           </div>
 
           {posts.length === 0 ? (
-            <div className="space-y-2">
-              <p className="text-text-muted">no posts found</p>
-              <a
-                href={profile.social.hashnode}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-text-secondary hover:text-accent-amber transition-colors"
-              >
-                open ayushilathiya.hashnode.dev
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
+            <p className="text-text-muted">no posts found</p>
           ) : (
             <div className="space-y-0">
               {posts.map((post) => (
-                <a
+                <button
                   key={post.slug}
-                  href={postUrl(post.slug)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  type="button"
+                  onClick={() => setSelectedSlug(post.slug)}
                   className="block w-full text-left p-2 border-b border-border-strong last:border-b-0 hover:bg-panel transition-colors duration-200 ease-out group"
                 >
                   <span className="text-text-primary group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
                     {post.title}
                   </span>
-                </a>
+                </button>
               ))}
-
-              <a
-                href={profile.social.hashnode}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 mt-3 pt-3 border-t border-border-strong text-text-secondary hover:text-accent-amber transition-colors"
-              >
-                view all on hashnode
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
             </div>
           )}
         </div>

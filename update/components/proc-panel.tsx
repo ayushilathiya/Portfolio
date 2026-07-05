@@ -19,12 +19,12 @@ interface ProcPanelProps {
 
 function WhoamiHero() {
   return (
-    <div className="content-stack-section py-2.5 px-3 relative overflow-hidden">
+    <div className="content-stack-section proc-whoami-hero py-4 px-4 md:py-5 md:px-5 relative overflow-hidden">
       <SectionVisual tab="whoami" />
-      <h1 className="text-text-primary text-base md:text-lg font-medium leading-snug">
+      <h1 className="text-text-primary text-xl md:text-2xl lg:text-[1.65rem] font-medium leading-snug">
         Hi, I&apos;m <span className="text-accent-amber">{profile.name}</span>
       </h1>
-      <p className="text-text-primary text-xs md:text-sm mt-1 leading-snug line-clamp-2">{profile.intro}</p>
+      <p className="text-text-primary text-sm md:text-base lg:text-lg mt-2 leading-relaxed">{profile.intro}</p>
     </div>
   );
 }
@@ -39,24 +39,24 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
     switch (activeTab) {
       case 'whoami':
         return (
-          <div className="content-stack h-full">
+          <div className="content-stack h-full flex flex-col">
             <WhoamiHero />
-            <div className="content-stack-section py-2 px-3 relative">
-              <PathLabel name="register_map" className="mb-1.5" />
-              <table className="w-full font-mono text-[10px]">
+            <div className="content-stack-section proc-register-section py-3 px-4 md:py-4 md:px-5 relative flex-1">
+              <PathLabel name="register_map" className="mb-2.5 text-sm" />
+              <table className="w-full font-mono text-xs md:text-sm">
                 <thead>
                   <tr className="text-text-muted text-left border-b border-border-strong">
-                    <th className="pb-1 pr-2 font-normal">ADDR</th>
-                    <th className="pb-1 pr-2 font-normal">FIELD</th>
-                    <th className="pb-1 font-normal">VALUE</th>
+                    <th className="pb-2 pr-3 font-normal">ADDR</th>
+                    <th className="pb-2 pr-3 font-normal">FIELD</th>
+                    <th className="pb-2 font-normal">VALUE</th>
                   </tr>
                 </thead>
                 <tbody>
                   {profile.registers.map((reg) => (
                     <tr key={reg.addr} className="border-b border-border-strong last:border-0">
-                      <td className="py-0.5 pr-2 text-accent-amber">{reg.addr}</td>
-                      <td className="py-0.5 pr-2 text-text-muted">{reg.field}</td>
-                      <td className="py-0.5 text-text-secondary truncate max-w-[140px] lg:max-w-none">{reg.value}</td>
+                      <td className="py-1.5 pr-3 text-accent-amber">{reg.addr}</td>
+                      <td className="py-1.5 pr-3 text-text-muted">{reg.field}</td>
+                      <td className="py-1.5 text-text-secondary">{reg.value}</td>
                     </tr>
                   ))}
                 </tbody>
