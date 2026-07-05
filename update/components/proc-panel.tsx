@@ -68,7 +68,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
           <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll">
             <div className="content-stack-section border-b border-border-strong">
               <PathLabel name="education_record" className="mb-2" />
-              <p className="font-mono text-[10px] text-text-muted mb-3">
+              <p className="font-mono text-[10px] text-text-muted">
                 firmware image · curriculum map
               </p>
             </div>

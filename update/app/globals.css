@@ -482,10 +482,11 @@
   }
 
   .proc-whoami-stack .proc-register-section {
-    flex: 1 1 38%;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-top: 1rem;
     min-height: 0;
   }
 
@@ -611,8 +612,11 @@
   }
 
   .module-card-motif {
-    height: 32px;
+    height: 40px;
     margin: 0 0 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
     pointer-events: none;
     background: transparent;
@@ -625,10 +629,12 @@
   }
 
   .module-motif-svg {
-    width: 100%;
     height: 100%;
-    opacity: 0.58;
+    width: auto;
+    max-width: 100%;
+    opacity: 0.82;
     display: block;
+    flex-shrink: 0;
   }
 
   .modules-grid {

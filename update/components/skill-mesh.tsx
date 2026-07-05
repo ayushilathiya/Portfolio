@@ -27,19 +27,23 @@ export default function SkillMesh({ compact = false }: { compact?: boolean }) {
           : 'relative panel p-4 min-h-[200px]'
       }
     >
-      <div className={compact ? 'content-stack-section' : ''}>
-        <PathLabel name={compact ? 'dev_pin_map' : 'skill_mesh'} className="mb-2 relative z-10" />
-        {!compact && (
+      {compact ? (
+        <div className="content-stack-section border-b border-border-strong">
+          <PathLabel name="dev_pin_map" className="mb-2 relative z-10" />
+          <p className="font-mono text-[10px] text-text-muted relative z-10">
+            gpio map · {skills.length} pins mapped
+          </p>
+        </div>
+      ) : (
+        <>
+          <PathLabel name="skill_mesh" className="mb-2 relative z-10" />
           <p className="font-mono text-[10px] text-text-muted mb-4 relative z-10">
             device skill bus · 4 domains · {skills.length} nodes
           </p>
-        )}
-        {compact && (
-          <p className="font-mono text-[10px] text-text-muted mb-3 relative z-10">
-            gpio map · {skills.length} pins mapped
-          </p>
-        )}
+        </>
+      )}
 
+      <div className={compact ? 'content-stack-section' : ''}>
         <div
           className={`relative z-10 grid ${
             compact ? 'grid-cols-2 lg:grid-cols-4 gap-2' : 'grid-cols-2 lg:grid-cols-4 gap-4'

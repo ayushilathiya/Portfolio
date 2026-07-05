@@ -19,37 +19,13 @@ const HELP_COMMANDS = [
   { cmd: 'help', desc: 'this reference — navigation & fault reporting' },
 ];
 
-const HELP_LINES = [
-  { type: 'joke', text: 'ECG looks fine. SpO₂: 98%. caffeine register: underflow detected. please refill.' },
-  { type: 'joke', text: 'if your car only turns left, you probably forgot to release the gesture mutex. classic ESP-NOW.' },
-  { type: 'joke', text: 'Houston, the UI is nominal. the bug is in low Earth orbit somewhere between line 42 and pin 42.' },
-  { type: 'joke', text: 'silicon lottery: you won the wafer. the website is the bonus die that actually booted.' },
-  { type: 'joke', text: 'watchdog timer armed. if you stare at /dev too long, it assumes you are debugging and leaves you alone.' },
-  { type: 'joke', text: 'health tech tip: this portfolio cannot diagnose arrhythmia. your cardiologist can. probably.' },
-  { type: 'joke', text: 'have you tried turning the portfolio off and on again? ctrl+shift+r is the new power cycle.' },
-  { type: 'joke', text: 'bootloader tip: if education_record fails checksum, blame the curriculum compiler — not the student.' },
-  { type: 'joke', text: 'tapeout rumor: this site missed the shuttle by one revision. next spin will fix the hold timing. probably.' },
-  { type: 'joke', text: 'satellite latency: your click reached the server in 12 ms. the ACK is still propagating through LEO.' },
-  { type: 'joke', text: 'vitals check: portfolio heartbeat 60 Hz nominal. arrhythmia detected only in the progress bar — ignore it.' },
-  { type: 'joke', text: 'firmware update available: changelog says "fixed nothing, improved vibes." recommended install: never.' },
-  { type: 'joke', text: 'VLSI wisdom: if the layout passes DRC, the bug is in the analog domain. always the analog domain.' },
-  { type: 'joke', text: 'uptime: 99.9% — the 0.1% was when avrdude held the upload hostage. we negotiated.' },
-  { type: 'joke', text: 'ECG pun: this UI has good R-R intervals. unlike my sleep schedule during tapeout week.' },
-];
-
-const FAULT_CONFIRMATIONS = [
-  "FAULT LOGGED: ticket #0x1337 filed under 'known cosmic ray interference.' no further action will be taken.",
-  'FAULT LOGGED: entry archived to /dev/null with read-only permissions. thank you for your concern.',
-  'FAULT LOGGED: classified as PEBKAC (Problem Exists Between Keyboard And Chair). closing ticket.',
-  'FAULT LOGGED: routed to the same queue as the progress bar — expect infinite retry, zero resolution.',
-  'FAULT LOGGED: severity LOW (humor HIGH). the watchdog ate your report and asked for seconds.',
-];
+const FAULT_CONFIRMATION =
+  "FAULT LOGGED: ticket #0x1337 filed under 'Signal analysis complete: Oh no no, that's a feature, not a bug! Terminating thread, thanks bye!'";
 
 export default function HelpPanel({ variant = 'floating' }: { variant?: 'floating' | 'titlebar' }) {
   const [open, setOpen] = useState(false);
   const [showBugForm, setShowBugForm] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [faultMessage, setFaultMessage] = useState('');
   const [error, setError] = useState('');
 
   function handleBugSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -67,9 +43,6 @@ export default function HelpPanel({ variant = 'floating' }: { variant?: 'floatin
       return;
     }
 
-    const confirmation =
-      FAULT_CONFIRMATIONS[Math.floor(Math.random() * FAULT_CONFIRMATIONS.length)];
-    setFaultMessage(confirmation);
     setIsSubmitted(true);
     form.reset();
   }
@@ -78,7 +51,6 @@ export default function HelpPanel({ variant = 'floating' }: { variant?: 'floatin
     setOpen(false);
     setShowBugForm(false);
     setIsSubmitted(false);
-    setFaultMessage('');
     setError('');
   }
 
@@ -121,18 +93,6 @@ export default function HelpPanel({ variant = 'floating' }: { variant?: 'floatin
 
             {!showBugForm ? (
               <>
-                <pre className="text-text-muted whitespace-pre-wrap leading-relaxed mb-4">
-{`HELP(1)                    portfolio.sys                    HELP(1)
-
-NAME
-       help — navigation, domain humor, fault reporting
-
-SYNOPSIS
-       help [--fault]
-
-DESCRIPTION`}
-                </pre>
-
                 <div className="space-y-1.5 mb-4">
                   <p className="text-[10px] text-text-muted uppercase tracking-wide mb-2">commands</p>
                   {HELP_COMMANDS.map((item) => (
@@ -143,16 +103,6 @@ DESCRIPTION`}
                       <span className="text-accent-amber shrink-0 min-w-[5.5rem]">{item.cmd}</span>
                       <span className="text-text-secondary">{item.desc}</span>
                     </div>
-                  ))}
-                </div>
-
-                <div className="space-y-2 mb-4 pl-2 border-l border-border-strong">
-                  <p className="text-[10px] text-text-muted uppercase tracking-wide mb-1 -ml-2 pl-2">notes</p>
-                  {HELP_LINES.map((line, i) => (
-                    <p key={i} className="text-text-secondary leading-relaxed">
-                      <span className="text-text-muted mr-2">~</span>
-                      {line.text}
-                    </p>
                   ))}
                 </div>
 
@@ -217,7 +167,7 @@ DESCRIPTION`}
               </>
             ) : (
               <div className="text-center py-4 space-y-3">
-                <p className="text-text-primary text-[11px] leading-relaxed">{faultMessage}</p>
+                <p className="text-text-primary text-[11px] leading-relaxed">{FAULT_CONFIRMATION}</p>
                 <Button
                   type="button"
                   onClick={close}
