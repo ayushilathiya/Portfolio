@@ -500,6 +500,21 @@
     margin-bottom: 0.375rem;
   }
 
+  .proc-whoami-stack .proc-register-section {
+    padding-top: 0.75rem;
+  }
+
+  .proc-whoami-stack .proc-port-section {
+    padding-top: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .proc-whoami-stack .proc-register-section,
+    .proc-whoami-stack .proc-port-section {
+      padding-top: 0.875rem;
+    }
+  }
+
   .proc-whoami-stack .proc-register-section .proc-whoami-label {
     margin-top: 0;
   }
