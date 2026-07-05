@@ -15,21 +15,21 @@ const ports = [
 
 export default function CompactPortLinks() {
   return (
-    <div className="content-stack-section proc-port-section shrink-0 py-2 px-4 md:px-5">
-      <PathLabel name="devicesandports" className="mb-2 text-xs" />
-      <div className="flex flex-wrap gap-1.5">
+    <div className="content-stack-section proc-port-section">
+      <PathLabel name="devicesandports" className="mb-2.5 proc-whoami-label" />
+      <div className="flex flex-wrap gap-2">
         {devices.map((link) => (
           <a
             key={link.id}
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="device-port-card device-port-card-sm"
+            className="device-port-card device-port-card-sm proc-port-card"
           >
-            <link.icon className="w-3 h-3 shrink-0 text-text-muted" strokeWidth={1.5} />
+            <link.icon className="w-3.5 h-3.5 shrink-0 text-text-muted" strokeWidth={1.5} />
             <div className="min-w-0">
-              <span className="block font-mono text-[9px] text-text-muted">{link.id}</span>
-              <span className="block font-mono text-[11px] text-text-primary truncate">{link.label}</span>
+              <span className="block font-mono text-[10px] text-text-muted">{link.id}</span>
+              <span className="block font-mono text-xs text-text-primary truncate">{link.label}</span>
             </div>
           </a>
         ))}
@@ -39,12 +39,12 @@ export default function CompactPortLinks() {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="device-port-card device-port-card-sm"
+            className="device-port-card device-port-card-sm proc-port-card"
           >
-            <link.icon className="w-3 h-3 shrink-0 text-text-muted" strokeWidth={1.5} />
+            <link.icon className="w-3.5 h-3.5 shrink-0 text-text-muted" strokeWidth={1.5} />
             <div className="min-w-0">
-              <span className="block font-mono text-[9px] text-text-muted">{link.id}</span>
-              <span className="block font-mono text-[11px] text-text-primary truncate">{link.label}</span>
+              <span className="block font-mono text-[10px] text-text-muted">{link.id}</span>
+              <span className="block font-mono text-xs text-text-primary truncate">{link.label}</span>
             </div>
           </a>
         ))}

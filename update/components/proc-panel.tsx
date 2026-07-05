@@ -36,11 +36,11 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
     switch (activeTab) {
       case 'whoami':
         return (
-          <div className="content-stack h-full flex flex-col min-h-0">
+          <div className="content-stack h-full flex flex-col min-h-0 proc-whoami-stack">
             <WhoamiHero />
-            <div className="content-stack-section proc-register-section shrink-0 relative">
-              <PathLabel name="register_map" className="mb-1.5 text-xs" />
-              <table className="w-full font-mono text-[10px] md:text-[11px]">
+            <div className="content-stack-section proc-register-section relative">
+              <PathLabel name="register_map" className="mb-2 proc-whoami-label" />
+              <table className="w-full font-mono proc-register-table">
                 <thead>
                   <tr className="text-text-muted text-left border-b border-border-strong">
                     <th className="pb-1 pr-2 font-normal">ADDR</th>
