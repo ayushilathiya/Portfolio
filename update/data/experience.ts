@@ -1,57 +1,100 @@
-export type ExperienceType = 'work' | 'education' | 'project';
+export type ExperienceType = 'work' | 'beacon';
+
+export type BeaconKind = 'achievement' | 'contribution';
 
 export interface ExperienceEntry {
   timestamp: string;
   title: string;
   organization: string;
-  description: string;
+  location?: string;
+  description?: string;
+  bullets?: string[];
   type: ExperienceType;
   link?: string;
+  beaconKind?: BeaconKind;
 }
 
-export const experienceEntries: ExperienceEntry[] = [
+/** `/runtime` — professional experience, most recent first */
+export const runtimeEntries: ExperienceEntry[] = [
+  {
+    timestamp: '2026.05 – Present',
+    title: 'Embedded Software Engineer',
+    organization: 'Battery Ok Technologies',
+    location: 'Ahmedabad, IN',
+    bullets: [
+      'Resolved firmware calibration mismatch in EV Doctor™ via post-rail stabilization, reducing mismatch by 60%.',
+      'Built an open-source ML model for State of Charge estimation, achieving 80% SoC prediction accuracy.',
+    ],
+    type: 'work',
+  },
+  {
+    timestamp: '2026.01 – 2026.05',
+    title: 'Research Intern (ML & RF)',
+    organization: 'ISRO, SAC',
+    location: 'Ahmedabad, IN',
+    bullets: [
+      'Designed a cosine-profile hybrid coupler for satellite payload systems; findings submitted to IEEE 2026.',
+      'Built a GPR + RF Regressor ensemble model to optimize coupler parameters, cutting optimization time by 45%.',
+      'Designed/simulated a 1:9 RF power combiner/divider with Verilog-based ASIC implementation and UVM verification.',
+    ],
+    type: 'work',
+  },
+  {
+    timestamp: '2025.07 – 2025.08',
+    title: 'Embedded Developer Intern',
+    organization: 'Swasau Technologies',
+    location: 'Ahmedabad, IN',
+    bullets: [
+      'Developed I2C master-slave firmware on CH32 (RISC-V) and ESP32 using ESP-IDF and MounRiver Studio.',
+      'Built ThingSpeak cloud-syncing pattern storage via IR presence detection and TTP223 touch sensing.',
+      'Researched capacitive sensing pad area effects on sensitivity for a custom design.',
+      'Designed and fabricated a 2-layer custom PCB for a capacitive touch panel switch using EasyEDA and KiCad.',
+    ],
+    type: 'work',
+  },
+];
+
+/** `/beacon` — achievements & contributions */
+export const beaconEntries: ExperienceEntry[] = [
   {
     timestamp: '2025.02',
-    title: "Healthathon'25 | Digital Health for Transplant Survivors",
-    organization: 'IAmAPatient.org × MSBC Group',
+    title: 'Healthathon 2025 — HeartStream',
+    organization: 'Hardware-dependent AI-powered remote ECG diagnosis',
     description:
-      'Recognized among the top solutions at Healthathon 2025. Contributed to a multidisciplinary team developing an AI-powered platform to support post-transplant patient care, combining clinical insight with intelligent automation.',
-    type: 'project',
-    link: 'https://www.linkedin.com/posts/ayushilathiya_healthathon25-msbcgroup-iamapatient-activity-7311730105838440448-xLfs',
+      'Won Healthathon 2025 for HeartStream, a hardware-dependent AI-powered remote ECG diagnosis system.',
+    type: 'beacon',
+    beaconKind: 'achievement',
   },
   {
     timestamp: '2024.06',
-    title: 'SSIP 2.0 Innovator',
+    title: 'SSIP 2.0 Funding',
     organization: 'Student Startup and Innovation Policy',
     description:
-      'Received financial support under SSIP 2.0 for innovation recognized at the Proof of Concept stage, acknowledging the potential and real-world feasibility of the proposed solution.',
-    type: 'project',
+      'Secured state government funding under SSIP 2.0 for an actuator-based warehouse automation system.',
+    type: 'beacon',
+    beaconKind: 'achievement',
     link: 'https://www.linkedin.com/posts/ayushilathiya_infinityai-artificialintelligence-aicommunity-activity-7281526689388466176-MBuq',
   },
   {
+    timestamp: '2024.03',
+    title: "Smart India Hackathon 2024 — Internal Qualifier",
+    organization: 'SIH\'24',
+    description:
+      'Qualified in the Smart India Hackathon 2024 (SIH\'24) Internal Hackathon for a platform giving farmers direct market access.',
+    type: 'beacon',
+    beaconKind: 'achievement',
+  },
+  {
     timestamp: '2023.11',
-    title: 'Google Developer Student Club - LDCE',
+    title: 'Google Developer Student Club — LDCE',
     organization: 'Team Member',
     description:
-      'Curated technical content for GDSC events and gained hands-on experience with Android Studio, open source contributions, and machine learning through TensorFlow events and the Google Cloud campaign. Organized and hosted tech workshops for peers.',
-    type: 'work',
+      'Team Member, Google Developer Student Club — LDCE (Nov 2023–present). Curated technical content, hosted workshops, and contributed to Android Studio, open source, and ML community events.',
+    type: 'beacon',
+    beaconKind: 'contribution',
     link: 'https://in.linkedin.com/company/gdsc-ldce',
   },
-  {
-    timestamp: '2023.08',
-    title: 'Semiconductor Manufacturing Workshop',
-    organization: 'IIT Gandhinagar',
-    description:
-      'Participated in an advanced workshop hosted by SEMI, ESSCI, and IESA focused on semiconductor packaging, vacuum systems, and display technology with sessions from STMicroelectronics, IIT Guwahati, and IESA.',
-    type: 'project',
-  },
-  {
-    timestamp: '2022.08',
-    title: 'Bachelor of Engineering in Electronics & Communications',
-    organization: 'Lalbhai Dalpatbhai College of Engineering',
-    description:
-      'Specialized in VLSI design, digital electronics, embedded systems, IoT, computer networks, microcontrollers, machine learning, and signal processing.',
-    type: 'education',
-    link: 'https://ldce.ac.in',
-  },
 ];
+
+/** Combined export for legacy `/syslog` view */
+export const experienceEntries: ExperienceEntry[] = [...runtimeEntries, ...beaconEntries];

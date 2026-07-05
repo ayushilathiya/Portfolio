@@ -100,7 +100,7 @@ export default function DocsPanel() {
           onScroll={handleScroll}
           className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10"
         >
-          <div className="docs-reader-nav sticky top-0 z-20 flex items-center justify-between gap-2 mb-3 py-1.5 bg-panel/95 backdrop-blur-sm border-b border-border-strong">
+          <div className="docs-reader-nav sticky top-0 z-20 flex items-center justify-between gap-2 mb-3 py-1.5 bg-panel border-b border-border-strong">
             <button
               type="button"
               onClick={goBackToIndex}
@@ -144,8 +144,8 @@ export default function DocsPanel() {
     <div className="panel-content relative">
       <SectionVisual tab="docs" />
 
-      <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10">
-        <div className="panel-box p-3 font-mono text-[11px]">
+      <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10 docs-index-scroll">
+        <div className="panel-box docs-index-panel p-3 font-mono text-[11px]">
           <PathLabel name="docs_index" />
           <div className="text-text-muted mb-3 pb-2 border-b border-border-strong flex flex-wrap gap-x-3 gap-y-1 -mt-1">
             <span>total {loadingIndex ? '…' : posts.length}</span>

@@ -4,8 +4,7 @@ import { experienceEntries } from '@/data/experience';
 
 const typeConfig = {
   work: { tag: 'WORK', prefix: 'info', perm: '-rw-r--r--' },
-  education: { tag: 'EDU', prefix: 'notice', perm: 'drwxr-xr-x' },
-  project: { tag: 'R&D', prefix: 'debug', perm: '-rw-rw-r--' },
+  beacon: { tag: 'BCN', prefix: 'signal', perm: '-rw-rw-r--' },
 };
 
 export default function Experience() {
@@ -26,6 +25,10 @@ export default function Experience() {
           <div className="space-y-0">
             {experienceEntries.map((entry, index) => {
               const cfg = typeConfig[entry.type];
+              const summary =
+                entry.description ??
+                entry.bullets?.join(' ') ??
+                entry.organization;
               const titleContent = entry.link ? (
                 <a
                   href={entry.link}
@@ -55,7 +58,7 @@ export default function Experience() {
                       {titleContent}
                     </div>
                     <p className="text-text-muted text-[10px] mt-0.5 pl-0 md:pl-4 leading-relaxed">
-                      {entry.organization} — {entry.description}
+                      {entry.organization}{summary ? ` — ${summary}` : ''}
                     </p>
                   </div>
                 </div>

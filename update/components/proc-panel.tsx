@@ -4,8 +4,7 @@ import { useState, useCallback } from 'react';
 import { procTabs, type ProcTabId } from '@/lib/sections';
 import { profile } from '@/data/profile';
 import { education } from '@/data/education';
-import { experienceEntries } from '@/data/experience';
-import { responsibilities } from '@/data/responsibilities';
+import { runtimeEntries, beaconEntries } from '@/data/experience';
 import SkillMesh from '@/components/skill-mesh';
 import IdleBlock from '@/components/idle-block';
 import PathLabel from '@/components/path-label';
@@ -25,7 +24,7 @@ function WhoamiHero() {
       <h1 className="text-text-primary text-xl md:text-2xl lg:text-[1.65rem] font-medium leading-snug relative z-10">
         Hi, I&apos;m <span className="text-accent-amber">{profile.name}</span>
       </h1>
-      <p className="text-text-primary text-sm md:text-base lg:text-lg mt-2 leading-relaxed relative z-10">
+      <p className="text-white text-sm md:text-base lg:text-lg mt-2 leading-relaxed relative z-10">
         {profile.intro}
       </p>
     </div>
@@ -34,11 +33,6 @@ function WhoamiHero() {
 
 export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
   const [activeTab, setActiveTab] = useState<ProcTabId>(initialTab);
-
-  const workEntries = experienceEntries.filter((e) => e.type === 'work');
-  const achievementEntries = experienceEntries.filter((e) => e.type === 'project');
-  const respTitles = new Set(responsibilities.map((r) => r.title));
-  const uniqueWorkEntries = workEntries.filter((e) => !respTitles.has(e.title));
 
   const renderContent = useCallback(() => {
     switch (activeTab) {
@@ -83,19 +77,29 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
             </div>
             {education.map((edu) => (
               <div key={edu.institution} className="content-stack-section py-3 px-4 md:px-5">
-                <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
-                  <a
-                    href={edu.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out"
-                  >
-                    {edu.institution}
-                  </a>
+                <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
+                  {edu.website ? (
+                    <a
+                      href={edu.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out"
+                    >
+                      {edu.institution}
+                    </a>
+                  ) : (
+                    <span className="font-mono text-sm text-text-primary">{edu.institution}</span>
+                  )}
                   <span className="font-mono text-[10px] text-text-muted shrink-0">{edu.period}</span>
                 </div>
-                <p className="font-mono text-xs text-text-secondary mb-3">{edu.degree}</p>
-                <p className="font-mono text-[10px] text-text-muted mb-2 uppercase tracking-wide">course modules</p>
+                <p className="font-mono text-xs text-text-secondary mb-1">{edu.degree}</p>
+                {edu.location && (
+                  <p className="font-mono text-[10px] text-text-muted mb-3">Location: {edu.location}</p>
+                )}
+                {!edu.location && <div className="mb-3" />}
+                <p className="font-mono text-[10px] text-text-muted mb-2 uppercase tracking-wide">
+                  {edu.modulesLabel ?? 'course modules'}
+                </p>
                 <div className="flex flex-wrap gap-1.5">
                   {edu.skills.map((skill) => (
                     <span key={skill} className="proc-field-pill">
@@ -115,56 +119,32 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
             <div className="content-stack-section py-3 px-4 md:px-5 border-b border-border-strong">
               <PathLabel name="work_log" className="mb-2" />
               <p className="font-mono text-[10px] text-text-muted">
-                tail -f /var/log/work.log · {uniqueWorkEntries.length + responsibilities.length} entries
+                tail -f /var/log/work.log · {runtimeEntries.length} entries
               </p>
             </div>
 
-            {responsibilities.map((pos) => (
-              <div key={pos.title} className="content-stack-section py-3 px-4 md:px-5 log-line">
-                <div className="flex flex-wrap gap-x-2 gap-y-1 mb-1.5 font-mono text-[10px]">
-                  <span className="text-text-muted">[{pos.period}]</span>
-                  <span className="text-accent-amber">&lt;contrib&gt;</span>
-                </div>
-                <a
-                  href={pos.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out block mb-1"
-                >
-                  {pos.title}
-                </a>
-                <p className="font-mono text-[10px] text-text-muted mb-2">{pos.org}</p>
-                <p className="font-mono text-[11px] text-text-secondary leading-relaxed mb-2">{pos.desc}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {pos.skills.map((skill) => (
-                    <span key={skill} className="proc-field-pill">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            {uniqueWorkEntries.map((entry) => (
-              <div key={entry.title} className="content-stack-section py-3 px-4 md:px-5 log-line">
+            {runtimeEntries.map((entry) => (
+              <div key={`${entry.timestamp}-${entry.organization}`} className="content-stack-section py-3 px-4 md:px-5 log-line">
                 <div className="flex flex-wrap gap-x-2 gap-y-1 mb-1.5 font-mono text-[10px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
                   <span className="text-accent-amber">&lt;work&gt;</span>
                 </div>
-                {entry.link ? (
-                  <a
-                    href={entry.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out block mb-1"
-                  >
-                    {entry.title}
-                  </a>
-                ) : (
-                  <p className="font-mono text-sm text-text-primary mb-1">{entry.title}</p>
+                <p className="font-mono text-sm text-text-primary mb-0.5">
+                  {entry.organization} — {entry.title}
+                </p>
+                {entry.location && (
+                  <p className="font-mono text-[10px] text-text-muted mb-2">{entry.location}</p>
                 )}
-                <p className="font-mono text-[10px] text-text-muted mb-2">{entry.organization}</p>
-                <p className="font-mono text-[11px] text-text-secondary leading-relaxed">{entry.description}</p>
+                {entry.bullets && (
+                  <ul className="font-mono text-[11px] text-text-secondary leading-relaxed space-y-1 list-none pl-0">
+                    {entry.bullets.map((bullet) => (
+                      <li key={bullet} className="flex gap-2">
+                        <span className="text-text-muted shrink-0">-</span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
@@ -177,15 +157,19 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
             <div className="content-stack-section py-3 px-4 md:px-5 border-b border-border-strong">
               <PathLabel name="beacon_tx" className="mb-2" />
               <p className="font-mono text-[10px] text-text-muted">
-                signal broadcast · {achievementEntries.length} packets received
+                signal broadcast · {beaconEntries.length} packets received
               </p>
             </div>
-            {achievementEntries.map((entry) => (
+            {beaconEntries.map((entry) => (
               <div key={entry.title} className="content-stack-section py-3 px-4 md:px-5 log-line">
                 <div className="flex flex-wrap gap-x-2 gap-y-1 mb-1.5 font-mono text-[10px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
-                  <span className="text-accent-amber">rx</span>
-                  <span className="text-text-muted">snr: ok</span>
+                  <span className="text-accent-amber">
+                    {entry.beaconKind === 'contribution' ? 'tx' : 'rx'}
+                  </span>
+                  <span className="text-text-muted">
+                    {entry.beaconKind === 'contribution' ? 'contrib' : 'achievement'}
+                  </span>
                 </div>
                 {entry.link ? (
                   <a
@@ -199,8 +183,12 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
                 ) : (
                   <p className="font-mono text-sm text-text-primary mb-1">{entry.title}</p>
                 )}
-                <p className="font-mono text-[10px] text-text-muted mb-2">{entry.organization}</p>
-                <p className="font-mono text-[11px] text-text-secondary leading-relaxed">{entry.description}</p>
+                {entry.organization && (
+                  <p className="font-mono text-[10px] text-text-muted mb-2">{entry.organization}</p>
+                )}
+                {entry.description && (
+                  <p className="font-mono text-[11px] text-text-secondary leading-relaxed">{entry.description}</p>
+                )}
               </div>
             ))}
           </div>
@@ -216,7 +204,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
       default:
         return null;
     }
-  }, [activeTab, uniqueWorkEntries, achievementEntries]);
+  }, [activeTab]);
 
   return (
     <div className="panel-content proc-layout proc-no-scroll">

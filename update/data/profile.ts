@@ -4,10 +4,6 @@ export const profile = {
   title: 'Electronics & Communication Engineer',
   intro:
     'Building at the intersection of hardware and software — embedded firmware, VLSI design, IoT systems, and health tech.',
-  bio: [
-    "As an Embedded Systems Developer and VLSI Enthusiast, I specialize in developing cutting-edge solutions at the intersection of hardware and software.",
-    'My expertise spans hardware-software integration, digital design, and system optimization, with a focus on IoT and machine learning.',
-  ],
   registers: [
     { addr: '0x00', field: 'ROLE', value: 'Embedded Systems + VLSI Engineer' },
     { addr: '0x01', field: 'INTERESTS', value: 'IoT, ML, Health Tech, Space Systems' },
@@ -22,7 +18,6 @@ export const profile = {
     github: 'https://github.com/ayushilathiya',
     linkedin: 'https://www.linkedin.com/in/ayushilathiya/',
     hashnode: 'https://ayushilathiya.hashnode.dev',
-    resume: '/docs/Ayushi_Lathiya_CV.pdf',
   },
   footerNote: 'Open to opportunities in embedded systems, VLSI, IoT, and health tech',
   stats: [

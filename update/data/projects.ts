@@ -16,7 +16,7 @@ export const projects: Project[] = [
     title: 'Gesture-Controlled Car',
     domain: 'IoT',
     description:
-      "Gesture-controlled system using ESP-NOW for low-latency wireless car control — phase two of the Wi-Fi car series.",
+      'Gesture-controlled system using ESP-NOW for low-latency wireless car control — phase two of the Wi-Fi car series.',
     status: 'live',
     statusLabel: 'LIVE',
     tech: ['IoT', 'ESP-NOW', 'Embedded Systems'],
@@ -37,6 +37,15 @@ export const projects: Project[] = [
       { type: 'github', url: 'https://github.com/ayushilathiya/ECG-Monitoring' },
       { type: 'demo', url: 'https://youtu.be/EAjrd2bCG9A' },
     ],
+  },
+  {
+    title: 'HeartStream (Remote Cardiac Diagnostics)',
+    domain: 'HEALTH',
+    description:
+      'Custom ECGNet model trained on MIT-BIH for cardiac anomaly detection (99% accuracy), with a real-time AD8232 + ESP8266 sensor pipeline streaming to ThingSpeak, and a Streamlit + Supabase app for live monitoring, ECG visualization, and PDF parsing.',
+    status: 'live',
+    statusLabel: 'LIVE',
+    tech: ['Python', 'ECGNet', 'Supabase', 'Streamlit'],
   },
   {
     title: 'WiFi-Controlled Car',
@@ -76,5 +85,14 @@ export const projects: Project[] = [
       { type: 'github', url: 'https://github.com/ayushilathiya/ESP-NOW-Protocol' },
       { type: 'demo', url: 'https://youtu.be/NGjMKT3Scls' },
     ],
+  },
+  {
+    title: 'Smart Water Level Controller ASIC',
+    domain: 'VLSI',
+    description:
+      'RTL-level water level controller ASIC in Verilog with a full testbench simulating real-world sensor scenarios, FSM transitions, motor control logic, and asynchronous reset handling — simulated and validated in Xilinx.',
+    status: 'built',
+    statusLabel: 'BUILT',
+    tech: ['Verilog', 'Testbench', 'Xilinx'],
   },
 ];

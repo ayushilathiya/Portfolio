@@ -10,7 +10,7 @@ export default function ModuleDomainMotif({ domain }: { domain: ProjectDomain })
   switch (domain) {
     case 'IoT':
       return (
-        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
           <circle cx="36" cy="28" r="3.5" fill={FILL} opacity="0.55" />
           <circle cx="96" cy="14" r="3" fill={FILL} opacity="0.45" />
           <circle cx="96" cy="42" r="3" fill={FILL} opacity="0.45" />
@@ -26,7 +26,7 @@ export default function ModuleDomainMotif({ domain }: { domain: ProjectDomain })
       );
     case 'EMBEDDED':
       return (
-        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
           <path
             d="M8 28 H48 L48 12 H88 L88 44 H128 L128 16 H168 L168 40 H208 L208 28 H232"
             fill="none"
@@ -43,7 +43,7 @@ export default function ModuleDomainMotif({ domain }: { domain: ProjectDomain })
       );
     case 'HEALTH':
       return (
-        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
           <line x1="0" y1="28" x2="240" y2="28" stroke={STROKE} strokeWidth="0.5" opacity="0.25" strokeDasharray="4 6" />
           <path
             d="M0 28 H24 L32 28 L38 14 L48 42 L58 18 L66 28 H96 L102 28 L110 8 L120 48 L130 12 L138 28 H168 L174 28 L182 20 L192 36 L202 28 H240"
@@ -58,7 +58,7 @@ export default function ModuleDomainMotif({ domain }: { domain: ProjectDomain })
       );
     case 'VLSI':
       return (
-        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
           <rect x="88" y="10" width="64" height="36" fill="none" stroke={STROKE} strokeWidth="1.3" opacity="0.75" rx="2" />
           <rect x="98" y="18" width="10" height="10" fill={FILL} opacity="0.35" />
           <rect x="112" y="18" width="10" height="10" fill={FILL} opacity="0.35" />
@@ -74,7 +74,7 @@ export default function ModuleDomainMotif({ domain }: { domain: ProjectDomain })
       );
     case 'SPACE':
       return (
-        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <svg className="module-motif-svg" viewBox="0 0 240 56" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
           <path d="M16 40 A104 104 0 0 1 224 40" fill="none" stroke={STROKE} strokeWidth="1.3" opacity="0.7" strokeDasharray="4 5" />
           <ellipse cx="176" cy="22" rx="36" ry="10" fill="none" stroke={STROKE} strokeWidth="0.9" opacity="0.45" transform="rotate(-18 176 22)" />
           <circle cx="188" cy="16" r="2.5" fill={FILL} opacity="0.5" />

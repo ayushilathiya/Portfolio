@@ -1,4 +1,14 @@
-export const education = [
+export interface EducationRecord {
+  institution: string;
+  degree: string;
+  period: string;
+  website?: string;
+  location?: string;
+  skills: string[];
+  modulesLabel?: string;
+}
+
+export const education: EducationRecord[] = [
   {
     institution: 'Lalbhai Dalpatbhai College of Engineering',
     degree: 'Bachelor of Engineering in Electronics & Communications',
@@ -15,5 +25,14 @@ export const education = [
       'Machine Learning',
       'Signal Processing',
     ],
+    modulesLabel: 'course modules',
+  },
+  {
+    institution: 'The H. B. Kapadia New High School',
+    degree: 'Higher Secondary Education (XII) — Science',
+    period: '2021–2022',
+    location: 'Ahmedabad, Gujarat, India',
+    skills: ['Physics', 'Chemistry', 'Mathematics', 'Computer Science'],
+    modulesLabel: 'Installed Modules',
   },
 ];
