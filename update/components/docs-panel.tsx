@@ -1,20 +1,77 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import SectionVisual from '@/components/section-visual';
 import PathLabel from '@/components/path-label';
 import PostBody from '@/components/post-body';
-import { formatPostDate, type HashnodePost } from '@/lib/hashnode';
+import { formatPostDate, summaryToPost, type HashnodePost, type HashnodePostSummary } from '@/lib/hashnode';
 
-interface DocsPanelProps {
-  posts: HashnodePost[];
-}
-
-export default function DocsPanel({ posts }: DocsPanelProps) {
+export default function DocsPanel() {
+  const [posts, setPosts] = useState<HashnodePost[]>([]);
+  const [loadingIndex, setLoadingIndex] = useState(true);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [postBody, setPostBody] = useState('');
+  const [loadingBody, setLoadingBody] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const selected = posts.find((p) => p.slug === selectedSlug) ?? null;
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoadingIndex(true);
+
+    fetch('/api/blogs')
+      .then((r) => (r.ok ? r.json() : []))
+      .then((summaries: HashnodePostSummary[]) => {
+        if (cancelled) return;
+        setPosts(summaries.map((s) => summaryToPost(s, '')));
+      })
+      .catch(() => {
+        if (!cancelled) setPosts([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingIndex(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!selectedSlug || !selected) {
+      setPostBody('');
+      setLoadingBody(false);
+      return;
+    }
+
+    if (selected.body) {
+      setPostBody(selected.body);
+      setLoadingBody(false);
+      return;
+    }
+
+    let cancelled = false;
+    setLoadingBody(true);
+    setPostBody('');
+
+    fetch(`/api/blogs/${encodeURIComponent(selectedSlug)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: HashnodePost | null) => {
+        if (cancelled) return;
+        setPostBody(data?.body ?? '');
+      })
+      .catch(() => {
+        if (!cancelled) setPostBody('');
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingBody(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedSlug, selected]);
 
   const scrollToTop = useCallback(() => {
     scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
@@ -70,7 +127,13 @@ export default function DocsPanel({ posts }: DocsPanelProps) {
               <span className="text-text-secondary">{selected.title}</span>
             </div>
 
-            <PostBody content={selected.body} />
+            {loadingBody ? (
+              <p className="text-text-muted animate-pulse">loading man page…</p>
+            ) : postBody ? (
+              <PostBody content={postBody} />
+            ) : (
+              <p className="text-text-muted">content unavailable</p>
+            )}
           </div>
         </div>
       </div>
@@ -85,12 +148,14 @@ export default function DocsPanel({ posts }: DocsPanelProps) {
         <div className="panel-box p-3 font-mono text-[11px]">
           <PathLabel name="docs_index" />
           <div className="text-text-muted mb-3 pb-2 border-b border-border-strong flex flex-wrap gap-x-3 gap-y-1 -mt-1">
-            <span>total {posts.length}</span>
+            <span>total {loadingIndex ? '…' : posts.length}</span>
             <span>·</span>
             <span>local index</span>
           </div>
 
-          {posts.length === 0 ? (
+          {loadingIndex ? (
+            <p className="text-text-muted animate-pulse">indexing man pages…</p>
+          ) : posts.length === 0 ? (
             <p className="text-text-muted">no posts found</p>
           ) : (
             <div className="space-y-0">

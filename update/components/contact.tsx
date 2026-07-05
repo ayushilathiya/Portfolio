@@ -51,8 +51,8 @@ export default function Contact() {
     <div className="panel-content relative">
       <SectionVisual tab="uart" />
 
-      <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full min-h-0 overflow-y-auto panel-inner-scroll">
-        <div className="panel-box p-4 md:p-5 relative">
+      <div className="flex-1 flex flex-col min-h-0 overflow-y-auto panel-inner-scroll uart-panel-scroll">
+        <div className="panel-box uart-form-box p-4 md:p-5 relative max-w-md mx-auto w-full">
           <PathLabel name="tx" />
           <div className="font-mono text-sm mb-4 -mt-1 pb-3 border-b border-border-strong">
             <span className="text-text-muted">{'>'}</span>

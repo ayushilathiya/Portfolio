@@ -5,10 +5,13 @@ export interface HashnodePost {
   body: string;
 }
 
+export type HashnodePostSummary = Pick<HashnodePost, 'slug' | 'title' | 'publishedAt'>;
+
 const PUBLICATION_HOST = 'ayushilathiya.hashnode.dev';
 const PUBLICATION_URL = `https://${PUBLICATION_HOST}`;
+const FETCH_TIMEOUT_MS = 6000;
 
-const GET_POSTS_QUERY = `
+const GET_POSTS_SUMMARY_QUERY = `
   query GetPosts {
     publication(host: "${PUBLICATION_HOST}") {
       posts(first: 20) {
@@ -17,9 +20,6 @@ const GET_POSTS_QUERY = `
             slug
             title
             publishedAt
-            content {
-              markdown
-            }
           }
         }
       }
@@ -41,50 +41,149 @@ const GET_POST_QUERY = `
   }
 `;
 
-export async function getHashnodePosts(): Promise<HashnodePost[]> {
+/** Lightweight list for initial page load — no post bodies */
+export async function getHashnodePostSummaries(): Promise<HashnodePostSummary[]> {
   try {
-    const posts = await fetchPostsViaGraphQL();
-    if (posts.length > 0) return posts;
+    return await fetchSummariesViaRss();
   } catch (error) {
-    console.error('Hashnode GraphQL fetch failed:', error);
+    console.error('Hashnode RSS summary fetch failed:', error);
   }
 
   try {
+    return await fetchSummariesViaGraphQL();
+  } catch (error) {
+    console.error('Hashnode GraphQL summary fetch failed:', error);
+    return [];
+  }
+}
+
+export async function getHashnodePosts(): Promise<HashnodePost[]> {
+  try {
     return await fetchPostsViaRss();
   } catch (error) {
-    console.error('Hashnode RSS fallback failed:', error);
+    console.error('Hashnode RSS fetch failed:', error);
+  }
+
+  try {
+    return await fetchPostsViaGraphQL();
+  } catch (error) {
+    console.error('Hashnode GraphQL fetch failed:', error);
     return [];
   }
 }
 
 export async function getHashnodePost(slug: string): Promise<HashnodePost | null> {
   try {
-    const post = await fetchPostViaGraphQL(slug);
+    const post = await fetchPostViaRss(slug);
     if (post) return post;
   } catch (error) {
-    console.error(`Hashnode GraphQL fetch failed for ${slug}:`, error);
+    console.error(`Hashnode RSS fetch failed for ${slug}:`, error);
   }
 
   try {
-    const posts = await fetchPostsViaRss();
-    return posts.find((p) => p.slug === slug) ?? null;
+    return await fetchPostViaGraphQL(slug);
   } catch (error) {
-    console.error(`Hashnode RSS fallback failed for ${slug}:`, error);
+    console.error(`Hashnode GraphQL fetch failed for ${slug}:`, error);
     return null;
   }
 }
 
-async function fetchPostsViaGraphQL(): Promise<HashnodePost[]> {
-  const data = await gqlRequest(GET_POSTS_QUERY);
+async function fetchWithTimeout(url: string, init: RequestInit = {}): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    return await fetch(url, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function fetchSummariesViaRss(): Promise<HashnodePostSummary[]> {
+  const response = await fetchWithTimeout(`${PUBLICATION_URL}/rss.xml`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!response.ok) {
+    throw new Error(`RSS feed returned ${response.status}`);
+  }
+
+  const xml = await response.text();
+  const items = xml.match(/<item>[\s\S]*?<\/item>/g) ?? [];
+  const posts: HashnodePostSummary[] = [];
+
+  for (const item of items.slice(0, 20)) {
+    const post = parseRssItemSummary(item);
+    if (post) posts.push(post);
+  }
+
+  return posts;
+}
+
+async function fetchPostsViaRss(): Promise<HashnodePost[]> {
+  const response = await fetchWithTimeout(`${PUBLICATION_URL}/rss.xml`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!response.ok) {
+    throw new Error(`RSS feed returned ${response.status}`);
+  }
+
+  const xml = await response.text();
+  const items = xml.match(/<item>[\s\S]*?<\/item>/g) ?? [];
+  const posts: HashnodePost[] = [];
+
+  for (const item of items.slice(0, 20)) {
+    const post = parseRssItem(item);
+    if (post) posts.push(post);
+  }
+
+  return posts;
+}
+
+async function fetchPostViaRss(slug: string): Promise<HashnodePost | null> {
+  const posts = await fetchPostsViaRss();
+  return posts.find((p) => p.slug === slug) ?? null;
+}
+
+async function fetchSummariesViaGraphQL(): Promise<HashnodePostSummary[]> {
+  const data = await gqlRequest(GET_POSTS_SUMMARY_QUERY);
   const edges = data.data?.publication?.posts?.edges;
 
   if (!Array.isArray(edges)) {
     throw new Error('Invalid GraphQL response format');
   }
 
-  return edges.map(({ node }: { node: Record<string, unknown> }) =>
-    mapGraphQLNode(node)
-  );
+  return edges.map(({ node }: { node: Record<string, unknown> }) => ({
+    slug: node.slug as string,
+    title: node.title as string,
+    publishedAt: (node.publishedAt as string) ?? '',
+  }));
+}
+
+async function fetchPostsViaGraphQL(): Promise<HashnodePost[]> {
+  const data = await gqlRequest(`
+    query GetPosts {
+      publication(host: "${PUBLICATION_HOST}") {
+        posts(first: 20) {
+          edges {
+            node {
+              slug
+              title
+              publishedAt
+              content { markdown }
+            }
+          }
+        }
+      }
+    }
+  `);
+  const edges = data.data?.publication?.posts?.edges;
+
+  if (!Array.isArray(edges)) {
+    throw new Error('Invalid GraphQL response format');
+  }
+
+  return edges.map(({ node }: { node: Record<string, unknown> }) => mapGraphQLNode(node));
 }
 
 async function fetchPostViaGraphQL(slug: string): Promise<HashnodePost | null> {
@@ -108,7 +207,7 @@ function mapGraphQLNode(node: Record<string, unknown>, slugOverride?: string): H
 }
 
 async function gqlRequest(query: string, variables?: Record<string, string>) {
-  const response = await fetch('https://gql.hashnode.com', {
+  const response = await fetchWithTimeout('https://gql.hashnode.com', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -132,36 +231,12 @@ async function gqlRequest(query: string, variables?: Record<string, string>) {
   return data;
 }
 
-async function fetchPostsViaRss(): Promise<HashnodePost[]> {
-  const response = await fetch(`${PUBLICATION_URL}/rss.xml`, {
-    next: { revalidate: 3600 },
-  });
-
-  if (!response.ok) {
-    throw new Error(`RSS feed returned ${response.status}`);
-  }
-
-  const xml = await response.text();
-  const items = xml.match(/<item>[\s\S]*?<\/item>/g) ?? [];
-  const posts: HashnodePost[] = [];
-
-  for (const item of items.slice(0, 20)) {
-    const post = parseRssItem(item);
-    if (post) posts.push(post);
-  }
-
-  return posts;
-}
-
-function parseRssItem(item: string): HashnodePost | null {
+function parseRssItemSummary(item: string): HashnodePostSummary | null {
   const titleMatch =
     item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) ??
     item.match(/<title>(.*?)<\/title>/);
   const linkMatch = item.match(/<link>(.*?)<\/link>/);
   const pubDateMatch = item.match(/<pubDate>(.*?)<\/pubDate>/);
-  const contentMatch =
-    item.match(/<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/) ??
-    item.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/);
 
   if (!titleMatch || !linkMatch) return null;
 
@@ -169,14 +244,26 @@ function parseRssItem(item: string): HashnodePost | null {
   const slug = url.replace(/\/$/, '').split('/').pop() ?? '';
   if (!slug) return null;
 
-  const rawBody = contentMatch?.[1] ?? '';
-  const body = stripImagesFromContent(htmlToPlainText(rawBody));
-
   return {
     slug,
     title: titleMatch[1].trim(),
     publishedAt: pubDateMatch?.[1] ?? '',
-    body,
+  };
+}
+
+function parseRssItem(item: string): HashnodePost | null {
+  const summary = parseRssItemSummary(item);
+  if (!summary) return null;
+
+  const contentMatch =
+    item.match(/<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/) ??
+    item.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/);
+
+  const rawBody = contentMatch?.[1] ?? '';
+
+  return {
+    ...summary,
+    body: stripImagesFromContent(htmlToPlainText(rawBody)),
   };
 }
 
@@ -213,4 +300,8 @@ export function formatPostDate(iso: string): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return '';
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+export function summaryToPost(summary: HashnodePostSummary, body = ''): HashnodePost {
+  return { ...summary, body };
 }

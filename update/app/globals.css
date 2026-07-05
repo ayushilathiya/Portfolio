@@ -504,13 +504,13 @@
     overflow: hidden;
   }
 
-  .module-card-motif-top {
-    position: relative;
-    height: 48px;
+  .module-card-motif {
+    height: 20px;
+    margin: 0 0 0.625rem;
     overflow: hidden;
     pointer-events: none;
-    border-bottom: 1px solid var(--border-strong);
-    background: inherit;
+    background: transparent;
+    border: none;
   }
 
   .module-card-body {
@@ -521,11 +521,27 @@
   .module-motif-svg {
     width: 100%;
     height: 100%;
-    opacity: 0.62;
+    opacity: 0.4;
+    display: block;
   }
 
-  .device-port-card-wide {
-    width: 100%;
+  .device-port-card-sm {
+    padding: 0.35rem 0.5rem;
+    gap: 0.4rem;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .uart-panel-scroll {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 0.75rem;
+  }
+
+  .uart-form-box {
+    border-radius: 6px;
+    flex-shrink: 0;
   }
 
   .docs-reader-nav {

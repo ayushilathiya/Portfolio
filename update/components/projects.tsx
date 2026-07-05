@@ -37,11 +37,11 @@ export default function Projects() {
               key={project.title}
               className="module-card panel-box group transition-colors duration-200 ease-out relative overflow-hidden"
             >
-              <div className="module-card-motif-top" aria-hidden="true">
-                <ModuleDomainMotif domain={project.domain} />
-              </div>
-
               <div className="module-card-body relative z-[2]">
+                <div className="module-card-motif" aria-hidden="true">
+                  <ModuleDomainMotif domain={project.domain} />
+                </div>
+
                 <div className="flex items-center justify-between mb-3 gap-2">
                   <div className="flex items-center gap-2">
                     <div

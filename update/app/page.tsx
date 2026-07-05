@@ -1,7 +1,6 @@
 import AppShell from '@/components/app-shell';
-import { getHashnodePosts } from '@/lib/hashnode';
 
-export default async function Home() {
-  const docsPosts = await getHashnodePosts();
-  return <AppShell docsPosts={docsPosts} />;
+/** No server-side Hashnode fetch — keeps first paint instant; /docs loads posts client-side */
+export default function Home() {
+  return <AppShell />;
 }
