@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { submitToFormspree } from '@/lib/formspree';
 
 const HELP_COMMANDS = [
   { cmd: '/proc', desc: 'main process panel — profile, education, work, achievements, skills' },
@@ -27,19 +26,35 @@ const HELP_LINES = [
   { type: 'joke', text: 'silicon lottery: you won the wafer. the website is the bonus die that actually booted.' },
   { type: 'joke', text: 'watchdog timer armed. if you stare at /dev too long, it assumes you are debugging and leaves you alone.' },
   { type: 'joke', text: 'health tech tip: this portfolio cannot diagnose arrhythmia. your cardiologist can. probably.' },
+  { type: 'joke', text: 'have you tried turning the portfolio off and on again? ctrl+shift+r is the new power cycle.' },
+  { type: 'joke', text: 'bootloader tip: if education_record fails checksum, blame the curriculum compiler — not the student.' },
+  { type: 'joke', text: 'tapeout rumor: this site missed the shuttle by one revision. next spin will fix the hold timing. probably.' },
+  { type: 'joke', text: 'satellite latency: your click reached the server in 12 ms. the ACK is still propagating through LEO.' },
+  { type: 'joke', text: 'vitals check: portfolio heartbeat 60 Hz nominal. arrhythmia detected only in the progress bar — ignore it.' },
+  { type: 'joke', text: 'firmware update available: changelog says "fixed nothing, improved vibes." recommended install: never.' },
+  { type: 'joke', text: 'VLSI wisdom: if the layout passes DRC, the bug is in the analog domain. always the analog domain.' },
+  { type: 'joke', text: 'uptime: 99.9% — the 0.1% was when avrdude held the upload hostage. we negotiated.' },
+  { type: 'joke', text: 'ECG pun: this UI has good R-R intervals. unlike my sleep schedule during tapeout week.' },
+];
+
+const FAULT_CONFIRMATIONS = [
+  "FAULT LOGGED: ticket #0x1337 filed under 'known cosmic ray interference.' no further action will be taken.",
+  'FAULT LOGGED: entry archived to /dev/null with read-only permissions. thank you for your concern.',
+  'FAULT LOGGED: classified as PEBKAC (Problem Exists Between Keyboard And Chair). closing ticket.',
+  'FAULT LOGGED: routed to the same queue as the progress bar — expect infinite retry, zero resolution.',
+  'FAULT LOGGED: severity LOW (humor HIGH). the watchdog ate your report and asked for seconds.',
 ];
 
 export default function HelpPanel({ variant = 'floating' }: { variant?: 'floating' | 'titlebar' }) {
   const [open, setOpen] = useState(false);
   const [showBugForm, setShowBugForm] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [faultMessage, setFaultMessage] = useState('');
   const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleBugSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleBugSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError('');
-    setIsSubmitting(true);
 
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
@@ -49,31 +64,21 @@ export default function HelpPanel({ variant = 'floating' }: { variant?: 'floatin
 
     if (!email || !message) {
       setError('email and description required');
-      setIsSubmitting(false);
       return;
     }
 
-    try {
-      const response = await submitToFormspree(formData);
-
-      if (response.ok) {
-        setIsSubmitted(true);
-        form.reset();
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (err) {
-      setError('uplink failed — retry or ping /uart instead');
-      console.error('Error:', err);
-    } finally {
-      setIsSubmitting(false);
-    }
+    const confirmation =
+      FAULT_CONFIRMATIONS[Math.floor(Math.random() * FAULT_CONFIRMATIONS.length)];
+    setFaultMessage(confirmation);
+    setIsSubmitted(true);
+    form.reset();
   }
 
   function close() {
     setOpen(false);
     setShowBugForm(false);
     setIsSubmitted(false);
+    setFaultMessage('');
     setError('');
   }
 
@@ -145,7 +150,7 @@ DESCRIPTION`}
                   <p className="text-[10px] text-text-muted uppercase tracking-wide mb-1 -ml-2 pl-2">notes</p>
                   {HELP_LINES.map((line, i) => (
                     <p key={i} className="text-text-secondary leading-relaxed">
-                      <span className="text-text-muted mr-2">{line.type === 'tip' ? '→' : '~'}</span>
+                      <span className="text-text-muted mr-2">~</span>
                       {line.text}
                     </p>
                   ))}
@@ -166,20 +171,17 @@ DESCRIPTION`}
                     FAULT: unexpected behavior on bus
                   </p>
                   <p className="text-text-muted mt-1 text-[10px]">
-                    same uplink as /uart — describe what broke
+                    describe what broke — report goes to the bit bucket, not an inbox
                   </p>
                 </div>
 
                 <form onSubmit={handleBugSubmit} className="space-y-3">
-                  <input type="hidden" name="_subject" value="Fault report — portfolio.sys" />
-
                   <div>
                     <label className="block text-[10px] text-text-muted mb-1">email</label>
                     <Input
                       type="email"
                       name="email"
                       required
-                      disabled={isSubmitting}
                       className="bg-base border-border text-text-primary focus-visible:ring-accent-amber font-mono text-xs h-8"
                     />
                   </div>
@@ -189,7 +191,6 @@ DESCRIPTION`}
                     <Textarea
                       name="message"
                       required
-                      disabled={isSubmitting}
                       placeholder="expected: amber underline. actual: existential dread."
                       className="min-h-[80px] bg-base border-border text-text-primary focus-visible:ring-accent-amber font-mono text-xs"
                     />
@@ -207,22 +208,20 @@ DESCRIPTION`}
                     </Button>
                     <Button
                       type="submit"
-                      disabled={isSubmitting}
-                      className="flex-1 bg-transparent border border-border-strong hover:border-accent-amber hover:text-accent-amber font-mono text-xs h-8 transition-colors duration-200 ease-out"
+                      className="flex-1 bg-accent-amber/15 border border-accent-amber text-accent-amber hover:bg-accent-amber/25 font-mono text-xs h-8 transition-colors duration-200 ease-out"
                     >
-                      {isSubmitting ? 'tx…' : 'submit log'}
+                      submit log
                     </Button>
                   </div>
                 </form>
               </>
             ) : (
-              <div className="text-center py-4 space-y-2">
-                <p className="text-text-primary">log stored in non-volatile memory</p>
-                <p className="text-text-muted text-[10px]">thanks — will probe on the bench</p>
+              <div className="text-center py-4 space-y-3">
+                <p className="text-text-primary text-[11px] leading-relaxed">{faultMessage}</p>
                 <Button
                   type="button"
                   onClick={close}
-                  className="mt-2 bg-transparent border border-border-strong font-mono text-xs h-8"
+                  className="mt-2 bg-transparent border border-border-strong text-text-secondary hover:border-accent-amber hover:text-accent-amber font-mono text-xs h-8"
                 >
                   close
                 </Button>

@@ -5,10 +5,9 @@ export const profile = {
   intro:
     'Building at the intersection of hardware and software — embedded firmware, VLSI design, IoT systems, and health tech.',
   registers: [
-    { addr: '0x00', field: 'ROLE', value: 'Embedded Systems + VLSI Engineer' },
-    { addr: '0x01', field: 'INTERESTS', value: 'IoT, ML, Health Tech, Space Systems' },
-    { addr: '0x02', field: 'STATUS', value: 'Building — accepting opportunities' },
-    { addr: '0x03', field: 'LOCATION', value: 'India (UTC+5:30)' },
+    { addr: '0x0B', field: 'BAUD_RATE', value: '115200 bps (fast learner)' },
+    { addr: '0x13', field: 'CLK_FREQ', value: 'Maximum Efficiency / Deadline Driven' },
+    { addr: '0x2A', field: 'LOCATION', value: 'India (UTC+5:30) — the answer, apparently' },
   ],
   devices: [
     { id: 'dev0', label: 'github', addr: 'github.com/ayushilathiya', href: 'https://github.com/ayushilathiya' },

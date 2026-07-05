@@ -35,7 +35,7 @@ export default function SkillMesh({ compact = false }: { compact?: boolean }) {
           </p>
         )}
         {compact && (
-          <p className="font-mono text-[10px] text-text-muted mb-3 pb-2 border-b border-border-strong relative z-10">
+          <p className="font-mono text-[10px] text-text-muted mb-3 relative z-10">
             gpio map · {skills.length} pins mapped
           </p>
         )}
