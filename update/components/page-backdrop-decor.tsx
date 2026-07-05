@@ -10,7 +10,7 @@ export default function PageBackdropDecor() {
       aria-hidden="true"
     >
       <line
-        className="trace-pulse"
+        className="trace-pulse trace-flow"
         x1="0"
         y1="140"
         x2="320"
@@ -19,7 +19,7 @@ export default function PageBackdropDecor() {
         strokeWidth="0.75"
       />
       <line
-        className="trace-pulse trace-pulse-delay-1"
+        className="trace-pulse trace-flow trace-pulse-delay-1"
         x1="1120"
         y1="760"
         x2="1440"
@@ -28,21 +28,21 @@ export default function PageBackdropDecor() {
         strokeWidth="0.75"
       />
       <path
-        className="trace-pulse trace-pulse-delay-2"
+        className="trace-pulse trace-flow trace-pulse-delay-2"
         d="M 180 48 L 180 168 L 300 168"
         fill="none"
         stroke="var(--accent-amber)"
         strokeWidth="0.6"
       />
       <path
-        className="trace-pulse trace-pulse-delay-3"
+        className="trace-pulse trace-flow trace-pulse-delay-3"
         d="M 1260 852 L 1260 732 L 1140 732"
         fill="none"
         stroke="var(--accent-amber)"
         strokeWidth="0.6"
       />
       <line
-        className="trace-pulse trace-pulse-delay-2"
+        className="trace-pulse trace-flow trace-pulse-delay-2"
         x1="60"
         y1="0"
         x2="60"
@@ -51,13 +51,23 @@ export default function PageBackdropDecor() {
         strokeWidth="0.5"
       />
       <line
-        className="trace-pulse trace-pulse-delay-1"
+        className="trace-pulse trace-flow trace-pulse-delay-1"
         x1="1380"
         y1="720"
         x2="1380"
         y2="900"
         stroke="var(--accent-amber)"
         strokeWidth="0.5"
+      />
+      <line
+        className="trace-pulse trace-flow trace-pulse-delay-3"
+        x1="400"
+        y1="880"
+        x2="700"
+        y2="880"
+        stroke="var(--accent-amber)"
+        strokeWidth="0.5"
+        opacity="0.7"
       />
     </svg>
   );

@@ -3,24 +3,25 @@
 import { Github, ExternalLink } from 'lucide-react';
 import { projects, type ProjectStatus } from '@/data/projects';
 import DomainIcon from '@/components/domain-icon';
-import SectionVisual, { DomainAccent } from '@/components/section-visual';
+import SectionVisual from '@/components/section-visual';
 import PathLabel from '@/components/path-label';
+import ModuleDomainMotif from '@/components/module-domain-motif';
 
 const statusLed: Record<ProjectStatus, string> = {
-  live: 'status-led-active',
-  deployed: 'status-led-active',
+  live: 'status-led-live',
+  deployed: 'status-led-deployed',
   active: 'status-led-active',
-  built: 'status-led-dim',
-  archived: 'status-led-dim',
+  built: 'status-led-built',
+  archived: 'status-led-built',
 };
 
-const domainAccentMap = {
-  EMBEDDED: 'embedded',
-  VLSI: 'vlsi',
-  IoT: 'iot',
-  SPACE: 'space',
-  HEALTH: 'health',
-} as const;
+const statusText: Record<ProjectStatus, string> = {
+  live: 'status-text-live',
+  deployed: 'status-text-deployed',
+  active: 'status-text-active',
+  built: 'status-text-built',
+  archived: 'status-text-built',
+};
 
 export default function Projects() {
   return (
@@ -29,18 +30,6 @@ export default function Projects() {
 
       <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative">
         <PathLabel name="modules_index" className="relative z-10 px-0.5" />
-        <DomainAccent domain="embedded" />
-
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none hidden sm:block opacity-25"
-          viewBox="0 0 800 600"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path d="M 380 80 L 420 80 L 420 280 L 380 280" fill="none" stroke="var(--border-strong)" strokeWidth="0.75" />
-          <path d="M 380 320 L 420 320 L 420 520 L 380 520" fill="none" stroke="var(--border-strong)" strokeWidth="0.75" />
-          <path d="M 400 280 L 400 320" fill="none" stroke="var(--border-strong)" strokeWidth="0.5" />
-        </svg>
 
         <div className="grid sm:grid-cols-2 gap-3 relative z-10">
           {projects.map((project) => (
@@ -48,7 +37,7 @@ export default function Projects() {
               key={project.title}
               className="panel-box p-3 md:p-4 group transition-colors duration-200 ease-out relative overflow-hidden"
             >
-              <DomainAccent domain={domainAccentMap[project.domain]} />
+              <ModuleDomainMotif domain={project.domain} />
 
               <div className="flex items-center justify-between mb-2 gap-2 relative z-10">
                 <div className="flex items-center gap-2">
@@ -56,7 +45,9 @@ export default function Projects() {
                     className={`status-led ${statusLed[project.status]}`}
                     aria-label={project.statusLabel}
                   />
-                  <span className="font-mono text-[10px] tracking-wide lowercase text-text-muted">
+                  <span
+                    className={`font-mono text-[10px] tracking-wide lowercase ${statusText[project.status]}`}
+                  >
                     {project.statusLabel.toLowerCase()}
                   </span>
                 </div>

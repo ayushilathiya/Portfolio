@@ -59,10 +59,10 @@ export default function Contact() {
 
       <div className="flex-1 flex flex-col justify-center max-w-md mx-auto w-full min-h-0 overflow-y-auto panel-inner-scroll">
         <div className="panel-box p-4 md:p-5 relative">
-          <PathLabel name="uart_form" />
+          <PathLabel name="tx" />
           <div className="font-mono text-sm mb-4 -mt-1 pb-3 border-b border-border-strong">
             <span className="text-text-muted">{'>'}</span>
-            <span className="text-text-primary ml-2">connect --with ayushi</span>
+            <span className="text-text-primary ml-2">tx --to ayushi</span>
           </div>
 
           {!isSubmitted ? (
@@ -90,7 +90,7 @@ export default function Contact() {
                 />
               </div>
               <div>
-                <label className="block font-mono text-[11px] text-text-muted mb-1">message</label>
+                <label className="block font-mono text-[11px] text-text-muted mb-1">payload</label>
                 <Textarea
                   name="message"
                   placeholder="your message"
@@ -105,12 +105,12 @@ export default function Contact() {
                 disabled={isSubmitting}
                 className="w-full bg-transparent border border-border-strong text-text-primary hover:border-accent-amber hover:text-accent-amber font-mono text-xs h-9 transition-colors duration-200 ease-out"
               >
-                {isSubmitting ? 'transmitting…' : 'send signal'}
+                {isSubmitting ? 'transmitting…' : 'transmit'}
               </Button>
             </form>
           ) : (
             <div className="text-center space-y-3 py-2 font-mono text-xs">
-              <p className="text-text-primary">signal received</p>
+              <p className="text-text-primary">tx ack received</p>
               <p className="text-text-muted">thank you — i&apos;ll get back to you soon.</p>
               <Button
                 type="button"
