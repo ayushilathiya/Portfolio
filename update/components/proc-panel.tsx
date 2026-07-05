@@ -51,9 +51,9 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
                 <tbody>
                   {profile.registers.map((reg) => (
                     <tr key={reg.addr} className="border-b border-border-strong last:border-0">
-                      <td className="py-1 pr-2 text-accent-amber">{reg.addr}</td>
-                      <td className="py-1 pr-2 text-text-muted">{reg.field}</td>
-                      <td className="py-1 text-text-secondary">{reg.value}</td>
+                      <td className="pr-2 text-accent-amber">{reg.addr}</td>
+                      <td className="pr-2 text-text-muted">{reg.field}</td>
+                      <td className="text-text-secondary">{reg.value}</td>
                     </tr>
                   ))}
                 </tbody>

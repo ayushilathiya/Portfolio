@@ -455,42 +455,48 @@
   }
 
   .proc-whoami-hero h1 {
-    font-size: 1.0625rem;
-    line-height: 1.4;
+    font-size: 1rem;
+    line-height: 1.35;
   }
 
   @media (min-width: 768px) {
     .proc-whoami-hero h1 {
-      font-size: 1.1875rem;
+      font-size: 1.0625rem;
     }
   }
 
   .proc-whoami-hero p {
     font-size: 12px;
-    line-height: 1.55;
-    margin-top: 0.625rem;
+    line-height: 1.45;
+    margin-top: 0.375rem;
   }
 
   @media (min-width: 768px) {
     .proc-whoami-hero p {
-      font-size: 13px;
+      font-size: 12px;
     }
   }
 
   .proc-whoami-stack {
-    min-height: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .proc-whoami-stack > .content-stack-section {
-    padding-top: 0.875rem;
-    padding-bottom: 0.875rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
   @media (min-width: 768px) {
     .proc-whoami-stack > .content-stack-section {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
+      padding-top: 0.5625rem;
+      padding-bottom: 0.5625rem;
     }
+  }
+
+  .proc-whoami-stack .proc-whoami-label {
+    margin-bottom: 0.375rem;
   }
 
   .proc-whoami-stack .proc-register-section {
@@ -498,15 +504,27 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    padding-bottom: 0;
     min-height: 0;
   }
 
   .proc-whoami-stack .proc-port-section {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    padding-top: 0.25rem;
     min-height: 0;
+  }
+
+  @media (min-width: 768px) {
+    .proc-whoami-stack .proc-port-section {
+      padding-top: 0.3125rem;
+    }
+  }
+
+  .proc-whoami-stack .proc-port-section > .flex-wrap {
+    gap: 0.375rem;
   }
 
   .proc-whoami-label {
@@ -519,25 +537,36 @@
     }
   }
 
-  .proc-register-table {
-    font-size: 11px;
+  .proc-whoami-stack .proc-register-table th,
+  .proc-whoami-stack .proc-register-table td {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
   }
 
-  .proc-register-table th,
-  .proc-register-table td {
-    padding-top: 0.4375rem;
-    padding-bottom: 0.4375rem;
+  .proc-whoami-stack .proc-register-table thead th {
+    padding-bottom: 0.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .proc-whoami-stack .proc-register-table th,
+    .proc-whoami-stack .proc-register-table td {
+      padding-top: 0.3125rem;
+      padding-bottom: 0.3125rem;
+    }
+  }
+
+  .proc-whoami-stack .proc-port-card {
+    padding: 0.375rem 0.5rem;
+    min-width: 5.75rem;
+  }
+
+  .proc-register-table {
+    font-size: 11px;
   }
 
   @media (min-width: 768px) {
     .proc-register-table {
       font-size: 12px;
-    }
-
-    .proc-register-table th,
-    .proc-register-table td {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
     }
   }
 
