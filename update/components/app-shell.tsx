@@ -19,8 +19,13 @@ import {
   type SectionId,
   type ProcTabId,
 } from '@/lib/sections';
+import type { HashnodePost } from '@/lib/hashnode';
 
-export default function AppShell() {
+interface AppShellProps {
+  docsPosts: HashnodePost[];
+}
+
+export default function AppShell({ docsPosts }: AppShellProps) {
   const [activeSection, setActiveSection] = useState<SectionId>('proc');
   const [initialProcTab, setInitialProcTab] = useState<ProcTabId>('whoami');
 
@@ -65,7 +70,7 @@ export default function AppShell() {
               <Projects />
             </SectionPanel>
             <SectionPanel isActive={activeSection === 'docs'}>
-              <DocsPanel />
+              <DocsPanel posts={docsPosts} />
             </SectionPanel>
             <SectionPanel isActive={activeSection === 'uart'}>
               <Contact />
