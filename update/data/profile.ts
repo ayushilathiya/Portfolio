@@ -5,7 +5,7 @@ export const profile = {
   intro:
     "I work at the intersection of hardware and software, focused on embedded firmware and VLSI design. I like poking around in IoT and health tech and that's honestly where I'm happiest.",
   registers: [
-    { addr: '0x0B', field: 'BAUD_RATE', value: '115200 bps (fast learner)' },
+    { addr: '0x0B', field: 'BAUD_RATE', value: '115200 bps (fast, basically.)' },
     { addr: '0x13', field: 'CLK_FREQ', value: 'Deadline Driven + Maximum Efficiency' },
     { addr: '0x2A', field: 'LOCATION', value: 'India (UTC+5:30); the answer, apparently(42, get it?)' },
   ],
