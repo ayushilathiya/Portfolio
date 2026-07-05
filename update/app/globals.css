@@ -552,13 +552,63 @@
   }
 
   .proc-register-table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
     font-size: 11px;
+  }
+
+  .proc-register-col-addr {
+    width: 3rem;
+  }
+
+  .proc-register-col-field {
+    width: 7.25rem;
+  }
+
+  .proc-register-col-value {
+    width: auto;
+  }
+
+  .proc-register-table th,
+  .proc-register-table td {
+    padding-right: 0.625rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .proc-register-table th:last-child,
+  .proc-register-table td:last-child {
+    padding-right: 0;
+  }
+
+  .proc-register-table th:nth-child(2),
+  .proc-register-table td.proc-register-field {
+    font-size: 11.5px;
   }
 
   @media (min-width: 768px) {
     .proc-register-table {
       font-size: 12px;
     }
+
+    .proc-register-col-addr {
+      width: 3.25rem;
+    }
+
+    .proc-register-col-field {
+      width: 7.75rem;
+    }
+
+    .proc-register-table th:nth-child(2),
+    .proc-register-table td.proc-register-field {
+      font-size: 12.5px;
+    }
+  }
+
+  .proc-register-table td:nth-child(3) {
+    white-space: normal;
+    word-break: break-word;
   }
 
   .compact-port-link {

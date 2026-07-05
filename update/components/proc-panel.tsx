@@ -41,18 +41,23 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
             <div className="content-stack-section proc-register-section relative">
               <PathLabel name="register_map" className="mb-2 proc-whoami-label" />
               <table className="w-full font-mono proc-register-table">
+                <colgroup>
+                  <col className="proc-register-col-addr" />
+                  <col className="proc-register-col-field" />
+                  <col className="proc-register-col-value" />
+                </colgroup>
                 <thead>
                   <tr className="text-text-muted text-left border-b border-border-strong">
-                    <th className="pb-1 pr-2 font-normal">ADDR</th>
-                    <th className="pb-1 pr-2 font-normal">FIELD</th>
+                    <th className="pb-1 font-normal">ADDR</th>
+                    <th className="pb-1 font-normal">FIELD</th>
                     <th className="pb-1 font-normal">VALUE</th>
                   </tr>
                 </thead>
                 <tbody>
                   {profile.registers.map((reg) => (
                     <tr key={reg.addr} className="border-b border-border-strong last:border-0">
-                      <td className="pr-2 text-accent-amber">{reg.addr}</td>
-                      <td className="pr-2 text-text-muted">{reg.field}</td>
+                      <td className="text-accent-amber">{reg.addr}</td>
+                      <td className="text-text-muted proc-register-field">{reg.field}</td>
                       <td className="text-text-secondary">{reg.value}</td>
                     </tr>
                   ))}
