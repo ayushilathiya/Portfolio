@@ -30,14 +30,16 @@ export default function Contact() {
     }
 
     try {
-      const response = await fetch(
-        `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_KEY}`,
-        {
-          method: 'POST',
-          body: formData,
-          headers: { Accept: 'application/json' },
-        }
-      );
+      const formspreeKey = process.env.NEXT_PUBLIC_FORMSPREE_KEY;
+      if (!formspreeKey) {
+        throw new Error('Formspree key not configured');
+      }
+
+      const response = await fetch(`https://formspree.io/f/${formspreeKey}`, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      });
 
       if (response.ok) {
         setIsSubmitted(true);
@@ -67,6 +69,7 @@ export default function Contact() {
 
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} className="space-y-3">
+              <input type="hidden" name="_subject" value="Portfolio contact — portfolio.sys /tx" />
               <div>
                 <label className="block font-mono text-[11px] text-text-muted mb-1">name</label>
                 <Input

@@ -5,9 +5,21 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
+const HELP_COMMANDS = [
+  { cmd: '/proc', desc: 'main process panel — profile, education, work, achievements, skills' },
+  { cmd: '/whoami', desc: 'identity, register map, devices & ports' },
+  { cmd: '/bootloader', desc: 'education record & curriculum modules' },
+  { cmd: '/runtime', desc: 'work log & positions of responsibility' },
+  { cmd: '/beacon', desc: 'achievements & project broadcasts' },
+  { cmd: '/dev', desc: 'skill pin map — embedded, vlsi, iot, software' },
+  { cmd: '/modules', desc: 'project module index' },
+  { cmd: '/docs', desc: 'local blog man pages (hashnode posts)' },
+  { cmd: '/uart', desc: 'contact transmit form (/tx)' },
+  { cmd: '/tx', desc: 'send a message via formspree uplink' },
+  { cmd: 'help', desc: 'this reference — navigation & fault reporting' },
+];
+
 const HELP_LINES = [
-  { type: 'tip', text: '/proc sidebar: /whoami → /bootloader → /runtime → /beacon → /dev. idle box stays lit at the bottom.' },
-  { type: 'tip', text: 'top nav: /modules (projects), /docs (hashnode man pages), /uart (/tx only — links live in /proc devicesandports)' },
   { type: 'joke', text: 'ECG looks fine. SpO₂: 98%. caffeine register: underflow detected. please refill.' },
   { type: 'joke', text: 'if your car only turns left, you probably forgot to release the gesture mutex. classic ESP-NOW.' },
   { type: 'joke', text: 'Houston, the UI is nominal. the bug is in low Earth orbit somewhere between line 42 and pin 42.' },
@@ -122,7 +134,21 @@ SYNOPSIS
 DESCRIPTION`}
                 </pre>
 
+                <div className="space-y-1.5 mb-4">
+                  <p className="text-[10px] text-text-muted uppercase tracking-wide mb-2">commands</p>
+                  {HELP_COMMANDS.map((item) => (
+                    <div
+                      key={item.cmd}
+                      className="flex gap-3 py-1 border-b border-border-strong last:border-0 font-mono text-[11px] leading-snug"
+                    >
+                      <span className="text-accent-amber shrink-0 min-w-[5.5rem]">{item.cmd}</span>
+                      <span className="text-text-secondary">{item.desc}</span>
+                    </div>
+                  ))}
+                </div>
+
                 <div className="space-y-2 mb-4 pl-2 border-l border-border-strong">
+                  <p className="text-[10px] text-text-muted uppercase tracking-wide mb-1 -ml-2 pl-2">notes</p>
                   {HELP_LINES.map((line, i) => (
                     <p key={i} className="text-text-secondary leading-relaxed">
                       <span className="text-text-muted mr-2">{line.type === 'tip' ? '→' : '~'}</span>

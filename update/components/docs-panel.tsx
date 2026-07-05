@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import SectionVisual from '@/components/section-visual';
 import PathLabel from '@/components/path-label';
 import PostBody from '@/components/post-body';
@@ -12,7 +12,24 @@ interface DocsPanelProps {
 
 export default function DocsPanel({ posts }: DocsPanelProps) {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const selected = posts.find((p) => p.slug === selectedSlug) ?? null;
+
+  const scrollToTop = useCallback(() => {
+    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  const goBackToIndex = useCallback(() => {
+    setSelectedSlug(null);
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setShowScrollTop(el.scrollTop > 120);
+  }, []);
 
   if (selected) {
     const dateLabel = formatPostDate(selected.publishedAt);
@@ -21,14 +38,29 @@ export default function DocsPanel({ posts }: DocsPanelProps) {
       <div className="panel-content relative">
         <SectionVisual tab="docs" />
 
-        <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10">
-          <button
-            type="button"
-            onClick={() => setSelectedSlug(null)}
-            className="font-mono text-xs text-text-muted hover:text-accent-amber mb-3 transition-colors duration-200 ease-out shrink-0"
-          >
-            {'< /docsindex'}
-          </button>
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10"
+        >
+          <div className="docs-reader-nav sticky top-0 z-20 flex items-center justify-between gap-2 mb-3 py-1.5 bg-panel/95 backdrop-blur-sm border-b border-border-strong">
+            <button
+              type="button"
+              onClick={goBackToIndex}
+              className="font-mono text-xs text-text-muted hover:text-accent-amber transition-colors duration-200 ease-out shrink-0"
+            >
+              {'< /docsindex'}
+            </button>
+            {showScrollTop && (
+              <button
+                type="button"
+                onClick={scrollToTop}
+                className="font-mono text-xs text-text-muted hover:text-accent-amber transition-colors duration-200 ease-out shrink-0"
+              >
+                ↑ top
+              </button>
+            )}
+          </div>
 
           <div className="panel-box p-4 md:p-5 font-mono text-xs">
             <PathLabel name={selected.slug.replace(/-/g, '_')} />
