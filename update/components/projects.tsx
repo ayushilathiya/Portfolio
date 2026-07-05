@@ -35,11 +35,11 @@ export default function Projects() {
           {projects.map((project) => (
             <div
               key={project.title}
-              className="panel-box p-3 md:p-4 group transition-colors duration-200 ease-out relative overflow-hidden"
+              className="panel-box p-3 md:p-4 group transition-colors duration-200 ease-out relative overflow-hidden min-h-[140px]"
             >
               <ModuleDomainMotif domain={project.domain} />
 
-              <div className="flex items-center justify-between mb-2 gap-2 relative z-10">
+              <div className="flex items-center justify-between mb-2 gap-2 relative z-[2]">
                 <div className="flex items-center gap-2">
                   <div
                     className={`status-led ${statusLed[project.status]}`}
@@ -57,14 +57,14 @@ export default function Projects() {
                 </span>
               </div>
 
-              <h3 className="font-mono text-sm text-text-primary mb-1 group-hover:text-accent-amber transition-colors duration-200 ease-out relative z-10">
+              <h3 className="font-mono text-sm text-text-primary mb-1 group-hover:text-accent-amber transition-colors duration-200 ease-out relative z-[2]">
                 {project.title}
               </h3>
-              <p className="font-mono text-[11px] text-text-muted leading-relaxed mb-2 line-clamp-3 relative z-10">
+              <p className="font-mono text-[11px] text-text-muted leading-relaxed mb-2 line-clamp-3 relative z-[2]">
                 {project.description}
               </p>
 
-              <div className="flex flex-wrap gap-1 mb-2 relative z-10">
+              <div className="flex flex-wrap gap-1 mb-2 relative z-[2]">
                 {project.tech.slice(0, 4).map((tech) => (
                   <span key={tech} className="mesh-node text-[10px]">
                     {tech}
@@ -73,7 +73,7 @@ export default function Projects() {
               </div>
 
               {project.links && (
-                <div className="flex gap-2 relative z-10">
+                <div className="flex gap-2 relative z-[2]">
                   {project.links.map((link) => (
                     <a
                       key={link.type}

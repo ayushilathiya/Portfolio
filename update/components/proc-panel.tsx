@@ -19,12 +19,14 @@ interface ProcPanelProps {
 
 function WhoamiHero() {
   return (
-    <div className="content-stack-section proc-whoami-hero py-4 px-4 md:py-5 md:px-5 relative overflow-hidden">
+    <div className="content-stack-section proc-whoami-hero shrink-0 py-4 px-4 md:py-5 md:px-5 relative">
       <SectionVisual tab="whoami" />
-      <h1 className="text-text-primary text-xl md:text-2xl lg:text-[1.65rem] font-medium leading-snug">
+      <h1 className="text-text-primary text-xl md:text-2xl lg:text-[1.65rem] font-medium leading-snug relative z-10">
         Hi, I&apos;m <span className="text-accent-amber">{profile.name}</span>
       </h1>
-      <p className="text-text-primary text-sm md:text-base lg:text-lg mt-2 leading-relaxed">{profile.intro}</p>
+      <p className="text-text-primary text-sm md:text-base lg:text-lg mt-2 leading-relaxed relative z-10">
+        {profile.intro}
+      </p>
     </div>
   );
 }
@@ -39,24 +41,24 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
     switch (activeTab) {
       case 'whoami':
         return (
-          <div className="content-stack h-full flex flex-col">
+          <div className="content-stack h-full flex flex-col min-h-0">
             <WhoamiHero />
-            <div className="content-stack-section proc-register-section py-3 px-4 md:py-4 md:px-5 relative flex-1">
-              <PathLabel name="register_map" className="mb-2.5 text-sm" />
-              <table className="w-full font-mono text-xs md:text-sm">
+            <div className="content-stack-section proc-register-section shrink-0 py-2 px-4 md:px-5 relative">
+              <PathLabel name="register_map" className="mb-1.5 text-xs" />
+              <table className="w-full font-mono text-[10px] md:text-[11px]">
                 <thead>
                   <tr className="text-text-muted text-left border-b border-border-strong">
-                    <th className="pb-2 pr-3 font-normal">ADDR</th>
-                    <th className="pb-2 pr-3 font-normal">FIELD</th>
-                    <th className="pb-2 font-normal">VALUE</th>
+                    <th className="pb-1 pr-2 font-normal">ADDR</th>
+                    <th className="pb-1 pr-2 font-normal">FIELD</th>
+                    <th className="pb-1 font-normal">VALUE</th>
                   </tr>
                 </thead>
                 <tbody>
                   {profile.registers.map((reg) => (
                     <tr key={reg.addr} className="border-b border-border-strong last:border-0">
-                      <td className="py-1.5 pr-3 text-accent-amber">{reg.addr}</td>
-                      <td className="py-1.5 pr-3 text-text-muted">{reg.field}</td>
-                      <td className="py-1.5 text-text-secondary">{reg.value}</td>
+                      <td className="py-0.5 pr-2 text-accent-amber">{reg.addr}</td>
+                      <td className="py-0.5 pr-2 text-text-muted">{reg.field}</td>
+                      <td className="py-0.5 text-text-secondary">{reg.value}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -151,8 +153,8 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
                 aria-selected={activeTab === tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'shrink-0 text-left px-3 py-1.5 md:py-1 font-mono text-[10px] leading-tight transition-all duration-200 ease-out',
-                  'border-b-2 md:border-b-0 md:border-l-2',
+                  'shrink-0 text-left px-3 py-2 md:py-2.5 font-mono text-xs md:text-sm leading-snug transition-all duration-200 ease-out',
+                  'border-b-2 md:border-b-0 md:border-l-2 md:flex-1 md:flex md:items-center',
                   activeTab === tab.id
                     ? 'border-accent-amber text-text-primary'
                     : 'border-transparent text-text-muted hover:text-text-secondary'

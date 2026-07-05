@@ -281,15 +281,15 @@
 
   @media (min-width: 768px) {
     .proc-nav {
-      flex: 0 0 60%;
+      flex: 0 0 40%;
       min-height: 0;
       overflow: hidden;
     }
 
     .idle-sidebar-slot {
-      flex: 0 0 40%;
+      flex: 0 0 60%;
       min-height: 0;
-      max-height: 40%;
+      max-height: 60%;
     }
   }
 
@@ -360,8 +360,8 @@
   .proc-status-bar {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    height: 22px;
+    gap: 0.625rem;
+    height: 26px;
     flex-shrink: 0;
     padding: 0 0.625rem;
     border-top: 1px solid var(--border-strong);
@@ -369,16 +369,42 @@
     font-family: var(--font-jetbrains), monospace;
     font-size: 10px;
     overflow: hidden;
-    white-space: nowrap;
   }
 
-  .proc-status-led {
-    display: inline-block;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
+  .proc-status-text {
     flex-shrink: 0;
-    background: currentColor;
+    min-width: 8.5rem;
+    white-space: nowrap;
+    transition: color 0.2s ease-out;
+  }
+
+  .proc-progress-track {
+    flex: 1;
+    height: 4px;
+    min-width: 0;
+    background: var(--bg-base);
+    border: 1px solid var(--border-strong);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .proc-progress-fill {
+    height: 100%;
+    min-width: 2px;
+    border-radius: 1px;
+    transition: background-color 0.2s ease-out;
+  }
+
+  .proc-progress-fill-neutral {
+    background: var(--text-secondary);
+  }
+
+  .proc-progress-fill-amber {
+    background: var(--accent-amber);
+  }
+
+  .proc-progress-fill-green {
+    background: var(--status-verified);
   }
 
   .proc-status-neutral {
@@ -391,6 +417,10 @@
 
   .proc-status-green {
     color: var(--status-verified);
+  }
+
+  .proc-whoami-hero {
+    overflow: visible;
   }
 
   .compact-port-link {
@@ -418,15 +448,11 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 64px;
-    height: 48px;
-    opacity: 0.5;
-    z-index: 0;
-  }
-
-  .module-domain-motif-bl {
-    top: auto;
     bottom: 0;
+    width: min(48%, 150px);
+    height: 100%;
+    opacity: 0.72;
+    z-index: 1;
   }
 
   .status-led-live {

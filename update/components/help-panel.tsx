@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 const HELP_LINES = [
   { type: 'tip', text: '/proc sidebar: whoami → bootloader → runtime → beacon → /dev. idle box stays lit at the bottom.' },
-  { type: 'tip', text: 'top nav: /modules (projects), /docs (hashnode man pages), /uart (/tx only — links live in /proc port_map)' },
+  { type: 'tip', text: 'top nav: /modules (projects), /docs (hashnode man pages), /uart (/tx only — links live in /proc devicesandports)' },
   { type: 'joke', text: 'ECG looks fine. SpO₂: 98%. caffeine register: underflow detected. please refill.' },
   { type: 'joke', text: 'if your car only turns left, you probably forgot to release the gesture mutex. classic ESP-NOW.' },
   { type: 'joke', text: 'Houston, the UI is nominal. the bug is in low Earth orbit somewhere between line 42 and pin 42.' },

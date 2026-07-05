@@ -14,7 +14,7 @@ const portLinks = [
 export default function CompactPortLinks() {
   return (
     <div className="content-stack-section proc-port-section py-3 px-4 md:py-4 md:px-5">
-      <PathLabel name="port_map" className="mb-3 text-sm" />
+      <PathLabel name="devicesandports" className="mb-3 text-sm" />
       <div className="flex flex-wrap gap-2">
         {portLinks.map((link) => (
           <a
