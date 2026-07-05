@@ -33,6 +33,6 @@ export const education: EducationRecord[] = [
     period: '2021–2022',
     location: 'Ahmedabad, Gujarat, India',
     skills: ['Physics', 'Chemistry', 'Mathematics', 'Computer Science'],
-    modulesLabel: 'Installed Modules',
+    modulesLabel: 'Subject Modules',
   },
 ];

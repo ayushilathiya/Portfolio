@@ -3,7 +3,6 @@
 import { Github, ExternalLink } from 'lucide-react';
 import { projects, type ProjectStatus } from '@/data/projects';
 import DomainIcon from '@/components/domain-icon';
-import SectionVisual from '@/components/section-visual';
 import PathLabel from '@/components/path-label';
 import ModuleDomainMotif from '@/components/module-domain-motif';
 
@@ -26,12 +25,10 @@ const statusText: Record<ProjectStatus, string> = {
 export default function Projects() {
   return (
     <div className="panel-content relative">
-      <SectionVisual tab="modules" />
-
       <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative">
         <PathLabel name="modules_index" className="relative z-10 px-0.5 mb-3" />
 
-        <div className="grid sm:grid-cols-2 gap-3 relative z-10">
+        <div className="modules-grid relative z-10">
           {projects.map((project) => (
             <article
               key={project.title}
@@ -60,10 +57,10 @@ export default function Projects() {
                   </span>
                 </div>
 
-                <h3 className="font-mono text-xs text-text-primary mb-1.5 group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
+                <h3 className="font-mono text-xs md:text-[13px] text-text-primary mb-2 group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
                   {project.title}
                 </h3>
-                <p className="font-mono text-[10px] md:text-[11px] text-text-muted leading-relaxed mb-2 line-clamp-3">
+                <p className="font-mono text-[11px] text-text-muted leading-relaxed mb-3 line-clamp-4">
                   {project.description}
                 </p>
 
@@ -76,7 +73,7 @@ export default function Projects() {
                 </div>
 
                 {project.links && (
-                  <div className="flex gap-3 pt-1 border-t border-border-strong">
+                  <div className="flex gap-3 pt-2 border-t border-border-strong">
                     {project.links.map((link) => (
                       <a
                         key={link.type}

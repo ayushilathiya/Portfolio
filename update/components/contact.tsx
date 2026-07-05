@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import SectionVisual from '@/components/section-visual';
 import PathLabel from '@/components/path-label';
 import { submitToFormspree } from '@/lib/formspree';
 
@@ -49,8 +48,6 @@ export default function Contact() {
 
   return (
     <div className="panel-content uart-panel relative">
-      <SectionVisual tab="uart" />
-
       <div className="uart-panel-inner">
         <div className="panel-box uart-form-box p-3 relative">
           <PathLabel name="tx" />

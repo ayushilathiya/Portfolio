@@ -2,7 +2,6 @@
 
 import { skills, type SkillDomain } from '@/data/skills';
 import PathLabel from '@/components/path-label';
-import SectionVisual from '@/components/section-visual';
 
 const domainOrder: SkillDomain[] = ['embedded', 'vlsi', 'iot', 'software'];
 
@@ -28,7 +27,6 @@ export default function SkillMesh({ compact = false }: { compact?: boolean }) {
           : 'relative panel p-4 min-h-[200px]'
       }
     >
-      <SectionVisual tab="dev" />
       <div className={compact ? 'content-stack-section' : ''}>
         <PathLabel name={compact ? 'dev_pin_map' : 'skill_mesh'} className="mb-2 relative z-10" />
         {!compact && (

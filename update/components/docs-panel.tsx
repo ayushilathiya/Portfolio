@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
-import SectionVisual from '@/components/section-visual';
 import PathLabel from '@/components/path-label';
 import PostBody from '@/components/post-body';
 import { formatPostDate, summaryToPost, type HashnodePost, type HashnodePostSummary } from '@/lib/hashnode';
@@ -93,8 +92,6 @@ export default function DocsPanel() {
 
     return (
       <div className="panel-content relative">
-        <SectionVisual tab="docs" />
-
         <div
           ref={scrollRef}
           onScroll={handleScroll}
@@ -142,8 +139,6 @@ export default function DocsPanel() {
 
   return (
     <div className="panel-content relative">
-      <SectionVisual tab="docs" />
-
       <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative z-10 docs-index-scroll">
         <div className="panel-box docs-index-panel p-3 font-mono text-[11px]">
           <PathLabel name="docs_index" />

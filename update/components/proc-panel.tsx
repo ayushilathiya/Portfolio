@@ -10,7 +10,6 @@ import IdleBlock from '@/components/idle-block';
 import PathLabel from '@/components/path-label';
 import CompactPortLinks from '@/components/compact-port-links';
 import ProcStatusBar from '@/components/proc-status-bar';
-import SectionVisual, { DomainAccent } from '@/components/section-visual';
 import { cn } from '@/lib/utils';
 
 interface ProcPanelProps {
@@ -20,7 +19,6 @@ interface ProcPanelProps {
 function WhoamiHero() {
   return (
     <div className="content-stack-section proc-whoami-hero shrink-0 relative">
-      <SectionVisual tab="whoami" />
       <h1 className="text-text-primary font-medium relative z-10">
         Hi, I&apos;m <span className="text-accent-amber">{profile.name}</span>
       </h1>
@@ -68,7 +66,6 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
       case 'bootloader':
         return (
           <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll">
-            <DomainAccent domain="vlsi" />
             <div className="content-stack-section border-b border-border-strong">
               <PathLabel name="education_record" className="mb-2" />
               <p className="font-mono text-[10px] text-text-muted mb-3 pb-2 border-b border-border-strong">
@@ -115,7 +112,6 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
       case 'runtime':
         return (
           <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll">
-            <DomainAccent domain="embedded" />
             <div className="content-stack-section border-b border-border-strong">
               <PathLabel name="work_log" className="mb-2" />
               <p className="font-mono text-[10px] text-text-muted">
@@ -153,7 +149,6 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
       case 'beacon':
         return (
           <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll relative">
-            <DomainAccent domain="space" />
             <div className="content-stack-section border-b border-border-strong">
               <PathLabel name="beacon_tx" className="mb-2" />
               <p className="font-mono text-[10px] text-text-muted">
@@ -209,7 +204,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
   return (
     <div className="panel-content proc-layout proc-no-scroll">
       <div className="proc-layout-grid flex-1 min-h-0">
-        <aside className="proc-sidebar">
+        <aside className="proc-sidebar flex flex-col min-h-0 h-full">
           <nav
             className="proc-nav flex md:flex-col gap-0 overflow-x-auto md:overflow-visible scrollbar-hide shrink-0"
             role="tablist"
@@ -237,7 +232,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
 
           <div className="hidden md:block w-full border-t border-border-strong shrink-0" aria-hidden="true" />
 
-          <div className="hidden md:flex idle-sidebar-slot">
+          <div className="hidden md:flex idle-sidebar-slot flex-1 min-h-0">
             <IdleBlock />
           </div>
         </aside>
