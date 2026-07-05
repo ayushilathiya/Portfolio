@@ -6,17 +6,16 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 const HELP_COMMANDS = [
-  { cmd: '/proc', desc: 'main process panel — profile, education, work, achievements, skills' },
-  { cmd: '/whoami', desc: 'identity, register map, devices & ports' },
+  { cmd: '/proc', desc: 'main process page: profile, education, work, contributions, skills' },
+  { cmd: '/whoami', desc: 'would love to know actually, who even am I?' },
   { cmd: '/bootloader', desc: 'education record & curriculum modules' },
-  { cmd: '/runtime', desc: 'work log & positions of responsibility' },
-  { cmd: '/beacon', desc: 'achievements & project broadcasts' },
-  { cmd: '/dev', desc: 'skill pin map — embedded, vlsi, iot, software' },
-  { cmd: '/modules', desc: 'project module index' },
-  { cmd: '/docs', desc: 'local blog man pages (hashnode posts)' },
-  { cmd: '/uart', desc: 'contact transmit form (/tx)' },
-  { cmd: '/tx', desc: 'send a message via formspree uplink' },
-  { cmd: 'help', desc: 'this reference — navigation & fault reporting' },
+  { cmd: '/runtime', desc: 'work log and roles held' },
+  { cmd: '/beacon', desc: 'achievements and roles held' },
+  { cmd: '/dev', desc: 'skill pin map across embedded, vlsi, iot, software' },
+  { cmd: '/modules', desc: 'project modules (more to come hopefully)' },
+  { cmd: '/docs', desc: 'blogs I (claude, mostly) wrote for my projects (hashnode posts)' },
+  { cmd: '/uart', desc: 'csend a message via formspree uplink (contact me)' },
+  { cmd: 'help', desc: 'you found it already, so.' },
 ];
 
 const FAULT_CONFIRMATION =

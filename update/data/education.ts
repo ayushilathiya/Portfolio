@@ -30,6 +30,7 @@ export const education: EducationRecord[] = [
   {
     institution: 'The H. B. Kapadia New High School',
     degree: 'Higher Secondary Education (XII) — Science',
+    website: 'https://www.hbkapadiaschool.com/',
     period: '2021–2022',
     location: 'Ahmedabad, Gujarat, India',
     skills: ['Physics', 'Chemistry', 'Mathematics', 'Computer Science'],
