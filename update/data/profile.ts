@@ -3,10 +3,10 @@ export const profile = {
   roleTag: 'embedded / vlsi / iot',
   title: 'Electronics & Communication Engineer',
   intro:
-    'Building at the intersection of hardware and software — embedded firmware, VLSI design, IoT systems, and health tech.',
+    "I work at the intersection of hardware and software, focused on embedded firmware and VLSI design. I like poking around in IoT and health tech too, and that's honestly where I'm happiest.",
   registers: [
     { addr: '0x0B', field: 'BAUD_RATE', value: '115200 bps (fast learner)' },
-    { addr: '0x13', field: 'CLK_FREQ', value: 'Maximum Efficiency / Deadline Driven' },
+    { addr: '0x13', field: 'CLK_FREQ', value: 'Deadline Driven' },
     { addr: '0x2A', field: 'LOCATION', value: 'India (UTC+5:30) — the answer, apparently' },
   ],
   devices: [

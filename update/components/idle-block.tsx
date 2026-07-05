@@ -1,7 +1,6 @@
 'use client';
 
 import { idleEntries, type IdleEntry } from '@/data/idle';
-import PathLabel from '@/components/path-label';
 
 function IdleIcon({ type }: { type: IdleEntry['icon'] }) {
   const props = {
@@ -56,7 +55,7 @@ export default function IdleBlock() {
   return (
     <div className="idle-panel font-mono text-[10px] md:text-[11px]">
       <div className="idle-panel-header shrink-0">
-        <PathLabel name="idle" className="mb-0" />
+        <p className="path-label mb-0">~idle</p>
       </div>
       <div className="idle-scroll-visible">
         <div className="space-y-2 pb-1">
