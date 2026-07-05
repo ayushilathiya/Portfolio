@@ -5,6 +5,7 @@ import { procTabs, type ProcTabId } from '@/lib/sections';
 import { profile } from '@/data/profile';
 import { education } from '@/data/education';
 import { experienceEntries } from '@/data/experience';
+import { responsibilities } from '@/data/responsibilities';
 import SkillMesh from '@/components/skill-mesh';
 import IdleBlock from '@/components/idle-block';
 import PathLabel from '@/components/path-label';
@@ -36,6 +37,8 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
 
   const workEntries = experienceEntries.filter((e) => e.type === 'work');
   const achievementEntries = experienceEntries.filter((e) => e.type === 'project');
+  const respTitles = new Set(responsibilities.map((r) => r.title));
+  const uniqueWorkEntries = workEntries.filter((e) => !respTitles.has(e.title));
 
   const renderContent = useCallback(() => {
     switch (activeTab) {
@@ -70,20 +73,36 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
 
       case 'bootloader':
         return (
-          <div className="content-stack h-full overflow-hidden">
+          <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll">
             <DomainAccent domain="vlsi" />
+            <div className="content-stack-section py-3 px-4 md:px-5 border-b border-border-strong">
+              <PathLabel name="education_record" className="mb-2" />
+              <p className="font-mono text-[10px] text-text-muted mb-3 pb-2 border-b border-border-strong">
+                firmware image · curriculum map
+              </p>
+            </div>
             {education.map((edu) => (
-              <div key={edu.institution} className="content-stack-section py-2 px-3">
-                <a
-                  href={edu.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-xs text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out line-clamp-1"
-                >
-                  {edu.institution}
-                </a>
-                <p className="font-mono text-[10px] text-text-secondary mt-0.5 line-clamp-1">{edu.degree}</p>
-                <p className="font-mono text-[10px] text-text-muted">{edu.period}</p>
+              <div key={edu.institution} className="content-stack-section py-3 px-4 md:px-5">
+                <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+                  <a
+                    href={edu.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out"
+                  >
+                    {edu.institution}
+                  </a>
+                  <span className="font-mono text-[10px] text-text-muted shrink-0">{edu.period}</span>
+                </div>
+                <p className="font-mono text-xs text-text-secondary mb-3">{edu.degree}</p>
+                <p className="font-mono text-[10px] text-text-muted mb-2 uppercase tracking-wide">course modules</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {edu.skills.map((skill) => (
+                    <span key={skill} className="proc-field-pill">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
@@ -91,18 +110,61 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
 
       case 'runtime':
         return (
-          <div className="content-stack h-full overflow-hidden">
+          <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll">
             <DomainAccent domain="embedded" />
-            <div className="content-stack-section py-1.5 px-3">
-              <PathLabel name="work_log" className="mb-0" />
+            <div className="content-stack-section py-3 px-4 md:px-5 border-b border-border-strong">
+              <PathLabel name="work_log" className="mb-2" />
+              <p className="font-mono text-[10px] text-text-muted">
+                tail -f /var/log/work.log · {uniqueWorkEntries.length + responsibilities.length} entries
+              </p>
             </div>
-            {workEntries.map((entry) => (
-              <div key={entry.title} className="content-stack-section py-1.5 px-3 log-line">
-                <div className="flex flex-wrap gap-x-2 text-[10px]">
-                  <span className="text-text-muted">[{entry.timestamp}]</span>
-                  <span className="text-text-primary line-clamp-1">{entry.title}</span>
+
+            {responsibilities.map((pos) => (
+              <div key={pos.title} className="content-stack-section py-3 px-4 md:px-5 log-line">
+                <div className="flex flex-wrap gap-x-2 gap-y-1 mb-1.5 font-mono text-[10px]">
+                  <span className="text-text-muted">[{pos.period}]</span>
+                  <span className="text-accent-amber">&lt;contrib&gt;</span>
                 </div>
-                <p className="text-text-muted text-[9px] mt-0.5 line-clamp-1">{entry.organization}</p>
+                <a
+                  href={pos.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out block mb-1"
+                >
+                  {pos.title}
+                </a>
+                <p className="font-mono text-[10px] text-text-muted mb-2">{pos.org}</p>
+                <p className="font-mono text-[11px] text-text-secondary leading-relaxed mb-2">{pos.desc}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {pos.skills.map((skill) => (
+                    <span key={skill} className="proc-field-pill">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {uniqueWorkEntries.map((entry) => (
+              <div key={entry.title} className="content-stack-section py-3 px-4 md:px-5 log-line">
+                <div className="flex flex-wrap gap-x-2 gap-y-1 mb-1.5 font-mono text-[10px]">
+                  <span className="text-text-muted">[{entry.timestamp}]</span>
+                  <span className="text-accent-amber">&lt;work&gt;</span>
+                </div>
+                {entry.link ? (
+                  <a
+                    href={entry.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out block mb-1"
+                  >
+                    {entry.title}
+                  </a>
+                ) : (
+                  <p className="font-mono text-sm text-text-primary mb-1">{entry.title}</p>
+                )}
+                <p className="font-mono text-[10px] text-text-muted mb-2">{entry.organization}</p>
+                <p className="font-mono text-[11px] text-text-secondary leading-relaxed">{entry.description}</p>
               </div>
             ))}
           </div>
@@ -110,15 +172,35 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
 
       case 'beacon':
         return (
-          <div className="content-stack h-full overflow-hidden">
+          <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll relative">
             <DomainAccent domain="space" />
-            <div className="content-stack-section py-1.5 px-3">
-              <PathLabel name="beacon_tx" className="mb-0" />
+            <div className="content-stack-section py-3 px-4 md:px-5 border-b border-border-strong">
+              <PathLabel name="beacon_tx" className="mb-2" />
+              <p className="font-mono text-[10px] text-text-muted">
+                signal broadcast · {achievementEntries.length} packets received
+              </p>
             </div>
             {achievementEntries.map((entry) => (
-              <div key={entry.title} className="content-stack-section py-1.5 px-3 log-line">
-                <div className="text-[10px] text-text-primary line-clamp-1">{entry.title}</div>
-                <p className="text-text-muted text-[9px] line-clamp-1">{entry.organization}</p>
+              <div key={entry.title} className="content-stack-section py-3 px-4 md:px-5 log-line">
+                <div className="flex flex-wrap gap-x-2 gap-y-1 mb-1.5 font-mono text-[10px]">
+                  <span className="text-text-muted">[{entry.timestamp}]</span>
+                  <span className="text-accent-amber">rx</span>
+                  <span className="text-text-muted">snr: ok</span>
+                </div>
+                {entry.link ? (
+                  <a
+                    href={entry.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-sm text-text-primary hover:text-accent-amber transition-colors duration-200 ease-out block mb-1"
+                  >
+                    {entry.title}
+                  </a>
+                ) : (
+                  <p className="font-mono text-sm text-text-primary mb-1">{entry.title}</p>
+                )}
+                <p className="font-mono text-[10px] text-text-muted mb-2">{entry.organization}</p>
+                <p className="font-mono text-[11px] text-text-secondary leading-relaxed">{entry.description}</p>
               </div>
             ))}
           </div>
@@ -126,7 +208,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
 
       case 'dev':
         return (
-          <div className="h-full overflow-hidden proc-dev-tab">
+          <div className="h-full min-h-0 overflow-hidden proc-dev-tab">
             <SkillMesh compact />
           </div>
         );
@@ -134,7 +216,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
       default:
         return null;
     }
-  }, [activeTab, workEntries, achievementEntries]);
+  }, [activeTab, uniqueWorkEntries, achievementEntries]);
 
   return (
     <div className="panel-content proc-layout proc-no-scroll">
@@ -153,7 +235,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
                 aria-selected={activeTab === tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'shrink-0 text-left px-3 py-2 md:py-2.5 font-mono text-xs md:text-sm leading-snug transition-all duration-200 ease-out',
+                  'shrink-0 text-left px-3 py-2 md:py-2 font-mono text-[11px] md:text-xs leading-snug transition-all duration-200 ease-out',
                   'border-b-2 md:border-b-0 md:border-l-2 md:flex-1 md:flex md:items-center',
                   activeTab === tab.id
                     ? 'border-accent-amber text-text-primary'

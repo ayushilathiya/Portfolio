@@ -2,44 +2,81 @@
 
 import { skills, type SkillDomain } from '@/data/skills';
 import PathLabel from '@/components/path-label';
+import SectionVisual from '@/components/section-visual';
 
 const domainOrder: SkillDomain[] = ['embedded', 'vlsi', 'iot', 'software'];
+
+const domainPins: Record<SkillDomain, string> = {
+  embedded: 'pin_a0',
+  vlsi: 'pin_b1',
+  iot: 'pin_c2',
+  software: 'pin_d3',
+};
 
 export default function SkillMesh({ compact = false }: { compact?: boolean }) {
   const grouped = domainOrder.map((domain) => ({
     domain,
+    pin: domainPins[domain],
     items: skills.filter((s) => s.domain === domain),
   }));
 
   return (
-    <div className={compact ? 'relative panel p-2 h-full overflow-hidden' : 'relative panel p-4 min-h-[200px]'}>
-      <PathLabel name="skill_mesh" className={compact ? 'mb-1' : undefined} />
+    <div
+      className={
+        compact
+          ? 'relative content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll'
+          : 'relative panel p-4 min-h-[200px]'
+      }
+    >
+      <SectionVisual tab="dev" />
+      <div className={compact ? 'content-stack-section py-3 px-4 md:px-5' : ''}>
+        <PathLabel name={compact ? 'dev_pin_map' : 'skill_mesh'} className="mb-2 relative z-10" />
+        {!compact && (
+          <p className="font-mono text-[10px] text-text-muted mb-4 relative z-10">
+            device skill bus · 4 domains · {skills.length} nodes
+          </p>
+        )}
+        {compact && (
+          <p className="font-mono text-[10px] text-text-muted mb-3 pb-2 border-b border-border-strong relative z-10">
+            gpio map · {skills.length} pins mapped
+          </p>
+        )}
 
-      <div className={`relative z-10 grid ${compact ? 'grid-cols-4 gap-1.5' : 'grid-cols-2 lg:grid-cols-4 gap-4'}`}>
-        {grouped.map(({ domain, items }) => (
-          <div key={domain} className="flex flex-col items-center gap-1">
-            <div className={`mesh-node mesh-node-hub lowercase ${compact ? 'text-[9px] px-1 py-0.5' : ''}`}>
-              {domain}
+        <div
+          className={`relative z-10 grid ${
+            compact ? 'grid-cols-2 lg:grid-cols-4 gap-2' : 'grid-cols-2 lg:grid-cols-4 gap-4'
+          }`}
+        >
+          {grouped.map(({ domain, pin, items }) => (
+            <div
+              key={domain}
+              className={`dev-pin-block border border-border-strong rounded bg-base/50 ${
+                compact ? 'p-2' : 'p-3'
+              }`}
+            >
+              <div className="flex items-center gap-1.5 mb-2 pb-1.5 border-b border-border">
+                <span className="dev-pin-led" aria-hidden="true" />
+                <span className="font-mono text-[9px] text-accent-amber">{pin}</span>
+                <span className="font-mono text-[10px] text-text-primary lowercase ml-auto">{domain}</span>
+              </div>
+              <div className={`flex flex-col ${compact ? 'gap-1' : 'gap-1.5'}`}>
+                {items.map((skill) => (
+                  <a
+                    key={skill.name}
+                    href={skill.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`dev-skill-node font-mono hover:text-accent-amber transition-colors duration-200 ease-out ${
+                      compact ? 'text-[9px]' : 'text-[10px]'
+                    }`}
+                  >
+                    {skill.name}
+                  </a>
+                ))}
+              </div>
             </div>
-            {!compact && <div className="w-px h-3 bg-border-strong" />}
-            <div className={`flex flex-col items-center w-full ${compact ? 'gap-0.5' : 'gap-1.5'}`}>
-              {items.map((skill) => (
-                <a
-                  key={skill.name}
-                  href={skill.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`mesh-node w-full text-center hover:text-accent-amber transition-colors duration-200 ease-out ${
-                    compact ? 'text-[8px] px-1 py-0.5' : ''
-                  }`}
-                >
-                  <span className="mesh-dot" aria-hidden="true" />
-                  {skill.name}
-                </a>
-              ))}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

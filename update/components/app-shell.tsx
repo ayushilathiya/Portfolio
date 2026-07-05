@@ -8,7 +8,6 @@ import ProcPanel from '@/components/proc-panel';
 import Projects from '@/components/projects';
 import DocsPanel from '@/components/docs-panel';
 import Contact from '@/components/contact';
-import HelpPanel from '@/components/help-panel';
 import PageBackdropDecor from '@/components/page-backdrop-decor';
 import WindowTitleBar from '@/components/window-title-bar';
 import {
@@ -76,8 +75,6 @@ export default function AppShell({ docsPosts }: AppShellProps) {
               <Contact />
             </SectionPanel>
           </main>
-
-          <HelpPanel />
         </div>
       </div>
     </div>

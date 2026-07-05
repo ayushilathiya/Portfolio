@@ -8,10 +8,10 @@ export const sections = [
 export type SectionId = (typeof sections)[number]['id'];
 
 export const procTabs = [
-  { id: 'whoami', label: 'whoami' },
-  { id: 'bootloader', label: 'bootloader' },
-  { id: 'runtime', label: 'runtime' },
-  { id: 'beacon', label: 'beacon' },
+  { id: 'whoami', label: '/whoami' },
+  { id: 'bootloader', label: '/bootloader' },
+  { id: 'runtime', label: '/runtime' },
+  { id: 'beacon', label: '/beacon' },
   { id: 'dev', label: '/dev' },
 ] as const;
 

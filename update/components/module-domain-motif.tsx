@@ -5,110 +5,87 @@ import type { ProjectDomain } from '@/data/projects';
 const STROKE = 'var(--border-strong)';
 const FILL = 'var(--text-muted)';
 
-/** Background domain motif — larger, visible accent on every module card */
+/** Domain motif confined to the card's visual strip (right column) */
 export default function ModuleDomainMotif({ domain }: { domain: ProjectDomain }) {
-  const cls = 'module-domain-motif pointer-events-none select-none';
-
   switch (domain) {
     case 'IoT':
       return (
-        <svg className={cls} viewBox="0 0 140 140" aria-hidden="true" preserveAspectRatio="xMaxYMid slice">
-          <circle cx="28" cy="70" r="5" fill={FILL} opacity="0.55" />
-          <circle cx="70" cy="38" r="4.5" fill={FILL} opacity="0.45" />
-          <circle cx="70" cy="102" r="4.5" fill={FILL} opacity="0.45" />
-          <circle cx="108" cy="58" r="5" fill={FILL} opacity="0.55" />
-          <circle cx="108" cy="88" r="4" fill={FILL} opacity="0.4" />
-          <line x1="32" y1="68" x2="66" y2="42" stroke={STROKE} strokeWidth="1.25" opacity="0.7" />
-          <line x1="32" y1="72" x2="66" y2="98" stroke={STROKE} strokeWidth="1.25" opacity="0.7" />
-          <line x1="74" y1="40" x2="104" y2="56" stroke={STROKE} strokeWidth="1.25" opacity="0.7" />
-          <line x1="74" y1="100" x2="104" y2="86" stroke={STROKE} strokeWidth="1.25" opacity="0.7" />
-          <line x1="74" y1="70" x2="104" y2="72" stroke={STROKE} strokeWidth="1" opacity="0.5" strokeDasharray="3 4" />
+        <svg className="module-motif-svg" viewBox="0 0 100 120" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+          <circle cx="22" cy="60" r="4" fill={FILL} opacity="0.6" />
+          <circle cx="50" cy="28" r="3.5" fill={FILL} opacity="0.5" />
+          <circle cx="50" cy="92" r="3.5" fill={FILL} opacity="0.5" />
+          <circle cx="78" cy="44" r="4" fill={FILL} opacity="0.6" />
+          <circle cx="78" cy="76" r="3" fill={FILL} opacity="0.45" />
+          <line x1="25" y1="58" x2="47" y2="30" stroke={STROKE} strokeWidth="1.25" opacity="0.75" />
+          <line x1="25" y1="62" x2="47" y2="90" stroke={STROKE} strokeWidth="1.25" opacity="0.75" />
+          <line x1="53" y1="30" x2="75" y2="46" stroke={STROKE} strokeWidth="1.25" opacity="0.75" />
+          <line x1="53" y1="90" x2="75" y2="74" stroke={STROKE} strokeWidth="1.25" opacity="0.75" />
         </svg>
       );
     case 'EMBEDDED':
       return (
-        <svg className={cls} viewBox="0 0 140 140" aria-hidden="true" preserveAspectRatio="xMaxYMid slice">
+        <svg className="module-motif-svg" viewBox="0 0 100 120" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
           <path
-            d="M8 70 H32 L32 44 H56 L56 96 H80 L80 52 H104 L104 88 H132"
+            d="M6 60 H28 L28 32 H50 L50 88 H72 L72 40 H94"
             fill="none"
             stroke={STROKE}
             strokeWidth="1.5"
-            opacity="0.75"
+            opacity="0.8"
           />
-          <path
-            d="M32 70 V96 M56 44 V70 M80 70 V96"
-            fill="none"
-            stroke={STROKE}
-            strokeWidth="1"
-            opacity="0.45"
-            strokeDasharray="2 3"
-          />
-          <circle cx="32" cy="70" r="3.5" fill={FILL} opacity="0.5" />
-          <circle cx="56" cy="44" r="3" fill={FILL} opacity="0.45" />
-          <circle cx="80" cy="96" r="3.5" fill={FILL} opacity="0.5" />
-          <circle cx="104" cy="52" r="3" fill={FILL} opacity="0.45" />
-          <circle cx="132" cy="88" r="3.5" fill={FILL} opacity="0.5" />
-          <rect x="118" y="62" width="14" height="10" fill="none" stroke={STROKE} strokeWidth="1" opacity="0.55" />
+          <circle cx="28" cy="60" r="2.5" fill={FILL} opacity="0.55" />
+          <circle cx="50" cy="32" r="2" fill={FILL} opacity="0.5" />
+          <circle cx="72" cy="88" r="2.5" fill={FILL} opacity="0.55" />
+          <rect x="80" y="48" width="12" height="24" fill="none" stroke={STROKE} strokeWidth="1" opacity="0.6" rx="1" />
         </svg>
       );
     case 'HEALTH':
       return (
-        <svg className={cls} viewBox="0 0 140 140" aria-hidden="true" preserveAspectRatio="xMaxYMid slice">
+        <svg className="module-motif-svg" viewBox="0 0 100 120" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+          <line x1="0" y1="60" x2="100" y2="60" stroke={STROKE} strokeWidth="0.5" opacity="0.3" strokeDasharray="3 5" />
           <path
-            d="M0 70 H18 L24 70 L30 52 L38 88 L46 58 L52 70 H68 L72 70 L78 38 L86 102 L94 48 L100 70 H116 L120 70 H140"
+            d="M0 60 H14 L20 60 L26 38 L34 82 L42 48 L48 60 H62 L66 60 L72 28 L80 92 L88 42 L94 60 H100"
             fill="none"
             stroke={STROKE}
             strokeWidth="2"
-            opacity="0.8"
+            opacity="0.85"
             strokeLinejoin="round"
             strokeLinecap="round"
           />
-          <path
-            d="M0 70 H18 L24 70 L30 52 L38 88 L46 58 L52 70 H68"
-            fill="none"
-            stroke={FILL}
-            strokeWidth="1.25"
-            opacity="0.35"
-            strokeLinejoin="round"
-          />
-          <line x1="0" y1="70" x2="140" y2="70" stroke={STROKE} strokeWidth="0.75" opacity="0.25" strokeDasharray="4 6" />
         </svg>
       );
     case 'VLSI':
       return (
-        <svg className={cls} viewBox="0 0 140 140" aria-hidden="true" preserveAspectRatio="xMaxYMid slice">
-          <rect x="36" y="36" width="68" height="68" fill="none" stroke={STROKE} strokeWidth="1.5" opacity="0.75" rx="2" />
-          <rect x="48" y="48" width="14" height="14" fill={FILL} opacity="0.35" />
-          <rect x="66" y="48" width="14" height="14" fill={FILL} opacity="0.35" />
-          <rect x="84" y="48" width="14" height="14" fill={FILL} opacity="0.35" />
-          <rect x="48" y="66" width="14" height="14" fill={FILL} opacity="0.3" />
-          <rect x="66" y="66" width="14" height="14" fill={FILL} opacity="0.4" />
-          <rect x="84" y="66" width="14" height="14" fill={FILL} opacity="0.3" />
-          <rect x="48" y="84" width="14" height="14" fill={FILL} opacity="0.35" />
-          <rect x="66" y="84" width="14" height="14" fill={FILL} opacity="0.35" />
-          <rect x="84" y="84" width="14" height="14" fill={FILL} opacity="0.35" />
-          <line x1="36" y1="52" x2="24" y2="52" stroke={STROKE} strokeWidth="1" opacity="0.55" />
-          <line x1="36" y1="70" x2="24" y2="70" stroke={STROKE} strokeWidth="1" opacity="0.55" />
-          <line x1="36" y1="88" x2="24" y2="88" stroke={STROKE} strokeWidth="1" opacity="0.55" />
-          <line x1="104" y1="52" x2="120" y2="52" stroke={STROKE} strokeWidth="1" opacity="0.55" />
-          <line x1="104" y1="88" x2="120" y2="88" stroke={STROKE} strokeWidth="1" opacity="0.55" />
+        <svg className="module-motif-svg" viewBox="0 0 100 120" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+          <rect x="24" y="30" width="52" height="60" fill="none" stroke={STROKE} strokeWidth="1.5" opacity="0.75" rx="2" />
+          <rect x="34" y="42" width="10" height="10" fill={FILL} opacity="0.4" />
+          <rect x="48" y="42" width="10" height="10" fill={FILL} opacity="0.4" />
+          <rect x="62" y="42" width="10" height="10" fill={FILL} opacity="0.4" />
+          <rect x="34" y="56" width="10" height="10" fill={FILL} opacity="0.35" />
+          <rect x="48" y="56" width="10" height="10" fill={FILL} opacity="0.45" />
+          <rect x="62" y="56" width="10" height="10" fill={FILL} opacity="0.35" />
+          <rect x="34" y="70" width="10" height="10" fill={FILL} opacity="0.4" />
+          <rect x="48" y="70" width="10" height="10" fill={FILL} opacity="0.4" />
+          <rect x="62" y="70" width="10" height="10" fill={FILL} opacity="0.4" />
         </svg>
       );
     case 'SPACE':
       return (
-        <svg className={cls} viewBox="0 0 140 140" aria-hidden="true" preserveAspectRatio="xMaxYMid slice">
-          <path
-            d="M12 98 A56 56 0 0 1 128 98"
-            fill="none"
-            stroke={STROKE}
-            strokeWidth="1.5"
-            opacity="0.7"
-            strokeDasharray="4 5"
-          />
-          <ellipse cx="98" cy="58" rx="28" ry="10" fill="none" stroke={STROKE} strokeWidth="1" opacity="0.45" transform="rotate(-24 98 58)" />
-          <circle cx="108" cy="48" r="4" fill={FILL} opacity="0.5" />
-          <circle cx="118" cy="72" r="2.5" fill={FILL} opacity="0.35" />
+        <svg className="module-motif-svg" viewBox="0 0 100 120" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+          <path d="M8 88 A42 42 0 0 1 92 88" fill="none" stroke={STROKE} strokeWidth="1.5" opacity="0.7" strokeDasharray="4 5" />
+          <ellipse cx="68" cy="48" rx="22" ry="8" fill="none" stroke={STROKE} strokeWidth="1" opacity="0.5" transform="rotate(-20 68 48)" />
+          <circle cx="76" cy="40" r="3" fill={FILL} opacity="0.55" />
         </svg>
       );
   }
+}
+
+export function moduleCardTint(domain: ProjectDomain): string {
+  const map: Record<ProjectDomain, string> = {
+    IoT: 'module-card-tint-iot',
+    EMBEDDED: 'module-card-tint-embedded',
+    HEALTH: 'module-card-tint-health',
+    VLSI: 'module-card-tint-vlsi',
+    SPACE: 'module-card-tint-space',
+  };
+  return map[domain];
 }

@@ -4,27 +4,22 @@ import { useState, useEffect, useRef } from 'react';
 
 type Phase = 'compile' | 'upload' | 'done' | 'verify';
 
-const FILL_MS = 5200;
-const EMPTY_MS = 4800;
-const CYCLE_MS = FILL_MS + EMPTY_MS;
+/** Semi-random flickering sequence — not a smooth sweep */
+const JUMP_SEQUENCE = [12, 47, 33, 81, 26, 94, 8, 61, 39, 88, 15, 72, 97, 4, 55, 68, 22, 91, 37, 76];
 
-function getPhase(progress: number, filling: boolean): Phase {
-  if (filling) {
-    if (progress < 18) return 'compile';
-    if (progress >= 99.5) return 'done';
-    return 'upload';
-  }
+function getPhase(pct: number): Phase {
+  if (pct >= 92) return 'done';
+  if (pct >= 25) return 'upload';
+  if (pct < 15) return 'compile';
   return 'verify';
 }
 
-function getLabel(progress: number, filling: boolean): string {
-  const pct = Math.round(progress);
-  if (filling) {
-    if (progress < 18) return 'Compiling sketch...';
-    if (progress >= 99.5) return 'Done uploading.';
-    return `Uploading... ${pct}%`;
-  }
-  return progress > 50 ? `Verifying... ${pct}%` : `Resetting... ${pct}%`;
+function getLabel(pct: number, prevPct: number): string {
+  if (pct >= 92) return 'Done uploading.';
+  if (pct >= 25) return `Uploading... ${pct}%`;
+  if (pct < 15 && prevPct >= 90) return 'Resetting...';
+  if (pct < 25 && prevPct > pct) return `Verifying... ${pct}%`;
+  return 'Compiling sketch...';
 }
 
 const phaseClass: Record<Phase, string> = {
@@ -42,37 +37,30 @@ const fillClass: Record<Phase, string> = {
 };
 
 export default function ProcStatusBar() {
-  const [progress, setProgress] = useState(0);
-  const [filling, setFilling] = useState(true);
-  const startRef = useRef<number | null>(null);
+  const [progress, setProgress] = useState(JUMP_SEQUENCE[0]);
+  const [prevProgress, setPrevProgress] = useState(JUMP_SEQUENCE[0]);
+  const indexRef = useRef(0);
 
   useEffect(() => {
-    let raf = 0;
+    let timer: ReturnType<typeof setTimeout>;
 
-    const tick = (now: number) => {
-      if (startRef.current === null) startRef.current = now;
-      const elapsed = (now - startRef.current) % CYCLE_MS;
-      const isFilling = elapsed < FILL_MS;
-
-      if (isFilling) {
-        const t = elapsed / FILL_MS;
-        setProgress(t * 100);
-        setFilling(true);
-      } else {
-        const t = (elapsed - FILL_MS) / EMPTY_MS;
-        setProgress(100 - t * 100);
-        setFilling(false);
-      }
-
-      raf = requestAnimationFrame(tick);
+    const jump = () => {
+      indexRef.current = (indexRef.current + 1) % JUMP_SEQUENCE.length;
+      const next = JUMP_SEQUENCE[indexRef.current];
+      setProgress((current) => {
+        setPrevProgress(current);
+        return next;
+      });
+      const pause = 380 + Math.floor(Math.random() * 520);
+      timer = setTimeout(jump, pause);
     };
 
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    timer = setTimeout(jump, 600);
+    return () => clearTimeout(timer);
   }, []);
 
-  const phase = getPhase(progress, filling);
-  const label = getLabel(progress, filling);
+  const phase = getPhase(progress);
+  const label = getLabel(progress, prevProgress);
 
   return (
     <div className="proc-status-bar shrink-0" aria-live="off">

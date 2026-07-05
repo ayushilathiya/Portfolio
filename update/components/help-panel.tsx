@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 const HELP_LINES = [
-  { type: 'tip', text: '/proc sidebar: whoami → bootloader → runtime → beacon → /dev. idle box stays lit at the bottom.' },
+  { type: 'tip', text: '/proc sidebar: /whoami → /bootloader → /runtime → /beacon → /dev. idle box stays lit at the bottom.' },
   { type: 'tip', text: 'top nav: /modules (projects), /docs (hashnode man pages), /uart (/tx only — links live in /proc devicesandports)' },
   { type: 'joke', text: 'ECG looks fine. SpO₂: 98%. caffeine register: underflow detected. please refill.' },
   { type: 'joke', text: 'if your car only turns left, you probably forgot to release the gesture mutex. classic ESP-NOW.' },
@@ -16,7 +16,7 @@ const HELP_LINES = [
   { type: 'joke', text: 'health tech tip: this portfolio cannot diagnose arrhythmia. your cardiologist can. probably.' },
 ];
 
-export default function HelpPanel() {
+export default function HelpPanel({ variant = 'floating' }: { variant?: 'floating' | 'titlebar' }) {
   const [open, setOpen] = useState(false);
   const [showBugForm, setShowBugForm] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -71,12 +71,17 @@ export default function HelpPanel() {
     setError('');
   }
 
+  const triggerClass =
+    variant === 'titlebar'
+      ? 'shrink-0 font-mono text-[10px] md:text-[11px] px-2 py-1 border border-border-strong bg-base text-text-muted hover:text-accent-amber hover:border-accent-amber transition-colors duration-200 ease-out rounded-sm'
+      : 'absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-50 font-mono text-xs px-2.5 py-1.5 border border-border-strong bg-panel text-text-muted hover:text-accent-amber hover:border-accent-amber transition-colors duration-200 ease-out rounded-sm';
+
   return (
     <>
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-50 font-mono text-xs px-2.5 py-1.5 border border-border-strong bg-panel text-text-muted hover:text-accent-amber hover:border-accent-amber transition-colors duration-200 ease-out rounded-sm"
+        className={triggerClass}
         aria-label="Open help"
       >
         [?] help
@@ -84,7 +89,7 @@ export default function HelpPanel() {
 
       {open && (
         <div
-          className="absolute inset-0 z-[60] flex items-center justify-center p-4 bg-black/70"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70"
           role="dialog"
           aria-modal="true"
           aria-label="Help"

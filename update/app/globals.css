@@ -392,7 +392,7 @@
     height: 100%;
     min-width: 2px;
     border-radius: 1px;
-    transition: background-color 0.2s ease-out;
+    transition: none;
   }
 
   .proc-progress-fill-neutral {
@@ -444,15 +444,150 @@
     gap: 0.35rem;
   }
 
-  .module-domain-motif {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: min(48%, 150px);
+  .device-port-card {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 0.875rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    background: var(--bg-base);
+    transition: color 0.2s ease-out, border-color 0.2s ease-out;
+  }
+
+  .device-port-card:hover {
+    border-color: var(--accent-amber);
+    color: var(--accent-amber);
+  }
+
+  .proc-field-pill {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 10px;
+    padding: 0.2rem 0.45rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-muted);
+    background: var(--bg-base);
+  }
+
+  .dev-pin-led {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .dev-skill-node {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0;
+    color: var(--text-secondary);
+  }
+
+  .dev-skill-node::before {
+    content: '';
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    flex-shrink: 0;
+  }
+
+  /* Module project cards */
+  .module-card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .module-card-layout {
+    display: grid;
+    grid-template-columns: 1fr minmax(72px, 30%);
+    min-height: 168px;
+  }
+
+  .module-card-body {
+    padding: 0.875rem 1rem;
+    min-width: 0;
+    background: var(--bg-panel);
+  }
+
+  .module-card-visual {
+    position: relative;
+    overflow: hidden;
+    border-left: 1px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .module-motif-svg {
+    width: 100%;
     height: 100%;
-    opacity: 0.72;
-    z-index: 1;
+    min-height: 120px;
+    padding: 0.5rem;
+  }
+
+  .module-card-tint-iot .module-card-visual {
+    background: linear-gradient(160deg, var(--bg-panel) 0%, color-mix(in srgb, var(--accent-amber) 6%, var(--bg-base)) 100%);
+  }
+
+  .module-card-tint-embedded .module-card-visual {
+    background: linear-gradient(160deg, var(--bg-panel) 0%, color-mix(in srgb, var(--text-muted) 8%, var(--bg-base)) 100%);
+  }
+
+  .module-card-tint-health .module-card-visual {
+    background: linear-gradient(160deg, var(--bg-panel) 0%, color-mix(in srgb, var(--text-secondary) 7%, var(--bg-base)) 100%);
+  }
+
+  .module-card-tint-vlsi .module-card-visual {
+    background: linear-gradient(160deg, var(--bg-panel) 0%, color-mix(in srgb, var(--accent-amber) 4%, var(--bg-base)) 100%);
+  }
+
+  .module-card-tint-space .module-card-visual {
+    background: linear-gradient(160deg, var(--bg-panel) 0%, color-mix(in srgb, var(--text-muted) 6%, var(--bg-base)) 100%);
+  }
+
+  .module-domain-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    padding: 0.2rem 0.45rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    color: var(--text-muted);
+    background: var(--bg-base);
+  }
+
+  .module-tech-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 10px;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-secondary);
+    background: var(--bg-base);
+  }
+
+  .module-tech-pill::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    opacity: 0.6;
+    flex-shrink: 0;
   }
 
   .status-led-live {
