@@ -54,7 +54,7 @@ export default function AppShell() {
     return (
       <div className="page-backdrop">
         <div className="device-frame flex items-center justify-center">
-          <p className="font-mono text-sm text-text-muted animate-pulse px-6">
+          <p className="font-mono text-[11px] text-text-muted animate-pulse px-6">
             › [0.0000] booting portfolio.sys…
           </p>
         </div>

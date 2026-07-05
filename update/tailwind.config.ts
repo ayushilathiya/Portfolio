@@ -56,8 +56,8 @@ const config: Config = {
         ring: 'var(--ring)',
       },
       fontFamily: {
-        mono: ['var(--font-jetbrains)', 'IBM Plex Mono', 'monospace'],
-        display: ['var(--font-space)', 'Space Grotesk', 'sans-serif'],
+        mono: ['var(--font-jetbrains)', 'JetBrains Mono', 'Consolas', 'Courier New', 'monospace'],
+        display: ['var(--font-space)', 'Space Grotesk', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         'amber-glow-sm': '0 0 8px color-mix(in srgb, var(--accent-amber) 20%, transparent)',

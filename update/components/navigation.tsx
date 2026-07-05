@@ -23,7 +23,7 @@ export default function Navigation({ active, onSelect }: NavigationProps) {
             aria-selected={active === section.id}
             onClick={() => onSelect(section.id)}
             className={cn(
-              'px-2.5 md:px-3 py-1.5 font-mono text-[11px] md:text-xs transition-all duration-200 ease-out border-b-2 -mb-px',
+              'px-2.5 md:px-3 py-1.5 font-mono text-[11px] transition-all duration-200 ease-out border-b-2 -mb-px',
               active === section.id
                 ? 'border-accent-amber text-text-primary'
                 : 'border-transparent text-text-muted hover:text-text-secondary'

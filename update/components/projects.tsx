@@ -60,10 +60,10 @@ export default function Projects() {
                   </span>
                 </div>
 
-                <h3 className="font-mono text-sm md:text-[15px] text-text-primary mb-2 group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
+                <h3 className="font-mono text-xs text-text-primary mb-1.5 group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
                   {project.title}
                 </h3>
-                <p className="font-mono text-[11px] md:text-xs text-text-muted leading-relaxed mb-3 line-clamp-3">
+                <p className="font-mono text-[10px] md:text-[11px] text-text-muted leading-relaxed mb-2 line-clamp-3">
                   {project.description}
                 </p>
 

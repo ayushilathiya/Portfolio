@@ -48,13 +48,13 @@ export default function Contact() {
   }
 
   return (
-    <div className="panel-content uart-panel relative overflow-visible">
+    <div className="panel-content uart-panel relative">
       <SectionVisual tab="uart" />
 
-      <div className="flex-1 flex items-center justify-center min-h-0 uart-panel-inner">
-        <div className="panel-box uart-form-box p-3 md:p-4 relative w-full max-w-sm mx-auto">
+      <div className="uart-panel-inner">
+        <div className="panel-box uart-form-box p-3 relative">
           <PathLabel name="tx" />
-          <div className="font-mono text-xs mb-3 -mt-1 pb-2 border-b border-border-strong">
+          <div className="font-mono text-[11px] mb-2 -mt-1 pb-2 border-b border-border-strong">
             <span className="text-text-muted">{'>'}</span>
             <span className="text-text-primary ml-2">tx --to ayushi</span>
           </div>

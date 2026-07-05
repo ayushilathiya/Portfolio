@@ -19,12 +19,12 @@ interface ProcPanelProps {
 
 function WhoamiHero() {
   return (
-    <div className="content-stack-section proc-whoami-hero shrink-0 py-4 px-4 md:py-5 md:px-5 relative">
+    <div className="content-stack-section proc-whoami-hero shrink-0 relative">
       <SectionVisual tab="whoami" />
-      <h1 className="text-text-primary text-xl md:text-2xl lg:text-[1.65rem] font-medium leading-snug relative z-10">
+      <h1 className="text-text-primary font-medium relative z-10">
         Hi, I&apos;m <span className="text-accent-amber">{profile.name}</span>
       </h1>
-      <p className="text-white text-sm md:text-base lg:text-lg mt-2 leading-relaxed relative z-10">
+      <p className="text-text-primary mt-1.5 relative z-10">
         {profile.intro}
       </p>
     </div>
@@ -40,7 +40,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
         return (
           <div className="content-stack h-full flex flex-col min-h-0">
             <WhoamiHero />
-            <div className="content-stack-section proc-register-section shrink-0 py-2 px-4 md:px-5 relative">
+            <div className="content-stack-section proc-register-section shrink-0 relative">
               <PathLabel name="register_map" className="mb-1.5 text-xs" />
               <table className="w-full font-mono text-[10px] md:text-[11px]">
                 <thead>
@@ -69,14 +69,14 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
         return (
           <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll">
             <DomainAccent domain="vlsi" />
-            <div className="content-stack-section py-3 px-4 md:px-5 border-b border-border-strong">
+            <div className="content-stack-section border-b border-border-strong">
               <PathLabel name="education_record" className="mb-2" />
               <p className="font-mono text-[10px] text-text-muted mb-3 pb-2 border-b border-border-strong">
                 firmware image · curriculum map
               </p>
             </div>
             {education.map((edu) => (
-              <div key={edu.institution} className="content-stack-section py-3 px-4 md:px-5">
+              <div key={edu.institution} className="content-stack-section">
                 <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
                   {edu.website ? (
                     <a
@@ -116,7 +116,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
         return (
           <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll">
             <DomainAccent domain="embedded" />
-            <div className="content-stack-section py-3 px-4 md:px-5 border-b border-border-strong">
+            <div className="content-stack-section border-b border-border-strong">
               <PathLabel name="work_log" className="mb-2" />
               <p className="font-mono text-[10px] text-text-muted">
                 tail -f /var/log/work.log · {runtimeEntries.length} entries
@@ -124,7 +124,7 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
             </div>
 
             {runtimeEntries.map((entry) => (
-              <div key={`${entry.timestamp}-${entry.organization}`} className="content-stack-section py-3 px-4 md:px-5 log-line">
+              <div key={`${entry.timestamp}-${entry.organization}`} className="content-stack-section log-line">
                 <div className="flex flex-wrap gap-x-2 gap-y-1 mb-1.5 font-mono text-[10px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
                   <span className="text-accent-amber">&lt;work&gt;</span>
@@ -154,14 +154,14 @@ export default function ProcPanel({ initialTab = 'whoami' }: ProcPanelProps) {
         return (
           <div className="content-stack h-full min-h-0 overflow-y-auto panel-inner-scroll relative">
             <DomainAccent domain="space" />
-            <div className="content-stack-section py-3 px-4 md:px-5 border-b border-border-strong">
+            <div className="content-stack-section border-b border-border-strong">
               <PathLabel name="beacon_tx" className="mb-2" />
               <p className="font-mono text-[10px] text-text-muted">
                 signal broadcast · {beaconEntries.length} packets received
               </p>
             </div>
             {beaconEntries.map((entry) => (
-              <div key={entry.title} className="content-stack-section py-3 px-4 md:px-5 log-line">
+              <div key={entry.title} className="content-stack-section log-line">
                 <div className="flex flex-wrap gap-x-2 gap-y-1 mb-1.5 font-mono text-[10px]">
                   <span className="text-text-muted">[{entry.timestamp}]</span>
                   <span className="text-accent-amber">

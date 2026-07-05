@@ -104,7 +104,7 @@ export default function DocsPanel() {
             <button
               type="button"
               onClick={goBackToIndex}
-              className="font-mono text-xs text-text-muted hover:text-accent-amber transition-colors duration-200 ease-out shrink-0"
+              className="font-mono text-[11px] text-text-muted hover:text-accent-amber transition-colors duration-200 ease-out shrink-0"
             >
               {'< /docsindex'}
             </button>
@@ -112,14 +112,14 @@ export default function DocsPanel() {
               <button
                 type="button"
                 onClick={scrollToTop}
-                className="font-mono text-xs text-text-muted hover:text-accent-amber transition-colors duration-200 ease-out shrink-0"
+                className="font-mono text-[11px] text-text-muted hover:text-accent-amber transition-colors duration-200 ease-out shrink-0"
               >
                 ↑ top
               </button>
             )}
           </div>
 
-          <div className="panel-box p-4 md:p-5 font-mono text-xs">
+          <div className="panel-box p-3 font-mono text-[11px]">
             <PathLabel name={selected.slug.replace(/-/g, '_')} />
             <div className="text-text-muted mb-4 pb-3 border-b border-border-strong -mt-1 flex flex-wrap gap-x-3 gap-y-1">
               {dateLabel && <span>{dateLabel}</span>}
@@ -166,7 +166,7 @@ export default function DocsPanel() {
                   onClick={() => setSelectedSlug(post.slug)}
                   className="block w-full text-left p-2 border-b border-border-strong last:border-b-0 hover:bg-panel transition-colors duration-200 ease-out group"
                 >
-                  <span className="text-text-primary group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
+                  <span className="text-text-primary text-[11px] group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
                     {post.title}
                   </span>
                 </button>

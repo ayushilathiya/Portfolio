@@ -29,7 +29,7 @@ export default function SkillMesh({ compact = false }: { compact?: boolean }) {
       }
     >
       <SectionVisual tab="dev" />
-      <div className={compact ? 'content-stack-section py-3 px-4 md:px-5' : ''}>
+      <div className={compact ? 'content-stack-section' : ''}>
         <PathLabel name={compact ? 'dev_pin_map' : 'skill_mesh'} className="mb-2 relative z-10" />
         {!compact && (
           <p className="font-mono text-[10px] text-text-muted mb-4 relative z-10">

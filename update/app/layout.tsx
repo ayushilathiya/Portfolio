@@ -6,12 +6,18 @@ const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains',
   weight: ['400', '500', '600'],
+  display: 'swap',
+  fallback: ['Consolas', 'Courier New', 'monospace'],
+  adjustFontFallback: true,
 });
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-space',
   weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  fallback: ['system-ui', 'Segoe UI', 'sans-serif'],
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
