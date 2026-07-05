@@ -447,10 +447,10 @@
 
   .proc-whoami-hero {
     overflow: hidden;
-    flex: 1 1 0;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 0;
   }
 
@@ -483,35 +483,25 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
   }
 
   .proc-whoami-stack > .content-stack-section {
-    flex: 1 1 0;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 0;
-    padding-top: 0.625rem;
-    padding-bottom: 0.625rem;
-  }
-
-  @media (min-width: 768px) {
-    .proc-whoami-stack > .content-stack-section {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-    }
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
   .proc-whoami-stack .proc-whoami-label {
     margin-bottom: 0.375rem;
   }
 
-  .proc-whoami-stack .proc-register-section {
-    justify-content: center;
-  }
-
-  .proc-whoami-stack .proc-port-section {
-    justify-content: center;
+  .proc-whoami-stack .proc-register-section .proc-whoami-label {
+    margin-top: 0;
   }
 
   .proc-whoami-stack .proc-port-section > .flex-wrap {
