@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import SectionVisual from '@/components/section-visual';
 import PathLabel from '@/components/path-label';
+import { submitToFormspree } from '@/lib/formspree';
 
 export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -30,16 +31,7 @@ export default function Contact() {
     }
 
     try {
-      const formspreeKey = process.env.NEXT_PUBLIC_FORMSPREE_KEY;
-      if (!formspreeKey) {
-        throw new Error('Formspree key not configured');
-      }
-
-      const response = await fetch(`https://formspree.io/f/${formspreeKey}`, {
-        method: 'POST',
-        body: formData,
-        headers: { Accept: 'application/json' },
-      });
+      const response = await submitToFormspree(formData);
 
       if (response.ok) {
         setIsSubmitted(true);

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { submitToFormspree } from '@/lib/formspree';
 
 const HELP_COMMANDS = [
   { cmd: '/proc', desc: 'main process panel — profile, education, work, achievements, skills' },
@@ -53,14 +54,7 @@ export default function HelpPanel({ variant = 'floating' }: { variant?: 'floatin
     }
 
     try {
-      const response = await fetch(
-        `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_KEY}`,
-        {
-          method: 'POST',
-          body: formData,
-          headers: { Accept: 'application/json' },
-        }
-      );
+      const response = await submitToFormspree(formData);
 
       if (response.ok) {
         setIsSubmitted(true);
