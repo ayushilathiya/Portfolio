@@ -5,43 +5,64 @@
   <img src="https://img.shields.io/badge/TailwindCSS-%2306B6D4.svg?&style=for-the-badge&logo=tailwind-css&logoColor=white"/>
 </p>
 
-# 🚀 Ayushi Lathiya - Portfolio
+# portfolio.sys - Ayushi Lathiya
 
-Welcome to my personal portfolio! Check it out at [ayushilathiya.xyz](https://ayushilathiya.xyz) 🌟
-
----
-## 📌 Navigation
-- [🌟 About](#-about)
-- [✨ Features](#-features)
-- [🛠️ Tech Stack](#-tech-stack)
-- [⚙️ Requirements](#️-requirements)
-- [📜 License](#-license)
+Personal engineering portfolio. Visit the live site at [ayushilathiya.live](https://ayushilathiya.live).
 
 ---
-## 🌟 About
-This portfolio showcases my journey, skills, and projects in IoT, VLSI, Microcontrollers, and 3D Modeling. It’s a dynamic and interactive space designed to reflect my expertise and passion.
+
+## Navigation
+- [About](#about)
+- [Projects](#projects)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Requirements](#requirements)
+- [License](#license)
 
 ---
-## ✨ Features
-- ✅ Responsive Design 🌍
-- ✅ Interactive UI/UX 🎨
-- ✅ Showcases My Projects 🔥
-- ✅ Contact Section 📬
+
+## About
+This portfolio presents my work in embedded systems, VLSI, IoT, and health tech. It brings together my project builds, technical writing, and background as an engineer focused on hardware and firmware driven systems.
 
 ---
-## 🛠️ Tech Stack
-- **Framework**: Next.js (TypeScript)
-- **Backend**: Node.js
-- **Styling**: Tailwind CSS
+
+## Projects
+A selection of the work featured on the site includes:
+- MPU6050 3D Visualization: sensor driven 3D motion modeling using an MPU6050 and live data streaming to a webpage
+- WiFi Controlled Car: a NodeMCU ESP8266 based car controlled over WiFi using an L298N motor driver and a mobile app
+- ESP-NOW Protocol: low power, low latency wireless communication between ESP32 and ESP8266 devices
+- ECGNet on a Live IoT Platform: an MIT-BIH trained ECG classification model deployed for real time heart anomaly detection
+- Binary Up-Down Counter: digital counter design in Verilog, simulated using Xilinx tools
+- DSCH-MW: CMOS logic gate design and layout simulation using DSCH and Microwind for VLSI circuit study
+
+Technical write-ups for these and other projects are published on my [Hashnode blog](https://ayushilathiya.hashnode.dev).
 
 ---
-## ⚙️ Requirements
-To run this portfolio locally, ensure you have:
-- Node.js & npm installed
+
+## Features
+- Responsive design across devices
+- Clean, minimal UI
+- Project showcase with linked repositories
+- Blog and article links
+- Contact section
+
+---
+
+## Tech Stack
+- Framework: Next.js (TypeScript)
+- Backend: Node.js
+- Styling: Tailwind CSS
+
+Note: confirm this section reflects the actual stack used to build the site before publishing, as it was not verified against the live source.
+
+---
+
+## Requirements
+To run this portfolio locally, ensure you have Node.js and npm installed.
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/portfolio.git
+git clone https://github.com/ayushilathiya/portfolio.git
 cd portfolio
 
 # Install dependencies
@@ -52,5 +73,6 @@ npm run dev
 ```
 
 ---
-## 📜 License
-This project is licensed under the **MIT License**. See the full license [here](https://github.com/harshhh28/Portfolio/blob/main/LICENSE).
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
