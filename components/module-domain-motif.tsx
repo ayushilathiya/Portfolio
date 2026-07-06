@@ -3,7 +3,7 @@
 import type { ProjectDomain } from '@/data/projects';
 
 const STROKE = 'var(--border-strong)';
-const FILL = 'var(--text-muted)';
+const FILL = 'var(--text-secondary)';
 
 /** Horizontal domain motif for top of module cards */
 export default function ModuleDomainMotif({ domain }: { domain: ProjectDomain }) {
