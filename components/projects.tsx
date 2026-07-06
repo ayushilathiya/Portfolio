@@ -37,64 +37,68 @@ export default function Projects() {
               key={project.title}
               className="module-card panel-box group transition-colors duration-200 ease-out relative"
             >
-              <div className="module-card-body relative z-[2] flex flex-col">
-                <div className="module-card-motif" aria-hidden="true">
-                  <ModuleDomainMotif domain={project.domain} />
-                </div>
+              <div className="module-card-body relative z-[2] flex flex-col h-full min-h-0">
+                <div className="module-card-main">
+                  <div className="module-card-motif" aria-hidden="true">
+                    <ModuleDomainMotif domain={project.domain} />
+                  </div>
 
-                <div className="module-card-meta flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div
-                      className={`status-led ${statusLed[project.status]}`}
-                      aria-label={project.statusLabel}
-                    />
-                    <span
-                      className={`font-mono text-[11px] md:text-xs tracking-wide lowercase ${statusText[project.status]}`}
-                    >
-                      {project.statusLabel.toLowerCase()}
+                  <div className="module-card-meta flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div
+                        className={`status-led ${statusLed[project.status]}`}
+                        aria-label={project.statusLabel}
+                      />
+                      <span
+                        className={`font-mono text-[11px] md:text-xs tracking-wide lowercase ${statusText[project.status]}`}
+                      >
+                        {project.statusLabel.toLowerCase()}
+                      </span>
+                    </div>
+                    <span className="module-domain-badge">
+                      <DomainIcon domain={project.domain} className="w-3 h-3 shrink-0" />
+                      {project.domain}
                     </span>
                   </div>
-                  <span className="module-domain-badge">
-                    <DomainIcon domain={project.domain} className="w-3 h-3 shrink-0" />
-                    {project.domain}
-                  </span>
+
+                  <h3 className="font-mono text-sm md:text-[15px] text-text-primary group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
+                    {project.title}
+                  </h3>
+                  <p className="font-mono text-xs md:text-[13px] text-text-secondary leading-relaxed">
+                    {project.description}
+                  </p>
                 </div>
 
-                <h3 className="font-mono text-sm md:text-[15px] text-text-primary group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
-                  {project.title}
-                </h3>
-                <p className="font-mono text-xs md:text-[13px] text-text-secondary leading-relaxed">
-                  {project.description}
-                </p>
-
-                <div className="module-card-tech flex flex-wrap">
-                  {project.tech.map((tech) => (
-                    <span key={tech} className="module-tech-pill">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {project.links && (
-                  <div className="module-card-links flex border-t border-border-strong">
-                    {project.links.map((link) => (
-                      <a
-                        key={link.type}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-text-muted hover:text-accent-amber transition-colors duration-200 ease-out"
-                      >
-                        {link.type === 'github' ? (
-                          <Github className="w-3.5 h-3.5" />
-                        ) : (
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        )}
-                        <span className="font-mono text-[11px] uppercase">{link.type}</span>
-                      </a>
+                <div className="module-card-footer">
+                  <div className="module-card-tech flex flex-wrap">
+                    {project.tech.map((tech) => (
+                      <span key={tech} className="module-tech-pill">
+                        {tech}
+                      </span>
                     ))}
                   </div>
-                )}
+
+                  {project.links && (
+                    <div className="module-card-links flex">
+                      {project.links.map((link) => (
+                        <a
+                          key={link.type}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 hover:text-accent-amber transition-colors duration-200 ease-out"
+                        >
+                          {link.type === 'github' ? (
+                            <Github className="w-3.5 h-3.5" />
+                          ) : (
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          )}
+                          <span className="font-mono text-[11px] uppercase">{link.type}</span>
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </article>
           ))}
