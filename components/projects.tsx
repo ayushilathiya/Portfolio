@@ -28,14 +28,14 @@ export default function Projects() {
       <div className="flex-1 min-h-0 overflow-y-auto panel-inner-scroll relative">
         <div className="flex items-baseline gap-2 relative z-10 px-0.5 mb-3">
           <PathLabel name="modules_index" className="mb-0" />
-          <span className="font-mono text-[10px] text-text-muted">· {projects.length}</span>
+          <span className="font-mono text-[11px] text-text-muted">· {projects.length}</span>
         </div>
 
         <div className="modules-grid relative z-10">
           {projects.map((project) => (
             <article
               key={project.title}
-              className="module-card panel-box group transition-colors duration-200 ease-out relative overflow-hidden h-full"
+              className="module-card panel-box group transition-colors duration-200 ease-out relative overflow-hidden"
             >
               <div className="module-card-body relative z-[2] flex flex-col h-full">
                 <div className="module-card-motif" aria-hidden="true">
@@ -49,7 +49,7 @@ export default function Projects() {
                       aria-label={project.statusLabel}
                     />
                     <span
-                      className={`font-mono text-[10px] tracking-wide lowercase ${statusText[project.status]}`}
+                      className={`font-mono text-[11px] tracking-wide lowercase ${statusText[project.status]}`}
                     >
                       {project.statusLabel.toLowerCase()}
                     </span>
@@ -60,10 +60,10 @@ export default function Projects() {
                   </span>
                 </div>
 
-                <h3 className="font-mono text-xs md:text-[13px] text-text-primary mb-2 group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
+                <h3 className="font-mono text-sm text-text-primary mb-2 group-hover:text-accent-amber transition-colors duration-200 ease-out leading-snug">
                   {project.title}
                 </h3>
-                <p className="font-mono text-[11px] text-text-muted leading-relaxed mb-3 line-clamp-4 flex-1">
+                <p className="font-mono text-xs text-text-muted leading-relaxed mb-3 line-clamp-3 flex-1">
                   {project.description}
                 </p>
 
@@ -90,7 +90,7 @@ export default function Projects() {
                         ) : (
                           <ExternalLink className="w-3.5 h-3.5" />
                         )}
-                        <span className="font-mono text-[10px] uppercase">{link.type}</span>
+                        <span className="font-mono text-[11px] uppercase">{link.type}</span>
                       </a>
                     ))}
                   </div>

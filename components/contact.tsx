@@ -49,64 +49,64 @@ export default function Contact() {
   return (
     <div className="panel-content uart-panel relative">
       <div className="uart-panel-inner">
-        <div className="panel-box uart-form-box p-3 relative">
+        <div className="panel-box uart-form-box p-4 relative">
           <PathLabel name="tx" className="mb-2" />
-          <p className="font-mono text-[11px] mb-2 pb-2 border-b border-border-strong text-text-primary">
+          <p className="font-mono text-xs mb-3 pb-2 border-b border-border-strong text-text-primary">
             transmit --to ayushi
           </p>
 
           {!isSubmitted ? (
-            <form onSubmit={handleSubmit} className="space-y-2.5">
+            <form onSubmit={handleSubmit} className="space-y-3">
               <input type="hidden" name="_subject" value="Portfolio contact — portfolio.sys /tx" />
               <div>
-                <label className="block font-mono text-[10px] text-text-muted mb-1">name</label>
+                <label className="block font-mono text-[11px] text-text-muted mb-1">name</label>
                 <Input
                   type="text"
                   name="name"
                   placeholder="your name"
                   required
                   disabled={isSubmitting}
-                  className="bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-xs h-8"
+                  className="bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-sm h-9"
                 />
               </div>
               <div>
-                <label className="block font-mono text-[10px] text-text-muted mb-1">email</label>
+                <label className="block font-mono text-[11px] text-text-muted mb-1">email</label>
                 <Input
                   type="email"
                   name="email"
                   placeholder="your.email@example.com"
                   required
                   disabled={isSubmitting}
-                  className="bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-xs h-8"
+                  className="bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-sm h-9"
                 />
               </div>
               <div>
-                <label className="block font-mono text-[10px] text-text-muted mb-1">payload</label>
+                <label className="block font-mono text-[11px] text-text-muted mb-1">payload</label>
                 <Textarea
                   name="message"
                   placeholder="your message"
-                  className="min-h-[72px] bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-xs resize-none"
+                  className="min-h-[96px] bg-base border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent-amber font-mono text-sm resize-none"
                   required
                   disabled={isSubmitting}
                 />
               </div>
-              {error && <p className="font-mono text-[10px] text-text-secondary text-center">{error}</p>}
+              {error && <p className="font-mono text-[11px] text-text-secondary text-center">{error}</p>}
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-transparent border border-border-strong text-text-primary hover:border-accent-amber hover:text-accent-amber font-mono text-xs h-8 transition-colors duration-200 ease-out"
+                className="w-full bg-transparent border border-border-strong text-text-primary hover:border-accent-amber hover:text-accent-amber font-mono text-sm h-9 transition-colors duration-200 ease-out"
               >
                 {isSubmitting ? 'transmitting…' : 'transmit'}
               </Button>
             </form>
           ) : (
-            <div className="text-center space-y-2 py-1 font-mono text-xs">
+            <div className="text-center space-y-2 py-2 font-mono text-sm">
               <p className="text-text-primary">tx ack received</p>
               <p className="text-text-muted">thank you — i&apos;ll get back to you soon.</p>
               <Button
                 type="button"
                 onClick={() => setIsSubmitted(false)}
-                className="bg-transparent border border-border-strong text-text-secondary hover:text-accent-amber hover:border-accent-amber font-mono text-xs h-8"
+                className="bg-transparent border border-border-strong text-text-secondary hover:text-accent-amber hover:border-accent-amber font-mono text-sm h-9"
               >
                 send another
               </Button>

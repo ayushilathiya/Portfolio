@@ -47,13 +47,13 @@
   }
 
   html {
-    font-size: 15px;
+    font-size: 16px;
     -webkit-text-size-adjust: 100%;
   }
 
   body {
     @apply bg-base text-text-primary antialiased font-mono;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.5;
     font-family: var(--font-jetbrains), ui-monospace, 'Cascadia Code', 'Consolas', 'Courier New', monospace;
     letter-spacing: -0.01em;
@@ -267,13 +267,13 @@
 
   @media (min-width: 1024px) {
     .device-frame {
-      max-width: min(1216px, 78.4vw);
-      max-height: calc(80dvh - 20px);
-      font-size: 15px;
+      max-width: min(1313px, 84.7vw);
+      max-height: calc(86.4dvh - 20px);
+      font-size: 16px;
     }
 
     body {
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.55;
     }
 
@@ -286,8 +286,8 @@
     }
 
     .proc-status-bar {
-      height: 32px;
-      font-size: 13px;
+      height: 34px;
+      font-size: 14px;
       padding: 0 1rem;
     }
 
@@ -301,11 +301,11 @@
     }
 
     .window-title-text {
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .main-nav-tab {
-      font-size: 14px;
+      font-size: 15px;
       padding-left: 1rem;
       padding-right: 1rem;
       padding-top: 0.75rem;
@@ -313,7 +313,7 @@
     }
 
     .path-label {
-      font-size: 13px;
+      font-size: 14px;
       margin-bottom: 0.875rem;
     }
 
@@ -348,21 +348,21 @@
     }
 
     .proc-whoami-hero p {
-      font-size: 16px;
+      font-size: 17px;
       margin-top: 0.625rem;
     }
 
     .proc-whoami-label {
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .proc-register-table {
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .proc-register-table th:nth-child(2),
     .proc-register-table td.proc-register-field {
-      font-size: 14.5px;
+      font-size: 15.5px;
     }
 
     .proc-whoami-stack .proc-register-table th,
@@ -385,7 +385,7 @@
     }
 
     .idle-panel {
-      font-size: 11px;
+      font-size: 12px;
     }
 
     .idle-sidebar-slot {
@@ -393,26 +393,22 @@
     }
 
     .proc-sidebar .proc-nav button {
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .log-line {
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .proc-field-pill {
-      font-size: 12px;
+      font-size: 13px;
       padding: 0.3rem 0.55rem;
     }
 
     .module-domain-badge,
     .module-tech-pill {
-      font-size: 12px;
+      font-size: 13px;
       padding: 0.3rem 0.55rem;
-    }
-
-    .module-card {
-      min-height: 13rem;
     }
 
     .module-card-body {
@@ -425,15 +421,23 @@
     }
 
     .module-card-body h3 {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     .module-card-body p {
-      font-size: 13px;
+      font-size: 14px;
     }
 
     .modules-grid {
-      gap: 1rem;
+      gap: 1.125rem;
+    }
+
+    .uart-form-box {
+      max-width: 26rem;
+    }
+
+    .uart-panel-inner {
+      padding: 1rem 1.25rem;
     }
 
     .content-stack-section {
@@ -885,7 +889,6 @@
     padding: 0;
     overflow: hidden;
     min-height: 11rem;
-    height: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -905,9 +908,11 @@
   .module-card-body {
     padding: 0.875rem 1rem;
     min-width: 0;
+    min-height: 0;
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
 
   .module-motif-svg {
@@ -921,15 +926,20 @@
 
   .modules-grid {
     display: grid;
-    gap: 0.875rem;
+    gap: 1rem;
     grid-template-columns: 1fr;
-    align-items: stretch;
+    align-items: start;
   }
 
   @media (min-width: 640px) {
     .modules-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.875rem;
+      gap: 1rem;
+    }
+
+    .module-card {
+      aspect-ratio: 1 / 1;
+      min-height: 0;
     }
   }
 
@@ -964,7 +974,7 @@
     border-radius: 6px;
     flex-shrink: 0;
     width: 100%;
-    max-width: 18rem;
+    max-width: 22rem;
   }
 
   .docs-index-scroll {
