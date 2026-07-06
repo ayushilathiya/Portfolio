@@ -29,7 +29,7 @@ export const projects: Project[] = [
     title: 'Gesture-Controlled Car',
     domain: 'IoT',
     description:
-      'Gesture-controlled system using ESP-NOW for low-latency wireless car control — phase two of the Wi-Fi car series.',
+      'Gesture-controlled system using ESP-NOW for low-latency wireless car control; phase two of the Wi-Fi car series, tuned for sub-50ms response latency.',
     status: 'built',
     statusLabel: 'BUILT',
     tech: ['IoT', 'ESP-NOW', 'Embedded Systems'],
