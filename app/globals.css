@@ -102,7 +102,7 @@
 
   @media (min-width: 1024px) {
     .page-backdrop {
-      padding: 8px 12px;
+      padding: 20px 28px;
     }
   }
 
@@ -267,8 +267,8 @@
 
   @media (min-width: 1024px) {
     .device-frame {
-      max-width: min(1520px, 98vw);
-      max-height: calc(100dvh - 16px);
+      max-width: min(1216px, 78.4vw);
+      max-height: calc(80dvh - 20px);
       font-size: 15px;
     }
 
@@ -389,7 +389,7 @@
     }
 
     .idle-sidebar-slot {
-      max-height: 200px;
+      max-height: 300px;
     }
 
     .proc-sidebar .proc-nav button {
@@ -479,7 +479,6 @@
     .idle-sidebar-slot {
       flex: 1 1 auto;
       min-height: 0;
-      max-height: none;
     }
   }
 
@@ -521,8 +520,8 @@
 
     .idle-sidebar-slot {
       flex: 0 1 auto;
-      max-height: 210px;
-      padding: 0.25rem 0.375rem 0.375rem;
+      max-height: 280px;
+      padding: 0.375rem 0.5rem 0.5rem;
     }
 
     .proc-sidebar .proc-nav button {
