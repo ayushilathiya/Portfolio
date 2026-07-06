@@ -11,7 +11,7 @@ export default function WindowTitleBar() {
         <span className="window-control-dot" />
       </div>
 
-      <div className="min-w-0 flex-1 font-mono text-[10px] md:text-[11px] text-text-muted truncate">
+      <div className="min-w-0 flex-1 font-mono text-[10px] md:text-[11px] window-title-text text-text-muted truncate">
         <span className="text-text-secondary">portfolio.sys</span>
         <span className="mx-1.5 text-border-strong">·</span>
         <span>shell active</span>

@@ -102,7 +102,7 @@
 
   @media (min-width: 1024px) {
     .page-backdrop {
-      padding: 24px 40px;
+      padding: 8px 12px;
     }
   }
 
@@ -243,7 +243,7 @@
     border-bottom: none;
   }
 
-  /* Centered device window — ~8% inset so outer traces stay visible */
+  /* Centered device window — fills desktop viewport with minimal outer margin */
   .device-frame {
     position: relative;
     z-index: 1;
@@ -267,8 +267,94 @@
 
   @media (min-width: 1024px) {
     .device-frame {
-      max-width: min(1188px, 90vw);
-      max-height: min(846px, calc(100dvh - 88px));
+      max-width: min(1520px, 98vw);
+      max-height: calc(100dvh - 16px);
+      font-size: 14px;
+    }
+
+    body {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .proc-main-body {
+      padding: 0.75rem 1.25rem;
+    }
+
+    .panel-content {
+      padding: 0.875rem 1.125rem;
+    }
+
+    .proc-status-bar {
+      height: 30px;
+      font-size: 12px;
+      padding: 0 0.875rem;
+    }
+
+    .proc-status-text {
+      min-width: 10rem;
+    }
+
+    .window-title-bar {
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+    }
+
+    .window-title-text {
+      font-size: 13px;
+    }
+
+    .main-nav-tab {
+      font-size: 13px;
+      padding-left: 0.875rem;
+      padding-right: 0.875rem;
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+    }
+
+    .path-label {
+      font-size: 12px;
+    }
+
+    .proc-whoami-hero h1 {
+      font-size: 1.625rem;
+    }
+
+    .proc-whoami-hero p {
+      font-size: 15px;
+    }
+
+    .proc-whoami-label {
+      font-size: 13px;
+    }
+
+    .proc-register-table {
+      font-size: 13px;
+    }
+
+    .proc-register-table th:nth-child(2),
+    .proc-register-table td.proc-register-field {
+      font-size: 13.5px;
+    }
+
+    .proc-register-col-addr {
+      width: 3.5rem;
+    }
+
+    .proc-register-col-field {
+      width: 8.25rem;
+    }
+
+    .idle-panel {
+      font-size: 12px;
+    }
+
+    .module-card-body {
+      padding: 1rem 1.125rem;
+    }
+
+    .content-stack-section {
+      padding: 0.875rem 1rem;
     }
   }
 

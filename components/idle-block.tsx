@@ -53,7 +53,7 @@ function IdleIcon({ type }: { type: IdleEntry['icon'] }) {
 
 export default function IdleBlock() {
   return (
-    <div className="idle-panel font-mono text-[10px] md:text-[11px]">
+    <div className="idle-panel font-mono text-[10px] md:text-[11px] lg:text-[12px]">
       <div className="idle-panel-header shrink-0">
         <p className="path-label mb-0">~idle</p>
       </div>

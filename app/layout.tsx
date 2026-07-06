@@ -21,18 +21,23 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'portfolio.sys | Ayushi Lathiya',
+  title: 'Ayushi Lathiya - Firmware Engineer | VLSI and HealthTech',
   description:
-    'Embedded systems, VLSI, IoT, and health tech — Ayushi Lathiya\'s engineering portfolio.',
+    'Firmware engineer focused on embedded systems, VLSI design, and health tech — Ayushi Lathiya\'s engineering portfolio.',
+  icons: {
+    icon: '/cpu.png',
+    shortcut: '/cpu.png',
+    apple: '/cpu.png',
+  },
   openGraph: {
-    title: 'portfolio.sys | Ayushi Lathiya',
-    description: 'Embedded Systems // VLSI // IoT Engineer',
+    title: 'Ayushi Lathiya - Firmware Engineer | VLSI and HealthTech',
+    description: 'Firmware Engineer · VLSI · HealthTech',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'portfolio.sys | Ayushi Lathiya',
-    description: 'Embedded Systems // VLSI // IoT Engineer',
+    title: 'Ayushi Lathiya - Firmware Engineer | VLSI and HealthTech',
+    description: 'Firmware Engineer · VLSI · HealthTech',
   },
 };
 
