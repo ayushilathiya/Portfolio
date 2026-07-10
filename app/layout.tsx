@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   description:
     'Firmware engineer focused on embedded systems, VLSI design, and health tech — Ayushi Lathiya\'s engineering portfolio.',
   icons: {
-    icon: '/cpu.png',
-    shortcut: '/cpu.png',
-    apple: '/cpu.png',
+    icon: '/cpu.ico',
+    shortcut: '/cpu.ico',
+    apple: '/cpu.ico',
   },
   openGraph: {
     title: 'Ayushi Lathiya - Firmware Engineer | VLSI and HealthTech',
